@@ -5,4 +5,5 @@ enum SharedConfig {
     static let scheduleKey = "blockSchedule"
     static let shieldSelectionKey = "shieldSelection"
     static let activityName = "daily-block"
+    static let immediateActivityName = "immediate-block"
 }
