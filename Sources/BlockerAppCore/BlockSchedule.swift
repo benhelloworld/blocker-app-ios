@@ -39,3 +39,44 @@ public struct BlockSchedule: Codable, Equatable, Sendable {
         return current >= startTotalMinutes && current < endTotalMinutes
     }
 }
+
+public struct ImmediateBlockSession: Equatable, Sendable {
+    public let start: Date
+    public let durationMinutes: Int
+    public let calendar: Calendar
+
+    public init(start: Date = Date(), durationMinutes: Int, calendar: Calendar = .current) {
+        self.start = start
+        self.durationMinutes = durationMinutes
+        self.calendar = calendar
+    }
+
+    public var end: Date {
+        calendar.date(byAdding: .minute, value: durationMinutes, to: start) ?? start
+    }
+
+    public var schedule: BlockSchedule {
+        let startParts = calendar.dateComponents([.hour, .minute], from: start)
+        let endParts = calendar.dateComponents([.hour, .minute], from: end)
+        return try! BlockSchedule(
+            startHour: startParts.hour ?? 0,
+            startMinute: startParts.minute ?? 0,
+            endHour: endParts.hour ?? 0,
+            endMinute: endParts.minute ?? 0
+        )
+    }
+
+    public var durationLabel: String {
+        if durationMinutes % 60 == 0 {
+            let hours = durationMinutes / 60
+            return hours == 1 ? "1 hour" : "\(hours) hours"
+        }
+
+        if durationMinutes > 60 {
+            let value = Double(durationMinutes) / 60.0
+            return "\(value.formatted(.number.precision(.fractionLength(1)))) hours"
+        }
+
+        return durationMinutes == 1 ? "1 minute" : "\(durationMinutes) minutes"
+    }
+}
