@@ -40,14 +40,14 @@ public struct BlockSchedule: Codable, Equatable, Sendable {
     }
 }
 
-public struct ImmediateBlockSession: Equatable, Sendable {
+public struct ImmediateBlockSession: Codable, Equatable, Sendable {
     public let start: Date
     public let durationMinutes: Int
     public let calendar: Calendar
 
     public init(start: Date = Date(), durationMinutes: Int, calendar: Calendar = .current) {
         self.start = start
-        self.durationMinutes = durationMinutes
+        self.durationMinutes = max(1, durationMinutes)
         self.calendar = calendar
     }
 
@@ -78,5 +78,24 @@ public struct ImmediateBlockSession: Equatable, Sendable {
         }
 
         return durationMinutes == 1 ? "1 minute" : "\(durationMinutes) minutes"
+    }
+
+    public func isActive(at date: Date = Date()) -> Bool {
+        date >= start && date < end
+    }
+
+    public func remainingMinutes(at date: Date = Date()) -> Int {
+        guard date < end else { return 0 }
+        let seconds = end.timeIntervalSince(date)
+        return max(0, Int(ceil(seconds / 60)))
+    }
+
+    public func progress(at date: Date = Date()) -> Double {
+        guard durationMinutes > 0 else { return 1 }
+        if date <= start { return 0 }
+        if date >= end { return 1 }
+        let elapsedSeconds = date.timeIntervalSince(start)
+        let totalSeconds = TimeInterval(durationMinutes * 60)
+        return min(1, max(0, elapsedSeconds / totalSeconds))
     }
 }

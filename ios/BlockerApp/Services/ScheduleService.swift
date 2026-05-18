@@ -21,8 +21,11 @@ final class ScheduleService {
         #endif
     }
 
+    @discardableResult
     func startImmediateBlock(durationMinutes: Int, start: Date = Date(), calendar: Calendar = .current) throws -> ImmediateBlockSession {
         let session = ImmediateBlockSession(start: start, durationMinutes: durationMinutes, calendar: calendar)
+
+        try ShieldStorage.shared.saveActiveImmediateSession(session)
 
         #if canImport(DeviceActivity)
         let center = DeviceActivityCenter()
@@ -46,11 +49,13 @@ final class ScheduleService {
             DeviceActivityName(SharedConfig.immediateActivityName)
         ])
         #endif
+        ShieldStorage.shared.clearActiveImmediateSession()
     }
 
     func stopImmediateBlock() {
         #if canImport(DeviceActivity)
         DeviceActivityCenter().stopMonitoring([DeviceActivityName(SharedConfig.immediateActivityName)])
         #endif
+        ShieldStorage.shared.clearActiveImmediateSession()
     }
 }

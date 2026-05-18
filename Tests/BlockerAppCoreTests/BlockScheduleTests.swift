@@ -44,4 +44,29 @@ final class BlockScheduleTests: XCTestCase {
         XCTAssertEqual(session.schedule, try BlockSchedule(startHour: 23, startMinute: 45, endHour: 0, endMinute: 30))
         XCTAssertTrue(session.schedule.crossesMidnight)
     }
+
+    func testImmediateBlockSessionReportsActiveStateAndRemainingMinutes() throws {
+        let calendar = Calendar(identifier: .gregorian)
+        let start = calendar.date(from: DateComponents(year: 2026, month: 5, day: 17, hour: 10, minute: 0))!
+        let session = ImmediateBlockSession(start: start, durationMinutes: 120, calendar: calendar)
+        let halfway = calendar.date(from: DateComponents(year: 2026, month: 5, day: 17, hour: 11, minute: 0))!
+        let afterEnd = calendar.date(from: DateComponents(year: 2026, month: 5, day: 17, hour: 12, minute: 1))!
+
+        XCTAssertTrue(session.isActive(at: halfway))
+        XCTAssertEqual(session.remainingMinutes(at: halfway), 60)
+        XCTAssertEqual(session.progress(at: halfway), 0.5)
+        XCTAssertFalse(session.isActive(at: afterEnd))
+        XCTAssertEqual(session.remainingMinutes(at: afterEnd), 0)
+    }
+
+    func testImmediateBlockSessionSupportsOvernightStatusText() throws {
+        let calendar = Calendar(identifier: .gregorian)
+        let start = calendar.date(from: DateComponents(year: 2026, month: 5, day: 17, hour: 23, minute: 30))!
+        let session = ImmediateBlockSession(start: start, durationMinutes: 90, calendar: calendar)
+        let now = calendar.date(from: DateComponents(year: 2026, month: 5, day: 18, hour: 0, minute: 15))!
+
+        XCTAssertTrue(session.isActive(at: now))
+        XCTAssertEqual(session.remainingMinutes(at: now), 45)
+        XCTAssertEqual(session.progress(at: now), 0.5)
+    }
 }
