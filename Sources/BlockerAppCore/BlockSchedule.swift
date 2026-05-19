@@ -1,27 +1,63 @@
 import Foundation
 
 public struct BlockSchedule: Codable, Equatable, Sendable {
+    public static let allWeekdays = Set(1...7)
+    public static let orderedWeekdays: [(weekday: Int, shortName: String, fullName: String)] = [
+        (2, "Mon", "Monday"),
+        (3, "Tue", "Tuesday"),
+        (4, "Wed", "Wednesday"),
+        (5, "Thu", "Thursday"),
+        (6, "Fri", "Friday"),
+        (7, "Sat", "Saturday"),
+        (1, "Sun", "Sunday")
+    ]
+
     public let startHour: Int
     public let startMinute: Int
     public let endHour: Int
     public let endMinute: Int
+    public let selectedWeekdays: Set<Int>
 
-    public init(startHour: Int, startMinute: Int, endHour: Int, endMinute: Int) throws {
+    public init(startHour: Int, startMinute: Int, endHour: Int, endMinute: Int, selectedWeekdays: Set<Int> = BlockSchedule.allWeekdays) throws {
         guard (0...23).contains(startHour), (0...23).contains(endHour) else {
             throw ValidationError.invalidHour
         }
         guard (0...59).contains(startMinute), (0...59).contains(endMinute) else {
             throw ValidationError.invalidMinute
         }
+        let filteredWeekdays = selectedWeekdays.filter { (1...7).contains($0) }
+        guard filteredWeekdays.count == selectedWeekdays.count else {
+            throw ValidationError.invalidWeekday
+        }
         self.startHour = startHour
         self.startMinute = startMinute
         self.endHour = endHour
         self.endMinute = endMinute
+        self.selectedWeekdays = filteredWeekdays
     }
 
     public enum ValidationError: Error, Equatable {
         case invalidHour
         case invalidMinute
+        case invalidWeekday
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case startHour
+        case startMinute
+        case endHour
+        case endMinute
+        case selectedWeekdays
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let startHour = try container.decode(Int.self, forKey: .startHour)
+        let startMinute = try container.decode(Int.self, forKey: .startMinute)
+        let endHour = try container.decode(Int.self, forKey: .endHour)
+        let endMinute = try container.decode(Int.self, forKey: .endMinute)
+        let selectedWeekdays = try container.decodeIfPresent(Set<Int>.self, forKey: .selectedWeekdays) ?? BlockSchedule.allWeekdays
+        try self.init(startHour: startHour, startMinute: startMinute, endHour: endHour, endMinute: endMinute, selectedWeekdays: selectedWeekdays)
     }
 
     public var startTotalMinutes: Int { startHour * 60 + startMinute }
@@ -31,12 +67,35 @@ public struct BlockSchedule: Codable, Equatable, Sendable {
         endTotalMinutes <= startTotalMinutes
     }
 
+    public var selectedWeekdaySymbols: [String] {
+        BlockSchedule.orderedWeekdays
+            .filter { selectedWeekdays.contains($0.weekday) }
+            .map(\.shortName)
+    }
+
+    public var selectedWeekdaySummary: String {
+        if selectedWeekdays == BlockSchedule.allWeekdays {
+            return "Every day"
+        }
+        if selectedWeekdays == Set(2...6) {
+            return "Weekdays"
+        }
+        if selectedWeekdays == Set([1, 7]) {
+            return "Weekends"
+        }
+        return selectedWeekdaySymbols.joined(separator: ", ")
+    }
+
     public func contains(hour: Int, minute: Int) -> Bool {
         let current = hour * 60 + minute
         if crossesMidnight {
             return current >= startTotalMinutes || current < endTotalMinutes
         }
         return current >= startTotalMinutes && current < endTotalMinutes
+    }
+
+    public func contains(weekday: Int, hour: Int, minute: Int) -> Bool {
+        selectedWeekdays.contains(weekday) && contains(hour: hour, minute: minute)
     }
 }
 
@@ -97,5 +156,12 @@ public struct ImmediateBlockSession: Codable, Equatable, Sendable {
         let elapsedSeconds = date.timeIntervalSince(start)
         let totalSeconds = TimeInterval(durationMinutes * 60)
         return min(1, max(0, elapsedSeconds / totalSeconds))
+    }
+
+    public func endTimeLabel(at date: Date = Date()) -> String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        formatter.dateStyle = calendar.isDate(end, inSameDayAs: date) ? .none : .medium
+        return formatter.string(from: end)
     }
 }

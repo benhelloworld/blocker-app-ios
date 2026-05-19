@@ -1,14 +1,76 @@
 import Foundation
 
 struct BlockSchedule: Codable, Equatable {
+    static let allWeekdays = Set(1...7)
+    static let orderedWeekdays: [(weekday: Int, shortName: String, fullName: String)] = [
+        (2, "Mon", "Monday"),
+        (3, "Tue", "Tuesday"),
+        (4, "Wed", "Wednesday"),
+        (5, "Thu", "Thursday"),
+        (6, "Fri", "Friday"),
+        (7, "Sat", "Saturday"),
+        (1, "Sun", "Sunday")
+    ]
+
     var startHour: Int
     var startMinute: Int
     var endHour: Int
     var endMinute: Int
+    var selectedWeekdays: Set<Int>
+
+    init(startHour: Int, startMinute: Int, endHour: Int, endMinute: Int, selectedWeekdays: Set<Int> = BlockSchedule.allWeekdays) {
+        self.startHour = startHour
+        self.startMinute = startMinute
+        self.endHour = endHour
+        self.endMinute = endMinute
+        self.selectedWeekdays = selectedWeekdays.filter { (1...7).contains($0) }
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case startHour
+        case startMinute
+        case endHour
+        case endMinute
+        case selectedWeekdays
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        startHour = try container.decode(Int.self, forKey: .startHour)
+        startMinute = try container.decode(Int.self, forKey: .startMinute)
+        endHour = try container.decode(Int.self, forKey: .endHour)
+        endMinute = try container.decode(Int.self, forKey: .endMinute)
+        selectedWeekdays = try container.decodeIfPresent(Set<Int>.self, forKey: .selectedWeekdays) ?? BlockSchedule.allWeekdays
+        selectedWeekdays = selectedWeekdays.filter { (1...7).contains($0) }
+    }
 
     var startTotalMinutes: Int { startHour * 60 + startMinute }
     var endTotalMinutes: Int { endHour * 60 + endMinute }
     var crossesMidnight: Bool { endTotalMinutes <= startTotalMinutes }
+
+    var selectedWeekdaySymbols: [String] {
+        BlockSchedule.orderedWeekdays
+            .filter { selectedWeekdays.contains($0.weekday) }
+            .map(\.shortName)
+    }
+
+    var selectedWeekdaySummary: String {
+        if selectedWeekdays == BlockSchedule.allWeekdays {
+            return "Every day"
+        }
+
+        let weekdaySet = Set(2...6)
+        if selectedWeekdays == weekdaySet {
+            return "Weekdays"
+        }
+
+        let weekendSet: Set<Int> = [1, 7]
+        if selectedWeekdays == weekendSet {
+            return "Weekends"
+        }
+
+        return selectedWeekdaySymbols.joined(separator: ", ")
+    }
 
     func contains(hour: Int, minute: Int) -> Bool {
         let current = hour * 60 + minute
@@ -16,6 +78,10 @@ struct BlockSchedule: Codable, Equatable {
             return current >= startTotalMinutes || current < endTotalMinutes
         }
         return current >= startTotalMinutes && current < endTotalMinutes
+    }
+
+    func contains(weekday: Int, hour: Int, minute: Int) -> Bool {
+        selectedWeekdays.contains(weekday) && contains(hour: hour, minute: minute)
     }
 
     static let defaultFocus = BlockSchedule(startHour: 9, startMinute: 0, endHour: 17, endMinute: 0)

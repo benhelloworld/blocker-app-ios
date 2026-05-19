@@ -11,13 +11,17 @@ final class ScheduleService {
 
         #if canImport(DeviceActivity)
         let center = DeviceActivityCenter()
-        let activity = DeviceActivityName(SharedConfig.activityName)
-        let deviceSchedule = DeviceActivitySchedule(
-            intervalStart: DateComponents(hour: schedule.startHour, minute: schedule.startMinute),
-            intervalEnd: DateComponents(hour: schedule.endHour, minute: schedule.endMinute),
-            repeats: true
-        )
-        try center.startMonitoring(activity, during: deviceSchedule)
+        center.stopMonitoring(SharedConfig.allDailyActivityNames.map { DeviceActivityName($0) })
+
+        for weekday in schedule.selectedWeekdays.sorted() {
+            let activity = DeviceActivityName(SharedConfig.dailyActivityName(for: weekday))
+            let deviceSchedule = DeviceActivitySchedule(
+                intervalStart: DateComponents(hour: schedule.startHour, minute: schedule.startMinute, weekday: weekday),
+                intervalEnd: DateComponents(hour: schedule.endHour, minute: schedule.endMinute, weekday: weekday),
+                repeats: true
+            )
+            try center.startMonitoring(activity, during: deviceSchedule)
+        }
         #endif
     }
 
@@ -44,10 +48,8 @@ final class ScheduleService {
 
     func stopMonitoring() {
         #if canImport(DeviceActivity)
-        DeviceActivityCenter().stopMonitoring([
-            DeviceActivityName(SharedConfig.activityName),
-            DeviceActivityName(SharedConfig.immediateActivityName)
-        ])
+        let dailyActivities = SharedConfig.allDailyActivityNames.map { DeviceActivityName($0) }
+        DeviceActivityCenter().stopMonitoring(dailyActivities + [DeviceActivityName(SharedConfig.immediateActivityName)])
         #endif
         ShieldStorage.shared.clearActiveImmediateSession()
     }

@@ -69,4 +69,22 @@ final class BlockScheduleTests: XCTestCase {
         XCTAssertEqual(session.remainingMinutes(at: now), 45)
         XCTAssertEqual(session.progress(at: now), 0.5)
     }
+
+
+    func testScheduleDefaultsToAllWeekdaysForExistingDailyBlocks() throws {
+        let schedule = try BlockSchedule(startHour: 9, startMinute: 0, endHour: 17, endMinute: 0)
+
+        XCTAssertEqual(schedule.selectedWeekdays, Set(1...7))
+        XCTAssertEqual(schedule.selectedWeekdaySymbols, ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"])
+    }
+
+    func testScheduleOnlyContainsSelectedWeekdays() throws {
+        let schedule = try BlockSchedule(startHour: 9, startMinute: 0, endHour: 17, endMinute: 0, selectedWeekdays: [2, 4, 6])
+
+        XCTAssertTrue(schedule.contains(weekday: 2, hour: 10, minute: 0))
+        XCTAssertTrue(schedule.contains(weekday: 4, hour: 10, minute: 0))
+        XCTAssertFalse(schedule.contains(weekday: 3, hour: 10, minute: 0))
+        XCTAssertFalse(schedule.contains(weekday: 6, hour: 18, minute: 0))
+        XCTAssertEqual(schedule.selectedWeekdaySymbols, ["Mon", "Wed", "Fri"])
+    }
 }
