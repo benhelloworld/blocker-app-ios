@@ -2,6 +2,12 @@ import Foundation
 #if canImport(DeviceActivity)
 import DeviceActivity
 #endif
+#if canImport(FamilyControls)
+import FamilyControls
+#endif
+#if canImport(ManagedSettings)
+import ManagedSettings
+#endif
 
 final class ScheduleService {
     static let shared = ScheduleService()
@@ -63,4 +69,35 @@ final class ScheduleService {
         #endif
         ShieldStorage.shared.clearActiveImmediateSession()
     }
+
+    #if canImport(FamilyControls) && canImport(ManagedSettings)
+    func setDelayAppsEnabled(_ isEnabled: Bool, selection: FamilyActivitySelection? = nil) throws {
+        ShieldStorage.shared.saveDelayAppsEnabled(isEnabled)
+        if isEnabled {
+            try applyDelayAppsShield(selection: selection ?? ShieldStorage.shared.loadDelaySelection())
+        } else {
+            clearDelayAppsShield()
+        }
+    }
+
+    func updateDelayAppsSelection(_ selection: FamilyActivitySelection) throws {
+        try ShieldStorage.shared.saveDelaySelection(selection)
+        if ShieldStorage.shared.loadDelayAppsEnabled() {
+            try applyDelayAppsShield(selection: selection)
+        }
+    }
+
+    private func applyDelayAppsShield(selection: FamilyActivitySelection) throws {
+        let delayStore = ManagedSettingsStore(named: .init("delay-apps"))
+        delayStore.shield.applications = selection.applicationTokens.isEmpty ? nil : selection.applicationTokens
+        delayStore.shield.applicationCategories = selection.categoryTokens.isEmpty ? nil : .specific(selection.categoryTokens)
+        delayStore.shield.webDomains = selection.webDomainTokens.isEmpty ? nil : selection.webDomainTokens
+    }
+
+    func clearDelayAppsShield() {
+        let delayStore = ManagedSettingsStore(named: .init("delay-apps"))
+        delayStore.clearAllSettings()
+    }
+    #endif
+
 }

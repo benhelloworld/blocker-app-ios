@@ -3,10 +3,18 @@ import Combine
 #if canImport(UIKit)
 import UIKit
 #endif
+#if canImport(FamilyControls)
+import FamilyControls
+#endif
 
 struct FocusModesView: View {
     @State private var message: String?
     @State private var showingDelayMode = false
+    #if canImport(FamilyControls)
+    @State private var delaySelection = ShieldStorage.shared.loadDelaySelection()
+    @State private var delayAppsEnabled = ShieldStorage.shared.loadDelayAppsEnabled()
+    @State private var isDelayPickerPresented = false
+    #endif
     @State private var suggestions = SmartSuggestionEngine.suggestions(
         stats: ShieldStorage.shared.loadFocusStats(),
         frictionUnlocks: ShieldStorage.shared.loadFrictionUnlockHistory()
@@ -63,27 +71,134 @@ struct FocusModesView: View {
 
     private var delayCard: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Label("Delay, Don’t Deny", systemImage: "hourglass")
+            Label("Delay Apps", systemImage: "hourglass")
                 .font(.title2.bold())
                 .foregroundStyle(.white)
-            Text("When the urge hits, wait 30 seconds. If you still want access, continue intentionally.")
+            Text("Choose apps specifically for delay. This is separate from your block list, quick blocks, and schedules.")
                 .foregroundStyle(.white.opacity(0.68))
-            Button { showingDelayMode = true } label: {
-                Label("Try 30 second delay", systemImage: "timer")
+
+            #if canImport(FamilyControls)
+            delaySelectionSummary
+
+            Toggle(isOn: Binding(
+                get: { delayAppsEnabled },
+                set: { newValue in setDelayAppsEnabled(newValue) }
+            )) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Delay Apps is active")
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                    Text(delayAppsEnabled ? "Selected apps show a 30-second shield." : "Turn on after choosing apps to delay.")
+                        .font(.caption)
+                        .foregroundStyle(.white.opacity(0.62))
+                }
+            }
+            .toggleStyle(.switch)
+            .disabled(delaySelectionIsEmpty && !delayAppsEnabled)
+
+            Button { isDelayPickerPresented = true } label: {
+                Label(delaySelectionIsEmpty ? "Choose Apps to Delay" : "Edit Delay Apps", systemImage: "plus.app.fill")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 6)
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
-            Text("Note: this app-side delay is live now. A true custom shield button on the Instagram shield requires adding Apple’s Shield Action extension next.")
+            .familyActivityPicker(isPresented: $isDelayPickerPresented, selection: $delaySelection)
+            .onChange(of: delaySelection) { _, newValue in
+                updateDelaySelection(newValue)
+            }
+
+            Button { showingDelayMode = true } label: {
+                Label("Preview 30 second timer", systemImage: "timer")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+
+            Text("When you open one of these chosen apps, Apple’s shield appears. Tap the wait button, pause for 30 seconds, then continue intentionally.")
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.55))
+            #else
+            Text("Delay Apps uses Apple Screen Time app selection and is available in the iOS app target.")
+                .font(.subheadline)
+                .foregroundStyle(.white.opacity(0.72))
+            Button { showingDelayMode = true } label: {
+                Label("Preview 30 second timer", systemImage: "timer")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 6)
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+            #endif
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
         .glassCard(cornerRadius: 26)
     }
+
+
+    #if canImport(FamilyControls)
+    private var delaySelectionSummary: some View {
+        let config = DelayAppsConfiguration(
+            isEnabled: delayAppsEnabled,
+            appCount: delaySelection.applicationTokens.count,
+            categoryCount: delaySelection.categoryTokens.count,
+            webDomainCount: delaySelection.webDomainTokens.count
+        )
+
+        return HStack(spacing: 10) {
+            delayMetric(value: config.appCount, label: "Apps", icon: "app.fill")
+            delayMetric(value: config.categoryCount, label: "Categories", icon: "square.grid.2x2.fill")
+            delayMetric(value: config.webDomainCount, label: "Websites", icon: "globe")
+        }
+    }
+
+    private var delaySelectionIsEmpty: Bool {
+        delaySelection.applicationTokens.isEmpty && delaySelection.categoryTokens.isEmpty && delaySelection.webDomainTokens.isEmpty
+    }
+
+    private func setDelayAppsEnabled(_ isEnabled: Bool) {
+        delayAppsEnabled = isEnabled
+        do {
+            try ScheduleService.shared.setDelayAppsEnabled(isEnabled, selection: delaySelection)
+            message = isEnabled ? "Delay Apps is on. Chosen apps now pause for 30 seconds." : "Delay Apps is off. Your normal blocks were not changed."
+            #if canImport(UIKit)
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            #endif
+        } catch {
+            delayAppsEnabled = ShieldStorage.shared.loadDelayAppsEnabled()
+            message = error.localizedDescription
+        }
+    }
+
+    private func updateDelaySelection(_ selection: FamilyActivitySelection) {
+        do {
+            try ScheduleService.shared.updateDelayAppsSelection(selection)
+            message = "Delay Apps updated. Your block list was not changed."
+        } catch {
+            message = error.localizedDescription
+        }
+    }
+
+    private func delayMetric(value: Int, label: String, icon: String) -> some View {
+        VStack(spacing: 5) {
+            Image(systemName: icon)
+                .font(.headline)
+                .foregroundStyle(.cyan)
+            Text("\(value)")
+                .font(.title3.bold())
+                .foregroundStyle(.white)
+            Text(label)
+                .font(.caption2.weight(.semibold))
+                .foregroundStyle(.white.opacity(0.62))
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .background(.white.opacity(0.10), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).stroke(.white.opacity(0.14), lineWidth: 1))
+    }
+    #endif
 
     private var templatesCard: some View {
         VStack(alignment: .leading, spacing: 14) {

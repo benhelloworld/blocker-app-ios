@@ -277,6 +277,30 @@ public struct DelayModeConfiguration: Codable, Equatable, Sendable {
     )
 }
 
+
+public struct DelayAppsConfiguration: Codable, Equatable, Sendable {
+    public var isEnabled: Bool
+    public var appCount: Int
+    public var categoryCount: Int
+    public var webDomainCount: Int
+    public var waitSeconds: Int
+
+    public init(isEnabled: Bool = false, appCount: Int = 0, categoryCount: Int = 0, webDomainCount: Int = 0, waitSeconds: Int = DelayModeConfiguration.default.waitSeconds) {
+        self.isEnabled = isEnabled
+        self.appCount = max(0, appCount)
+        self.categoryCount = max(0, categoryCount)
+        self.webDomainCount = max(0, webDomainCount)
+        self.waitSeconds = max(1, waitSeconds)
+    }
+
+    public var totalSelectionCount: Int { appCount + categoryCount + webDomainCount }
+    public var hasSelection: Bool { totalSelectionCount > 0 }
+
+    public func clearedSelection() -> DelayAppsConfiguration {
+        DelayAppsConfiguration(isEnabled: isEnabled, waitSeconds: waitSeconds)
+    }
+}
+
 public enum FocusTemplate: String, CaseIterable, Codable, Equatable, Sendable {
     case work
     case sleep

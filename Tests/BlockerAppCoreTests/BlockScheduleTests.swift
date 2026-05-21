@@ -169,4 +169,28 @@ final class BlockScheduleTests: XCTestCase {
         XCTAssertTrue(suggestions.map(\.title).contains("Try a shorter 30 min block"))
     }
 
+
+    func testDelayAppsConfigurationIsIndependentFromBlockingSelection() throws {
+        let delayApps = DelayAppsConfiguration(isEnabled: true, appCount: 2, categoryCount: 1, webDomainCount: 0)
+        let blockSchedule = try BlockSchedule(startHour: 9, startMinute: 0, endHour: 17, endMinute: 0)
+        let immediateBlock = ImmediateBlockSession(durationMinutes: 60)
+
+        XCTAssertTrue(delayApps.isEnabled)
+        XCTAssertEqual(delayApps.totalSelectionCount, 3)
+        XCTAssertEqual(delayApps.waitSeconds, 30)
+        XCTAssertEqual(blockSchedule, try BlockSchedule(startHour: 9, startMinute: 0, endHour: 17, endMinute: 0))
+        XCTAssertEqual(immediateBlock.durationMinutes, 60)
+    }
+
+    func testDelayAppsConfigurationCanBeClearedWithoutTouchingBlockState() {
+        let enabled = DelayAppsConfiguration(isEnabled: true, appCount: 4, categoryCount: 2, webDomainCount: 1)
+        let cleared = enabled.clearedSelection()
+
+        XCTAssertEqual(enabled.totalSelectionCount, 7)
+        XCTAssertTrue(cleared.isEnabled)
+        XCTAssertEqual(cleared.totalSelectionCount, 0)
+        XCTAssertEqual(cleared.waitSeconds, 30)
+    }
+
+
 }

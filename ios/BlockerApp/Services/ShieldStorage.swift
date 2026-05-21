@@ -103,4 +103,42 @@ final class ShieldStorage {
         return selection
     }
     #endif
+
+    func saveDelayAppsEnabled(_ isEnabled: Bool) {
+        defaults?.set(isEnabled, forKey: SharedConfig.delayAppsEnabledKey)
+    }
+
+    func loadDelayAppsEnabled() -> Bool {
+        defaults?.bool(forKey: SharedConfig.delayAppsEnabledKey) ?? false
+    }
+
+    #if canImport(FamilyControls)
+    func saveDelaySelection(_ selection: FamilyActivitySelection) throws {
+        let data = try JSONEncoder().encode(selection)
+        defaults?.set(data, forKey: SharedConfig.delaySelectionKey)
+    }
+
+    func loadDelaySelection() -> FamilyActivitySelection {
+        guard let data = defaults?.data(forKey: SharedConfig.delaySelectionKey),
+              let selection = try? JSONDecoder().decode(FamilyActivitySelection.self, from: data) else {
+            return FamilyActivitySelection()
+        }
+        return selection
+    }
+
+    func loadDelayAppsConfiguration() -> DelayAppsConfiguration {
+        let selection = loadDelaySelection()
+        return DelayAppsConfiguration(
+            isEnabled: loadDelayAppsEnabled(),
+            appCount: selection.applicationTokens.count,
+            categoryCount: selection.categoryTokens.count,
+            webDomainCount: selection.webDomainTokens.count
+        )
+    }
+    #else
+    func loadDelayAppsConfiguration() -> DelayAppsConfiguration {
+        DelayAppsConfiguration(isEnabled: loadDelayAppsEnabled())
+    }
+    #endif
+
 }

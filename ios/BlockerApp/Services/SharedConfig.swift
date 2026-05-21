@@ -4,6 +4,8 @@ enum SharedConfig {
     static let appGroupIdentifier = "group.com.benberther.BlockerApp"
     static let scheduleKey = "blockSchedule"
     static let shieldSelectionKey = "shieldSelection"
+    static let delaySelectionKey = "delaySelection"
+    static let delayAppsEnabledKey = "delayAppsEnabled"
     static let activeImmediateSessionKey = "activeImmediateSession"
     static let focusStatsKey = "focusStats"
     static let frictionUnlockHistoryKey = "frictionUnlockHistory"
