@@ -271,8 +271,8 @@ public struct DelayModeConfiguration: Codable, Equatable, Sendable {
     public var message: String
 
     public static let `default` = DelayModeConfiguration(
-        waitSeconds: 30,
-        title: "Wait 30 seconds",
+        waitSeconds: 15,
+        title: "Wait 15 seconds",
         message: "If you still want it, continue."
     )
 }
@@ -412,6 +412,36 @@ public enum SmartSuggestionEngine {
     }
 }
 
+public struct DelayAppsPauseProgress: Equatable, Sendable {
+    public var waitSeconds: Int
+    public var remainingSeconds: Int
+    public var segments: Int
+
+    public init(waitSeconds: Int = DelayModeConfiguration.default.waitSeconds, remainingSeconds: Int, segments: Int = 10) {
+        self.waitSeconds = max(1, waitSeconds)
+        self.remainingSeconds = max(0, min(remainingSeconds, max(1, waitSeconds)))
+        self.segments = max(1, segments)
+    }
+
+    public var progressFraction: Double {
+        Double(remainingSeconds) / Double(waitSeconds)
+    }
+
+    public var filledSegments: Int {
+        Int(ceil(progressFraction * Double(segments)))
+    }
+
+    public var barText: String {
+        let filled = String(repeating: "█", count: filledSegments)
+        let empty = String(repeating: "░", count: segments - filledSegments)
+        return filled + empty
+    }
+
+    public var statusText: String {
+        remainingSeconds == 0 ? "Ready" : "\(remainingSeconds)s left"
+    }
+}
+
 
 public enum DelayAppsWaitDecision: Equatable {
     case startWaiting(unlockAt: Date)
@@ -422,7 +452,7 @@ public enum DelayAppsWaitDecision: Equatable {
 public struct DelayAppsWaitGate: Equatable {
     public var waitSeconds: Int
 
-    public init(waitSeconds: Int = 30) {
+    public init(waitSeconds: Int = 15) {
         self.waitSeconds = max(1, waitSeconds)
     }
 

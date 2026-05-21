@@ -8,7 +8,7 @@ final class ShieldActionExtension: ShieldActionDelegate {
     private let delaySelectionKey = "delaySelection"
     private let delayAppsEnabledKey = "delayAppsEnabled"
     private let delayWaitStartedAtKey = "delayAppsWaitStartedAt"
-    private let waitSeconds: TimeInterval = 30
+    private let waitSeconds: TimeInterval = 15
 
     override func handle(action: ShieldAction, for application: ApplicationToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
         handle(action: action, isDelayOnlyShield: isDelayOnlyShield(application: application), completionHandler: completionHandler)

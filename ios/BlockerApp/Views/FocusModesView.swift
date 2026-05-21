@@ -115,7 +115,7 @@ struct FocusModesView: View {
             }
             .buttonStyle(.bordered)
 
-            Text("When you open one of these chosen apps, Apple’s shield appears. Tap the wait button, pause for 30 seconds, then continue intentionally.")
+            Text("When you open one of these chosen apps, Apple’s shield appears. Tap the wait button, pause for 15 seconds, then continue intentionally.")
                 .font(.caption)
                 .foregroundStyle(.white.opacity(0.55))
             #else
@@ -162,7 +162,7 @@ struct FocusModesView: View {
         delayAppsEnabled = isEnabled
         do {
             try ScheduleService.shared.setDelayAppsEnabled(isEnabled, selection: delaySelection)
-            message = isEnabled ? "Delay Apps is on. Chosen apps now pause for 30 seconds." : "Delay Apps is off. Your normal blocks were not changed."
+            message = isEnabled ? "Delay Apps is on. Chosen apps now pause for 15 seconds." : "Delay Apps is off. Your normal blocks were not changed."
             #if canImport(UIKit)
             UINotificationFeedbackGenerator().notificationOccurred(.success)
             #endif

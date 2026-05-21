@@ -131,11 +131,11 @@ final class BlockScheduleTests: XCTestCase {
 
 
 
-    func testDelayModeUsesThirtySecondWaitAndCalmCopy() {
+    func testDelayModeUsesFifteenSecondWaitAndCalmCopy() {
         let delay = DelayModeConfiguration.default
 
-        XCTAssertEqual(delay.waitSeconds, 30)
-        XCTAssertEqual(delay.title, "Wait 30 seconds")
+        XCTAssertEqual(delay.waitSeconds, 15)
+        XCTAssertEqual(delay.title, "Wait 15 seconds")
         XCTAssertEqual(delay.message, "If you still want it, continue.")
     }
 
@@ -177,7 +177,7 @@ final class BlockScheduleTests: XCTestCase {
 
         XCTAssertTrue(delayApps.isEnabled)
         XCTAssertEqual(delayApps.totalSelectionCount, 3)
-        XCTAssertEqual(delayApps.waitSeconds, 30)
+        XCTAssertEqual(delayApps.waitSeconds, 15)
         XCTAssertEqual(blockSchedule, try BlockSchedule(startHour: 9, startMinute: 0, endHour: 17, endMinute: 0))
         XCTAssertEqual(immediateBlock.durationMinutes, 60)
     }
@@ -189,29 +189,42 @@ final class BlockScheduleTests: XCTestCase {
         XCTAssertEqual(enabled.totalSelectionCount, 7)
         XCTAssertTrue(cleared.isEnabled)
         XCTAssertEqual(cleared.totalSelectionCount, 0)
-        XCTAssertEqual(cleared.waitSeconds, 30)
+        XCTAssertEqual(cleared.waitSeconds, 15)
     }
 
 
 
     func testDelayAppsWaitGateStartsWaitInsteadOfBlockingCompletionThread() throws {
-        let gate = DelayAppsWaitGate(waitSeconds: 30)
+        let gate = DelayAppsWaitGate()
         let start = Date(timeIntervalSince1970: 1_000)
 
         let decision = gate.decision(now: start, waitStartedAt: nil)
 
-        XCTAssertEqual(decision, .startWaiting(unlockAt: start.addingTimeInterval(30)))
-        XCTAssertEqual(gate.remainingSeconds(now: start.addingTimeInterval(12), unlockAt: start.addingTimeInterval(30)), 18)
+        XCTAssertEqual(decision, .startWaiting(unlockAt: start.addingTimeInterval(15)))
+        XCTAssertEqual(gate.remainingSeconds(now: start.addingTimeInterval(12), unlockAt: start.addingTimeInterval(15)), 3)
     }
 
-    func testDelayAppsWaitGateAllowsOnlyAfterThirtySecondPause() throws {
-        let gate = DelayAppsWaitGate(waitSeconds: 30)
+    func testDelayAppsWaitGateAllowsOnlyAfterFifteenSecondPause() throws {
+        let gate = DelayAppsWaitGate()
         let start = Date(timeIntervalSince1970: 2_000)
-        let unlockAt = start.addingTimeInterval(30)
+        let unlockAt = start.addingTimeInterval(15)
 
-        XCTAssertEqual(gate.decision(now: start.addingTimeInterval(29), waitStartedAt: start), .keepWaiting(remainingSeconds: 1))
+        XCTAssertEqual(gate.decision(now: start.addingTimeInterval(14), waitStartedAt: start), .keepWaiting(remainingSeconds: 1))
         XCTAssertEqual(gate.decision(now: unlockAt, waitStartedAt: start), .allowAccess)
-        XCTAssertEqual(gate.decision(now: start.addingTimeInterval(45), waitStartedAt: start), .allowAccess)
+        XCTAssertEqual(gate.decision(now: start.addingTimeInterval(30), waitStartedAt: start), .allowAccess)
+    }
+
+
+    func testDelayAppsPauseProgressShowsDescendingBarAndRemainingSeconds() {
+        let full = DelayAppsPauseProgress(waitSeconds: 15, remainingSeconds: 15)
+        let mid = DelayAppsPauseProgress(waitSeconds: 15, remainingSeconds: 7)
+        let done = DelayAppsPauseProgress(waitSeconds: 15, remainingSeconds: 0)
+
+        XCTAssertEqual(full.barText, "██████████")
+        XCTAssertEqual(mid.barText, "█████░░░░░")
+        XCTAssertEqual(done.barText, "░░░░░░░░░░")
+        XCTAssertEqual(mid.statusText, "7s left")
+        XCTAssertEqual(done.statusText, "Ready")
     }
 
 }
