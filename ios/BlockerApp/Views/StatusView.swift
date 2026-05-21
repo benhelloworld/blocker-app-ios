@@ -13,6 +13,8 @@ struct StatusView: View {
     @State private var showingFrictionUnlock = false
     @State private var selectedQuickBlockMinutes = 60
     @State private var selectedQuickBlockPreset: QuickBlockPreset?
+    @State private var confirmationPreset: QuickBlockPreset?
+    @State private var showStartConfirmation = false
 
     var body: some View {
         NavigationStack {
@@ -32,6 +34,12 @@ struct StatusView: View {
                         authorizationCard
                     }
                     .padding()
+                }
+
+                if showStartConfirmation {
+                    startConfirmationOverlay
+                        .transition(.scale(scale: 0.92).combined(with: .opacity))
+                        .zIndex(2)
                 }
             }
             .navigationTitle("Status")
@@ -178,15 +186,23 @@ struct StatusView: View {
             }
 
             Button {
-                startQuickBlock(minutes: selectedQuickBlockMinutes)
+                startQuickBlock(minutes: selectedQuickBlockMinutes, preset: selectedQuickBlockPreset)
             } label: {
-                Label(QuickBlockPresetSelection(selectedMinutes: selectedQuickBlockMinutes).startButtonTitle, systemImage: "play.fill")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 6)
+                HStack(spacing: 10) {
+                    Image(systemName: selectedQuickBlockPreset?.systemImage ?? "play.fill")
+                    Text(QuickBlockPresetSelection(selectedMinutes: selectedQuickBlockMinutes).startButtonTitle)
+                }
+                .font(.headline)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 8)
             }
-            .buttonStyle(.borderedProminent)
-            .controlSize(.large)
+            .foregroundStyle(.black)
+            .background(.cyan, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(.white.opacity(0.28), lineWidth: 1)
+            )
+            .shadow(color: .cyan.opacity(0.25), radius: 18, y: 8)
             .disabled(isStartingQuickBlock)
 
             if let quickBlockMessage {
@@ -317,37 +333,105 @@ struct StatusView: View {
 
     private func quickPresetButton(_ preset: QuickBlockPreset) -> some View {
         let isSelected = selectedQuickBlockPreset == preset
+        let accent = presetAccentColor(preset)
 
         return Button {
-            selectedQuickBlockPreset = preset
-            selectedQuickBlockMinutes = preset.durationMinutes
+            withAnimation(.spring(response: 0.34, dampingFraction: 0.72)) {
+                selectedQuickBlockPreset = preset
+                selectedQuickBlockMinutes = preset.durationMinutes
+            }
             playSelectionHaptic()
         } label: {
-            VStack(alignment: .leading, spacing: 7) {
-                Image(systemName: preset.systemImage)
-                    .font(.headline)
-                    .foregroundStyle(isSelected ? .black : .cyan)
-                Text(preset.title)
-                    .font(.subheadline.weight(.semibold))
-                    .lineLimit(1)
-                Text(preset.subtitle)
-                    .font(.caption.weight(.medium))
-                    .foregroundStyle(isSelected ? .black.opacity(0.65) : .white.opacity(0.62))
+            VStack(alignment: .leading, spacing: 10) {
+                AnimatedPresetGlyph(preset: preset, isSelected: isSelected)
+                    .frame(width: 34, height: 34)
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(preset.title)
+                        .font(.subheadline.weight(.semibold))
+                        .lineLimit(1)
+                    Text(preset.subtitle)
+                        .font(.caption.weight(.medium))
+                        .foregroundStyle(isSelected ? .black.opacity(0.66) : .white.opacity(0.62))
+                }
             }
             .foregroundStyle(isSelected ? .black : .white)
-            .frame(width: 106, alignment: .leading)
-            .padding(12)
-            .background(isSelected ? .cyan : .white.opacity(0.10), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .stroke(isSelected ? .cyan.opacity(0.9) : .white.opacity(0.12), lineWidth: 1)
+            .frame(width: 118, alignment: .leading)
+            .padding(13)
+            .background(
+                ZStack {
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(isSelected ? accent : .white.opacity(0.09))
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(.linearGradient(colors: [.white.opacity(isSelected ? 0.30 : 0.10), .clear], startPoint: .topLeading, endPoint: .bottomTrailing))
+                }
             )
+            .overlay(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(isSelected ? .white.opacity(0.42) : .white.opacity(0.13), lineWidth: 1)
+            )
+            .shadow(color: isSelected ? accent.opacity(0.32) : .clear, radius: 18, y: 8)
+            .scaleEffect(isSelected ? 1.025 : 1)
         }
         .buttonStyle(.plain)
         .disabled(isStartingQuickBlock)
     }
 
-    private func startQuickBlock(minutes: Int) {
+    private var startConfirmationOverlay: some View {
+        let preset = confirmationPreset
+        let accent = preset.map(presetAccentColor) ?? .cyan
+        return ZStack {
+            Color.black.opacity(0.36)
+                .ignoresSafeArea()
+
+            VStack(spacing: 16) {
+                ZStack {
+                    Circle()
+                        .fill(accent.opacity(0.18))
+                        .frame(width: 98, height: 98)
+                    Circle()
+                        .stroke(accent.opacity(0.42), lineWidth: 1)
+                        .frame(width: 98, height: 98)
+                    AnimatedPresetGlyph(preset: preset ?? .quickReset, isSelected: true)
+                        .frame(width: 54, height: 54)
+                }
+
+                VStack(spacing: 6) {
+                    Text(preset?.confirmationTitle ?? "Focus started")
+                        .font(.title3.bold())
+                        .foregroundStyle(.white)
+                    Text(preset?.confirmationSubtitle ?? "Your selected block is active.")
+                        .font(.subheadline)
+                        .foregroundStyle(.white.opacity(0.70))
+                        .multilineTextAlignment(.center)
+                }
+            }
+            .padding(26)
+            .frame(maxWidth: 310)
+            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 30, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 30, style: .continuous)
+                    .stroke(.white.opacity(0.20), lineWidth: 1)
+            )
+            .padding()
+        }
+        .onTapGesture {
+            withAnimation(.easeOut(duration: 0.2)) {
+                showStartConfirmation = false
+            }
+        }
+    }
+
+    private func presetAccentColor(_ preset: QuickBlockPreset) -> Color {
+        switch preset {
+        case .quickReset: return .cyan
+        case .deepWork: return .indigo
+        case .study: return .orange
+        case .sleep: return .purple
+        }
+    }
+
+    private func startQuickBlock(minutes: Int, preset: QuickBlockPreset?) {
         isStartingQuickBlock = true
         defer { isStartingQuickBlock = false }
 
@@ -355,6 +439,15 @@ struct StatusView: View {
             let session = try ScheduleService.shared.startImmediateBlock(durationMinutes: minutes)
             activeSession = session
             quickBlockMessage = "Started a \(session.durationLabel) block."
+            confirmationPreset = preset
+            withAnimation(.spring(response: 0.42, dampingFraction: 0.78)) {
+                showStartConfirmation = true
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.55) {
+                withAnimation(.easeOut(duration: 0.28)) {
+                    showStartConfirmation = false
+                }
+            }
             playSuccessHaptic()
         } catch {
             quickBlockMessage = "Block failed: \(error.localizedDescription)"
@@ -402,6 +495,46 @@ struct StatusView: View {
         #if canImport(UIKit)
         UINotificationFeedbackGenerator().notificationOccurred(.success)
         #endif
+    }
+}
+
+
+private struct AnimatedPresetGlyph: View {
+    let preset: QuickBlockPreset
+    let isSelected: Bool
+
+    var body: some View {
+        TimelineView(.animation) { timeline in
+            let t = timeline.date.timeIntervalSinceReferenceDate
+            ZStack {
+                Circle()
+                    .fill((isSelected ? Color.black.opacity(0.08) : Color.white.opacity(0.10)))
+                icon(for: t)
+                    .font(.system(size: 18, weight: .bold))
+                    .foregroundStyle(isSelected ? .black : .white)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func icon(for time: TimeInterval) -> some View {
+        switch preset.motionCue {
+        case .spark:
+            Image(systemName: preset.systemImage)
+                .rotationEffect(.degrees(isSelected ? sin(time * 3.0) * 12 : 0))
+                .scaleEffect(isSelected ? 1 + sin(time * 5.0) * 0.06 : 1)
+        case .focusPulse:
+            Image(systemName: preset.systemImage)
+                .scaleEffect(isSelected ? 1 + sin(time * 2.2) * 0.045 : 1)
+                .opacity(isSelected ? 0.86 + cos(time * 2.2) * 0.14 : 1)
+        case .pageFlip:
+            Image(systemName: preset.systemImage)
+                .rotation3DEffect(.degrees(isSelected ? sin(time * 2.4) * 9 : 0), axis: (x: 0, y: 1, z: 0))
+        case .moonDrift:
+            Image(systemName: preset.systemImage)
+                .offset(y: isSelected ? sin(time * 1.4) * 2 : 0)
+                .rotationEffect(.degrees(isSelected ? sin(time * 1.1) * 4 : 0))
+        }
     }
 }
 

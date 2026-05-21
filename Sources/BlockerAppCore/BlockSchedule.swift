@@ -302,6 +302,13 @@ public struct DelayAppsConfiguration: Codable, Equatable, Sendable {
 }
 
 
+public enum QuickBlockPresetMotionCue: String, CaseIterable, Codable, Equatable, Sendable {
+    case spark
+    case focusPulse
+    case pageFlip
+    case moonDrift
+}
+
 public enum QuickBlockPreset: String, CaseIterable, Codable, Equatable, Sendable {
     case quickReset
     case deepWork
@@ -330,8 +337,8 @@ public enum QuickBlockPreset: String, CaseIterable, Codable, Equatable, Sendable
 
     public var systemImage: String {
         switch self {
-        case .quickReset: return "bolt.fill"
-        case .deepWork: return "brain.head.profile"
+        case .quickReset: return "arrow.clockwise"
+        case .deepWork: return "shield.lefthalf.filled"
         case .study: return "book.closed.fill"
         case .sleep: return "moon.stars.fill"
         }
@@ -349,6 +356,57 @@ public enum QuickBlockPreset: String, CaseIterable, Codable, Equatable, Sendable
     public var durationLabel: String {
         ImmediateBlockSession(durationMinutes: durationMinutes).durationLabel
     }
+
+    public var motionCue: QuickBlockPresetMotionCue {
+        switch self {
+        case .quickReset: return .spark
+        case .deepWork: return .focusPulse
+        case .study: return .pageFlip
+        case .sleep: return .moonDrift
+        }
+    }
+
+    public var accentName: String {
+        switch self {
+        case .quickReset: return "cyan"
+        case .deepWork: return "indigo"
+        case .study: return "amber"
+        case .sleep: return "violet"
+        }
+    }
+
+    public var confirmationTitle: String {
+        switch self {
+        case .quickReset: return "Quick Reset started"
+        case .deepWork: return "Deep Work started"
+        case .study: return "Study block started"
+        case .sleep: return "Sleep shield started"
+        }
+    }
+
+    public var confirmationSubtitle: String {
+        switch self {
+        case .quickReset: return "A clean 30-minute reset is active."
+        case .deepWork: return "Two hours protected for focused work."
+        case .study: return "Ninety minutes set aside for learning."
+        case .sleep: return "Eight hours protected for a calmer night."
+        }
+    }
+}
+
+public struct AppLaunchSlogan: Codable, Equatable, Sendable {
+    public var title: String
+    public var subtitle: String
+
+    public init(title: String, subtitle: String) {
+        self.title = title
+        self.subtitle = subtitle
+    }
+
+    public static let primary = AppLaunchSlogan(title: "You vs. you", subtitle: "Protect your attention before the scroll wins.")
+    public static let intention = AppLaunchSlogan(title: "Less impulse. More intention.", subtitle: "A calmer way back to focus.")
+    public static let attention = AppLaunchSlogan(title: "Choose your attention", subtitle: "Start small. Stay with it.")
+    public static var all: [AppLaunchSlogan] { [.primary, .intention, .attention] }
 }
 
 public struct QuickBlockPresetSelection: Codable, Equatable, Sendable {

@@ -156,6 +156,22 @@ final class BlockScheduleTests: XCTestCase {
         XCTAssertEqual(selection.selecting(.study).startButtonTitle, "Start 1.5 hours focus")
     }
 
+
+    func testQuickBlockPresetsHaveDistinctPremiumMotionCues() {
+        XCTAssertEqual(QuickBlockPreset.quickReset.motionCue, .spark)
+        XCTAssertEqual(QuickBlockPreset.deepWork.motionCue, .focusPulse)
+        XCTAssertEqual(QuickBlockPreset.study.motionCue, .pageFlip)
+        XCTAssertEqual(QuickBlockPreset.sleep.motionCue, .moonDrift)
+        XCTAssertEqual(Set(QuickBlockPreset.mainRow.map(\.accentName)).count, 4)
+        XCTAssertEqual(QuickBlockPreset.deepWork.confirmationTitle, "Deep Work started")
+    }
+
+    func testLaunchSplashUsesCalmPremiumSlogan() {
+        XCTAssertEqual(AppLaunchSlogan.primary.title, "You vs. you")
+        XCTAssertEqual(AppLaunchSlogan.primary.subtitle, "Protect your attention before the scroll wins.")
+        XCTAssertTrue(AppLaunchSlogan.all.contains(.primary))
+    }
+
     func testFocusTemplatesExposeTheRequestedPresets() {
         XCTAssertEqual(FocusTemplate.allPresets.map(\.name), ["Work Mode", "Sleep Mode", "Morning Mode", "Study Mode", "Gym Mode"])
         XCTAssertEqual(FocusTemplate.work.defaultDurationMinutes, 60)
