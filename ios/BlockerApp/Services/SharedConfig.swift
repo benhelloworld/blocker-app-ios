@@ -6,6 +6,7 @@ enum SharedConfig {
     static let shieldSelectionKey = "shieldSelection"
     static let delaySelectionKey = "delaySelection"
     static let delayAppsEnabledKey = "delayAppsEnabled"
+    static let delayWaitStartedAtKey = "delayAppsWaitStartedAt"
     static let activeImmediateSessionKey = "activeImmediateSession"
     static let focusStatsKey = "focusStats"
     static let frictionUnlockHistoryKey = "frictionUnlockHistory"

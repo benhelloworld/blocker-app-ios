@@ -193,4 +193,25 @@ final class BlockScheduleTests: XCTestCase {
     }
 
 
+
+    func testDelayAppsWaitGateStartsWaitInsteadOfBlockingCompletionThread() throws {
+        let gate = DelayAppsWaitGate(waitSeconds: 30)
+        let start = Date(timeIntervalSince1970: 1_000)
+
+        let decision = gate.decision(now: start, waitStartedAt: nil)
+
+        XCTAssertEqual(decision, .startWaiting(unlockAt: start.addingTimeInterval(30)))
+        XCTAssertEqual(gate.remainingSeconds(now: start.addingTimeInterval(12), unlockAt: start.addingTimeInterval(30)), 18)
+    }
+
+    func testDelayAppsWaitGateAllowsOnlyAfterThirtySecondPause() throws {
+        let gate = DelayAppsWaitGate(waitSeconds: 30)
+        let start = Date(timeIntervalSince1970: 2_000)
+        let unlockAt = start.addingTimeInterval(30)
+
+        XCTAssertEqual(gate.decision(now: start.addingTimeInterval(29), waitStartedAt: start), .keepWaiting(remainingSeconds: 1))
+        XCTAssertEqual(gate.decision(now: unlockAt, waitStartedAt: start), .allowAccess)
+        XCTAssertEqual(gate.decision(now: start.addingTimeInterval(45), waitStartedAt: start), .allowAccess)
+    }
+
 }

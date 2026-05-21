@@ -411,3 +411,35 @@ public enum SmartSuggestionEngine {
         return result
     }
 }
+
+
+public enum DelayAppsWaitDecision: Equatable {
+    case startWaiting(unlockAt: Date)
+    case keepWaiting(remainingSeconds: Int)
+    case allowAccess
+}
+
+public struct DelayAppsWaitGate: Equatable {
+    public var waitSeconds: Int
+
+    public init(waitSeconds: Int = 30) {
+        self.waitSeconds = max(1, waitSeconds)
+    }
+
+    public func decision(now: Date = Date(), waitStartedAt: Date?) -> DelayAppsWaitDecision {
+        guard let waitStartedAt else {
+            return .startWaiting(unlockAt: now.addingTimeInterval(TimeInterval(waitSeconds)))
+        }
+
+        let unlockAt = waitStartedAt.addingTimeInterval(TimeInterval(waitSeconds))
+        let remaining = remainingSeconds(now: now, unlockAt: unlockAt)
+        if remaining <= 0 {
+            return .allowAccess
+        }
+        return .keepWaiting(remainingSeconds: remaining)
+    }
+
+    public func remainingSeconds(now: Date = Date(), unlockAt: Date) -> Int {
+        max(0, Int(ceil(unlockAt.timeIntervalSince(now))))
+    }
+}
