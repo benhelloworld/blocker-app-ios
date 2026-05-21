@@ -301,6 +301,76 @@ public struct DelayAppsConfiguration: Codable, Equatable, Sendable {
     }
 }
 
+
+public enum QuickBlockPreset: String, CaseIterable, Codable, Equatable, Sendable {
+    case quickReset
+    case deepWork
+    case study
+    case sleep
+
+    public static var mainRow: [QuickBlockPreset] { [.quickReset, .deepWork, .study, .sleep] }
+
+    public var title: String {
+        switch self {
+        case .quickReset: return "Quick Reset"
+        case .deepWork: return "Deep Work"
+        case .study: return "Study"
+        case .sleep: return "Sleep"
+        }
+    }
+
+    public var subtitle: String {
+        switch self {
+        case .quickReset: return "30m"
+        case .deepWork: return "2h"
+        case .study: return "90m"
+        case .sleep: return "8h"
+        }
+    }
+
+    public var systemImage: String {
+        switch self {
+        case .quickReset: return "bolt.fill"
+        case .deepWork: return "brain.head.profile"
+        case .study: return "book.closed.fill"
+        case .sleep: return "moon.stars.fill"
+        }
+    }
+
+    public var durationMinutes: Int {
+        switch self {
+        case .quickReset: return 30
+        case .deepWork: return 120
+        case .study: return 90
+        case .sleep: return 480
+        }
+    }
+
+    public var durationLabel: String {
+        ImmediateBlockSession(durationMinutes: durationMinutes).durationLabel
+    }
+}
+
+public struct QuickBlockPresetSelection: Codable, Equatable, Sendable {
+    public var selectedMinutes: Int
+
+    public init(selectedMinutes: Int = 60) {
+        self.selectedMinutes = max(1, selectedMinutes)
+    }
+
+    public func selecting(_ preset: QuickBlockPreset) -> QuickBlockPresetSelection {
+        QuickBlockPresetSelection(selectedMinutes: preset.durationMinutes)
+    }
+
+    public var durationLabel: String {
+        ImmediateBlockSession(durationMinutes: selectedMinutes).durationLabel
+    }
+
+    public var startButtonTitle: String {
+        "Start \(durationLabel) focus"
+    }
+}
+
 public enum FocusTemplate: String, CaseIterable, Codable, Equatable, Sendable {
     case work
     case sleep

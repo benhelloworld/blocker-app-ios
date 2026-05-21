@@ -139,6 +139,23 @@ final class BlockScheduleTests: XCTestCase {
         XCTAssertEqual(delay.message, "If you still want it, continue.")
     }
 
+
+    func testQuickBlockPresetsOfferFourCompactDurations() {
+        XCTAssertEqual(QuickBlockPreset.mainRow.map(\.title), ["Quick Reset", "Deep Work", "Study", "Sleep"])
+        XCTAssertEqual(QuickBlockPreset.mainRow.map(\.durationMinutes), [30, 120, 90, 480])
+        XCTAssertEqual(QuickBlockPreset.study.durationLabel, "1.5 hours")
+        XCTAssertEqual(QuickBlockPreset.sleep.subtitle, "8h")
+    }
+
+    func testQuickBlockPresetSelectionKeepsStartAsASeparateConfirmation() {
+        let selection = QuickBlockPresetSelection()
+
+        XCTAssertEqual(selection.selectedMinutes, 60)
+        XCTAssertEqual(selection.startButtonTitle, "Start 1 hour focus")
+        XCTAssertEqual(selection.selecting(.study).selectedMinutes, 90)
+        XCTAssertEqual(selection.selecting(.study).startButtonTitle, "Start 1.5 hours focus")
+    }
+
     func testFocusTemplatesExposeTheRequestedPresets() {
         XCTAssertEqual(FocusTemplate.allPresets.map(\.name), ["Work Mode", "Sleep Mode", "Morning Mode", "Study Mode", "Gym Mode"])
         XCTAssertEqual(FocusTemplate.work.defaultDurationMinutes, 60)

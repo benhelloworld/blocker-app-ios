@@ -11,8 +11,8 @@ struct StatusView: View {
     @State private var customHours = 0.5
     @State private var showingCustomDuration = false
     @State private var showingFrictionUnlock = false
-
-    private let quickDurations = [30, 60, 120]
+    @State private var selectedQuickBlockMinutes = 60
+    @State private var selectedQuickBlockPreset: QuickBlockPreset?
 
     var body: some View {
         NavigationStack {
@@ -144,31 +144,43 @@ struct StatusView: View {
             Text("Uses the apps and websites from your Apps tab. Pick a preset or set your own duration.")
                 .foregroundStyle(.white.opacity(0.68))
 
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 96), spacing: 12)], spacing: 12) {
-                ForEach(quickDurations, id: \.self) { minutes in
-                    quickDurationButton(minutes: minutes)
-                }
+            VStack(alignment: .leading, spacing: 10) {
+                Text("Presets")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.white.opacity(0.62))
+                    .textCase(.uppercase)
 
-                Button {
-                    showingCustomDuration = true
-                } label: {
-                    VStack(spacing: 4) {
-                        Text("Custom")
-                            .font(.headline)
-                        Text("duration")
-                            .font(.caption)
-                            .foregroundStyle(.white.opacity(0.6))
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 10) {
+                        ForEach(QuickBlockPreset.mainRow, id: \.self) { preset in
+                            quickPresetButton(preset)
+                        }
+
+                        Button {
+                            showingCustomDuration = true
+                        } label: {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Image(systemName: "slider.horizontal.3")
+                                    .font(.headline)
+                                Text("Custom")
+                                    .font(.subheadline.weight(.semibold))
+                                Text(durationTitle(selectedQuickBlockMinutes))
+                                    .font(.caption)
+                                    .foregroundStyle(.white.opacity(0.62))
+                            }
+                            .frame(width: 106, alignment: .leading)
+                            .padding(12)
+                        }
+                        .buttonStyle(GlassButtonStyle())
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 14)
+                    .padding(.vertical, 2)
                 }
-                .buttonStyle(GlassButtonStyle())
             }
 
             Button {
-                startQuickBlock(minutes: 60)
+                startQuickBlock(minutes: selectedQuickBlockMinutes)
             } label: {
-                Label("Start 1 hour focus", systemImage: "play.fill")
+                Label(QuickBlockPresetSelection(selectedMinutes: selectedQuickBlockMinutes).startButtonTitle, systemImage: "play.fill")
                     .font(.headline)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 6)
@@ -258,10 +270,11 @@ struct StatusView: View {
                 .foregroundStyle(.secondary)
 
                 Button {
-                    startQuickBlock(minutes: Int(customHours * 60))
+                    selectedQuickBlockMinutes = Int(customHours * 60)
+                    selectedQuickBlockPreset = nil
                     showingCustomDuration = false
                 } label: {
-                    Label("Start custom block", systemImage: "play.fill")
+                    Label("Use this duration", systemImage: "checkmark")
                         .frame(maxWidth: .infinity)
                 }
                 .buttonStyle(.borderedProminent)
@@ -302,21 +315,35 @@ struct StatusView: View {
             .background(.white.opacity(0.12), in: Capsule())
     }
 
-    private func quickDurationButton(minutes: Int) -> some View {
-        Button {
-            startQuickBlock(minutes: minutes)
+    private func quickPresetButton(_ preset: QuickBlockPreset) -> some View {
+        let isSelected = selectedQuickBlockPreset == preset
+
+        return Button {
+            selectedQuickBlockPreset = preset
+            selectedQuickBlockMinutes = preset.durationMinutes
+            playSelectionHaptic()
         } label: {
-            VStack(spacing: 4) {
-                Text(durationTitle(minutes))
+            VStack(alignment: .leading, spacing: 7) {
+                Image(systemName: preset.systemImage)
                     .font(.headline)
-                Text("focus")
-                    .font(.caption)
-                    .foregroundStyle(.white.opacity(0.6))
+                    .foregroundStyle(isSelected ? .black : .cyan)
+                Text(preset.title)
+                    .font(.subheadline.weight(.semibold))
+                    .lineLimit(1)
+                Text(preset.subtitle)
+                    .font(.caption.weight(.medium))
+                    .foregroundStyle(isSelected ? .black.opacity(0.65) : .white.opacity(0.62))
             }
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 14)
+            .foregroundStyle(isSelected ? .black : .white)
+            .frame(width: 106, alignment: .leading)
+            .padding(12)
+            .background(isSelected ? .cyan : .white.opacity(0.10), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .stroke(isSelected ? .cyan.opacity(0.9) : .white.opacity(0.12), lineWidth: 1)
+            )
         }
-        .buttonStyle(GlassButtonStyle())
+        .buttonStyle(.plain)
         .disabled(isStartingQuickBlock)
     }
 
@@ -363,6 +390,12 @@ struct StatusView: View {
 
     private func durationTitle(_ minutes: Int) -> String {
         ImmediateBlockSession(durationMinutes: minutes).durationLabel
+    }
+
+    private func playSelectionHaptic() {
+        #if canImport(UIKit)
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        #endif
     }
 
     private func playSuccessHaptic() {
