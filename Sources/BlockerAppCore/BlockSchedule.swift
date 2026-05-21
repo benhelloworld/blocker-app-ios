@@ -165,3 +165,225 @@ public struct ImmediateBlockSession: Codable, Equatable, Sendable {
         return formatter.string(from: end)
     }
 }
+
+
+public struct FocusStats: Codable, Equatable, Sendable {
+    public var totalSessions: Int
+    public var totalPlannedMinutes: Int
+    public var focusDayStamps: Set<String>
+    public var lastSessionStart: Date?
+
+    public init(totalSessions: Int = 0, totalPlannedMinutes: Int = 0, focusDayStamps: Set<String> = [], lastSessionStart: Date? = nil) {
+        self.totalSessions = totalSessions
+        self.totalPlannedMinutes = totalPlannedMinutes
+        self.focusDayStamps = focusDayStamps
+        self.lastSessionStart = lastSessionStart
+    }
+
+    public var focusDayCount: Int { focusDayStamps.count }
+
+    public var totalHoursLabel: String {
+        guard totalPlannedMinutes > 0 else { return "0h" }
+        let hours = Double(totalPlannedMinutes) / 60.0
+        if totalPlannedMinutes % 60 == 0 {
+            return "\(Int(hours))h"
+        }
+        return "\(hours.formatted(.number.precision(.fractionLength(1))))h"
+    }
+
+    public mutating func record(session: ImmediateBlockSession, calendar: Calendar = .current) {
+        totalSessions += 1
+        totalPlannedMinutes += session.durationMinutes
+        lastSessionStart = session.start
+        focusDayStamps.insert(Self.dayStamp(for: session.start, calendar: calendar))
+    }
+
+    public func currentStreakDays(asOf date: Date = Date(), calendar: Calendar = .current) -> Int {
+        var streak = 0
+        var cursor = calendar.startOfDay(for: date)
+        while focusDayStamps.contains(Self.dayStamp(for: cursor, calendar: calendar)) {
+            streak += 1
+            guard let previousDay = calendar.date(byAdding: .day, value: -1, to: cursor) else { break }
+            cursor = previousDay
+        }
+        return streak
+    }
+
+    private static func dayStamp(for date: Date, calendar: Calendar) -> String {
+        let components = calendar.dateComponents([.year, .month, .day], from: date)
+        let year = components.year ?? 0
+        let month = components.month ?? 0
+        let day = components.day ?? 0
+        return String(format: "%04d-%02d-%02d", year, month, day)
+    }
+}
+
+
+public enum FrictionUnlockReason: String, CaseIterable, Codable, Equatable, Sendable {
+    case bored
+    case stressed
+    case tired
+    case habit
+    case needSomethingImportant
+    case other
+
+    public static var allOptions: [FrictionUnlockReason] { allCases }
+
+    public var title: String {
+        switch self {
+        case .bored: return "Bored"
+        case .stressed: return "Stressed"
+        case .tired: return "Tired"
+        case .habit: return "Habit"
+        case .needSomethingImportant: return "Need something important"
+        case .other: return "Other"
+        }
+    }
+}
+
+public struct FrictionUnlockReflection: Codable, Equatable, Sendable {
+    public var blockReason: String
+    public var stopReason: FrictionUnlockReason?
+    public var otherStopReason: String
+    public var completedAt: Date
+
+    public init(blockReason: String, stopReason: FrictionUnlockReason? = nil, otherStopReason: String = "", completedAt: Date = Date()) {
+        self.blockReason = blockReason
+        self.stopReason = stopReason
+        self.otherStopReason = otherStopReason
+        self.completedAt = completedAt
+    }
+
+    public var isComplete: Bool {
+        let hasBlockReason = !blockReason.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        guard hasBlockReason, let stopReason else { return false }
+        if stopReason == .other {
+            return !otherStopReason.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }
+        return true
+    }
+}
+
+
+public struct DelayModeConfiguration: Codable, Equatable, Sendable {
+    public var waitSeconds: Int
+    public var title: String
+    public var message: String
+
+    public static let `default` = DelayModeConfiguration(
+        waitSeconds: 30,
+        title: "Wait 30 seconds",
+        message: "If you still want it, continue."
+    )
+}
+
+public enum FocusTemplate: String, CaseIterable, Codable, Equatable, Sendable {
+    case work
+    case sleep
+    case morning
+    case study
+    case gym
+
+    public static var allPresets: [FocusTemplate] { [.work, .sleep, .morning, .study, .gym] }
+
+    public var name: String {
+        switch self {
+        case .work: return "Work Mode"
+        case .sleep: return "Sleep Mode"
+        case .morning: return "Morning Mode"
+        case .study: return "Study Mode"
+        case .gym: return "Gym Mode"
+        }
+    }
+
+    public var blockingIntent: String {
+        switch self {
+        case .work: return "Blocks social + entertainment."
+        case .sleep: return "Blocks everything except essentials."
+        case .morning: return "Blocks social/news until 10 AM."
+        case .study: return "Blocks social + YouTube."
+        case .gym: return "Blocks social, keeps music apps."
+        }
+    }
+
+    public var defaultDurationMinutes: Int {
+        switch self {
+        case .work: return 60
+        case .sleep: return 480
+        case .morning: return 120
+        case .study: return 90
+        case .gym: return 75
+        }
+    }
+
+    public var scheduleHint: String? {
+        switch self {
+        case .morning: return "Until 10 AM"
+        case .work: return "Weekdays 9–12"
+        case .sleep: return "Nightly wind down"
+        default: return nil
+        }
+    }
+}
+
+public struct AccountabilityReceipt: Codable, Equatable, Sendable {
+    public var protectedMinutes: Int
+    public var completedAt: Date
+    public var lines: [String]
+
+    public init(protectedMinutes: Int, completedAt: Date = Date(), lines: [String] = ["Apps stayed blocked.", "Commitment kept."]) {
+        self.protectedMinutes = max(1, protectedMinutes)
+        self.completedAt = completedAt
+        self.lines = lines
+    }
+
+    public var headline: String {
+        if protectedMinutes % 60 == 0 {
+            let hours = protectedMinutes / 60
+            return "You protected \(hours == 1 ? "1 hour" : "\(hours) hours")."
+        }
+        return "You protected \(protectedMinutes) minutes."
+    }
+}
+
+public struct SmartSuggestion: Codable, Equatable, Identifiable, Sendable {
+    public var id: String { title }
+    public var title: String
+    public var message: String
+    public var template: FocusTemplate?
+
+    public init(title: String, message: String, template: FocusTemplate? = nil) {
+        self.title = title
+        self.message = message
+        self.template = template
+    }
+}
+
+public enum SmartSuggestionEngine {
+    public static func suggestions(stats: FocusStats, frictionUnlocks: [FrictionUnlockReflection], calendar: Calendar = .current) -> [SmartSuggestion] {
+        var result: [SmartSuggestion] = []
+
+        if let last = stats.lastSessionStart,
+           (calendar.component(.hour, from: last) >= 21 || calendar.component(.hour, from: last) <= 4) {
+            result.append(SmartSuggestion(title: "Try a Sleep Block preset", message: "You often start quick blocks at night. Want a calmer wind-down preset?", template: .sleep))
+        }
+
+        if stats.totalSessions >= 3 {
+            result.append(SmartSuggestion(title: "Schedule a Work Block", message: "You completed 3 work blocks this week. Want to schedule weekdays 9–12?", template: .work))
+        }
+
+        let lateEarlyStops = frictionUnlocks.filter { reflection in
+            let hour = calendar.component(.hour, from: reflection.completedAt)
+            return hour >= 22 || hour <= 4
+        }
+        if lateEarlyStops.count >= 2 {
+            result.append(SmartSuggestion(title: "Try a shorter 30 min block", message: "You stopped early twice after 22:00. A shorter block may fit better tonight.", template: nil))
+        }
+
+        if result.isEmpty {
+            result.append(SmartSuggestion(title: "Protect your next session", message: "Start with a small 30 minute block and keep it easy to complete.", template: nil))
+        }
+
+        return result
+    }
+}

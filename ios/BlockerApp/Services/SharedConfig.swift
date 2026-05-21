@@ -5,6 +5,9 @@ enum SharedConfig {
     static let scheduleKey = "blockSchedule"
     static let shieldSelectionKey = "shieldSelection"
     static let activeImmediateSessionKey = "activeImmediateSession"
+    static let focusStatsKey = "focusStats"
+    static let frictionUnlockHistoryKey = "frictionUnlockHistory"
+    static let lastAccountabilityReceiptKey = "lastAccountabilityReceipt"
     static let activityName = "daily-block"
     static let immediateActivityName = "immediate-block"
 

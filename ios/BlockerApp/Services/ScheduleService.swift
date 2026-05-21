@@ -30,6 +30,9 @@ final class ScheduleService {
         let session = ImmediateBlockSession(start: start, durationMinutes: durationMinutes, calendar: calendar)
 
         try ShieldStorage.shared.saveActiveImmediateSession(session)
+        var stats = ShieldStorage.shared.loadFocusStats()
+        stats.record(session: session, calendar: calendar)
+        try ShieldStorage.shared.saveFocusStats(stats)
 
         #if canImport(DeviceActivity)
         let center = DeviceActivityCenter()

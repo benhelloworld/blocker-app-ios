@@ -11,6 +11,12 @@ struct RootView: View {
 
             ScheduleView()
                 .tabItem { Label("Schedule", systemImage: "calendar") }
+
+            FocusProgressView()
+                .tabItem { Label("Progress", systemImage: "chart.line.uptrend.xyaxis") }
+
+            FocusModesView()
+                .tabItem { Label("Modes", systemImage: "sparkles") }
         }
     }
 }

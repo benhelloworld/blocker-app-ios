@@ -8,8 +8,9 @@ struct StatusView: View {
     @State private var activeSession = ShieldStorage.shared.loadActiveImmediateSession()
     @State private var quickBlockMessage: String?
     @State private var isStartingQuickBlock = false
-    @State private var customHours = 1.0
+    @State private var customHours = 0.5
     @State private var showingCustomDuration = false
+    @State private var showingFrictionUnlock = false
 
     private let quickDurations = [30, 60, 120]
 
@@ -37,6 +38,9 @@ struct StatusView: View {
             .toolbarColorScheme(.dark, for: .navigationBar)
             .sheet(isPresented: $showingCustomDuration) {
                 customDurationSheet
+            }
+            .sheet(isPresented: $showingFrictionUnlock) {
+                frictionUnlockSheet
             }
         }
         .tint(.cyan)
@@ -74,7 +78,11 @@ struct StatusView: View {
             }
         }
         .padding(22)
-        .background(cardBackground)
+        .background(cardBackground, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.14), lineWidth: 1)
+        )
     }
 
     private var activeSessionCard: some View {
@@ -107,9 +115,9 @@ struct StatusView: View {
                     }
 
                     Button(role: .destructive) {
-                        stopQuickBlock()
+                        showingFrictionUnlock = true
                     } label: {
-                        Label("Stop quick block", systemImage: "xmark.circle.fill")
+                        Label("Stop with friction unlock", systemImage: "lock.open.trianglebadge.exclamationmark")
                             .frame(maxWidth: .infinity)
                     }
                     .buttonStyle(.bordered)
@@ -119,7 +127,11 @@ struct StatusView: View {
                 }
             }
             .padding(20)
-            .background(cardBackground)
+            .background(cardBackground, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.14), lineWidth: 1)
+        )
         }
     }
 
@@ -173,7 +185,11 @@ struct StatusView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
-        .background(cardBackground)
+        .background(cardBackground, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.14), lineWidth: 1)
+        )
     }
 
     private var authorizationCard: some View {
@@ -200,7 +216,20 @@ struct StatusView: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(20)
-        .background(cardBackground)
+        .background(cardBackground, in: RoundedRectangle(cornerRadius: 26, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                .stroke(.white.opacity(0.14), lineWidth: 1)
+        )
+    }
+
+    private var frictionUnlockSheet: some View {
+        FrictionUnlockView(
+            onCancel: { showingFrictionUnlock = false },
+            onComplete: { reflection in
+                completeFrictionUnlock(reflection)
+            }
+        )
     }
 
     private var customDurationSheet: some View {
@@ -217,7 +246,16 @@ struct StatusView: View {
                 Text(customDurationLabel)
                     .font(.system(size: 44, weight: .bold, design: .rounded))
 
-                Slider(value: $customHours, in: 0.5...8, step: 0.5)
+                Slider(value: $customHours, in: 0.5...24, step: 0.5)
+                HStack {
+                    Text("30 min")
+                    Spacer()
+                    Text("30 min – 24 hours")
+                    Spacer()
+                    Text("24h")
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
 
                 Button {
                     startQuickBlock(minutes: Int(customHours * 60))
@@ -297,9 +335,23 @@ struct StatusView: View {
     }
 
     private func stopQuickBlock() {
+        saveReceiptForStoppedSession()
         ScheduleService.shared.stopImmediateBlock()
         activeSession = nil
         quickBlockMessage = "Quick block stopped."
+    }
+
+    private func saveReceiptForStoppedSession() {
+        guard let session = activeSession ?? ShieldStorage.shared.loadActiveImmediateSession() else { return }
+        let elapsedMinutes = max(1, min(session.durationMinutes, Int(Date().timeIntervalSince(session.start) / 60)))
+        try? ShieldStorage.shared.saveAccountabilityReceipt(AccountabilityReceipt(protectedMinutes: elapsedMinutes))
+    }
+
+    private func completeFrictionUnlock(_ reflection: FrictionUnlockReflection) {
+        try? ShieldStorage.shared.recordFrictionUnlock(reflection)
+        showingFrictionUnlock = false
+        stopQuickBlock()
+        quickBlockMessage = "Quick block stopped after reflection."
     }
 
     private func refreshedSession(now: Date) -> ImmediateBlockSession? {
