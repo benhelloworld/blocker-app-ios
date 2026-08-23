@@ -1,37 +1,47 @@
-# Blocker App iOS
+# AntiScroll
 
-Starter repo for an iOS app/website blocker using Apple's Screen Time APIs.
+AntiScroll is an iOS app and Mac companion for intentional app and website blocking. The iOS app uses Apple’s FamilyControls, ManagedSettings, and DeviceActivity frameworks.
 
-Important: Hermes can write the code and push to GitHub from the VPS, but final build/run/signing must happen on a Mac with Xcode and a real iPhone for Screen Time APIs.
+## Canonical source of truth
 
-## What this repo contains
+A clone of this repository is the complete source of truth. Open `BlockerApp.xcodeproj` from that same clone; do not create or maintain a second copied Swift/Xcode tree. If a historical path is needed, make it a symlink to the clone.
 
-- Swift package with testable shared scheduling logic
-- SwiftUI app starter files
-- Device Activity Monitor extension starter files
-- Xcode setup instructions
-- App Store/privacy drafts
+- Xcode project: `BlockerApp.xcodeproj`
+- iOS app: `BlockerApp/BlockerApp/`
+- Screen Time extensions: `BlockerMonitorExtension/`, `BlockerShieldActionExtension/`, `BlockerShieldConfigurationExtension/`, and `BlockerAppReportExtension/`
+- iOS tests: `BlockerAppTests/` and `BlockerAppUITests/`
+- Mac companion package: `Package.swift`, `Sources/`, and `Tests/`
 
-## Apple frameworks planned
+The compatibility Desktop path used on the primary development Mac points to this repository. It is a symlink, never a second editable copy.
 
-- FamilyControls
-- ManagedSettings
-- DeviceActivity
-- SwiftUI
-- App Groups
+## Build and test
 
-## Quick start on your Mac
+```bash
+xcodebuild build \
+  -project BlockerApp.xcodeproj \
+  -scheme BlockerApp \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+  CODE_SIGNING_ALLOWED=NO
 
-Read `EASIEST_START.md` first.
+xcodebuild test \
+  -project BlockerApp.xcodeproj \
+  -scheme BlockerApp \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 
-## Current MVP scope
+swift test
+```
 
-1. Ask permission for Family Controls.
-2. Let user select apps/websites to block.
-3. Create a daily blocking schedule.
-4. Enforce selected shields during the scheduled interval.
-5. Store schedule and shield selection through an App Group so the main app and extension share state.
+FamilyControls and real Screen Time shield behavior require a signed build on a physical iPhone; simulator success does not replace real-device verification.
 
-## Safety/marketing language
+## Git workflow
 
-Avoid saying "impossible to bypass" in App Store copy. Use safer wording like "harder to bypass", "commitment-focused", and "built with Apple's Screen Time framework".
+1. Start from a clean `main` branch.
+2. Create one branch per change.
+3. Keep changes scoped and review the diff.
+4. Build and run targeted tests before committing.
+5. Validate every edited `Localizable.strings` file.
+6. Push, upload, submit, or change external accounts only with Ben’s approval.
+
+## Product safety language
+
+Do not claim AntiScroll is “impossible to bypass.” Prefer truthful language such as “harder to bypass,” “commitment-focused,” and “built with Apple’s Screen Time framework.”

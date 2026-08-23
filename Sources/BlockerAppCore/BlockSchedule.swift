@@ -167,6 +167,18 @@ public struct ImmediateBlockSession: Codable, Equatable, Sendable {
 }
 
 
+public struct QuickBlockStartGuard: Equatable, Sendable {
+    public static func canStartNewBlock(existing: ImmediateBlockSession?, now: Date = Date()) -> Bool {
+        guard let existing else { return true }
+        return !existing.isActive(at: now)
+    }
+
+    public static func activeBlockMessage(existing: ImmediateBlockSession, now: Date = Date()) -> String {
+        "Focus already active — \(existing.remainingMinutes(at: now)) min left."
+    }
+}
+
+
 public struct FocusStats: Codable, Equatable, Sendable {
     public var totalSessions: Int
     public var totalPlannedMinutes: Int
@@ -192,8 +204,16 @@ public struct FocusStats: Codable, Equatable, Sendable {
     }
 
     public mutating func record(session: ImmediateBlockSession, calendar: Calendar = .current) {
+        recordCompleted(session: session, completedAt: session.end, calendar: calendar)
+    }
+
+    public mutating func recordCompleted(session: ImmediateBlockSession, completedAt: Date = Date(), calendar: Calendar = .current) {
+        let elapsedSeconds = completedAt.timeIntervalSince(session.start)
+        let elapsedMinutes = max(0, min(session.durationMinutes, Int(floor(elapsedSeconds / 60))))
+        guard elapsedMinutes > 0 else { return }
+
         totalSessions += 1
-        totalPlannedMinutes += session.durationMinutes
+        totalPlannedMinutes += elapsedMinutes
         lastSessionStart = session.start
         focusDayStamps.insert(Self.dayStamp(for: session.start, calendar: calendar))
     }
@@ -302,6 +322,22 @@ public struct DelayAppsConfiguration: Codable, Equatable, Sendable {
 }
 
 
+
+public struct PremiumAccessPolicy: Codable, Equatable, Sendable {
+    public static let premiumProductID = "com.benberther.BlockerApp.premium"
+    public static let maxFreeQuickBlockMinutes = 120
+
+    public init() {}
+
+    public static func canStartQuickBlock(durationMinutes: Int, isPremium: Bool) -> Bool {
+        isPremium || durationMinutes <= maxFreeQuickBlockMinutes
+    }
+
+    public static func requiresPremiumForQuickBlock(durationMinutes: Int) -> Bool {
+        durationMinutes > maxFreeQuickBlockMinutes
+    }
+}
+
 public enum QuickBlockPresetMotionCue: String, CaseIterable, Codable, Equatable, Sendable {
     case spark
     case focusPulse
@@ -357,6 +393,15 @@ public enum QuickBlockPreset: String, CaseIterable, Codable, Equatable, Sendable
         ImmediateBlockSession(durationMinutes: durationMinutes).durationLabel
     }
 
+    public var onePhraseExplanation: String {
+        switch self {
+        case .quickReset: return "Short reset"
+        case .deepWork: return "Serious focus"
+        case .study: return "Study session"
+        case .sleep: return "Sleep shield"
+        }
+    }
+
     public var motionCue: QuickBlockPresetMotionCue {
         switch self {
         case .quickReset: return .spark
@@ -368,9 +413,9 @@ public enum QuickBlockPreset: String, CaseIterable, Codable, Equatable, Sendable
 
     public var accentName: String {
         switch self {
-        case .quickReset: return "cyan"
+        case .quickReset: return "teal"
         case .deepWork: return "indigo"
-        case .study: return "amber"
+        case .study: return "blue"
         case .sleep: return "violet"
         }
     }
@@ -538,6 +583,115 @@ public enum SmartSuggestionEngine {
 
         return result
     }
+}
+
+
+public struct CoreFlowStep: Codable, Equatable, Identifiable, Sendable {
+    public var id: String { tabName }
+    public var tabName: String
+    public var title: String
+    public var message: String
+    public var systemImage: String
+    public var accentName: String
+
+    public init(tabName: String, title: String, message: String, systemImage: String, accentName: String) {
+        self.tabName = tabName
+        self.title = title
+        self.message = message
+        self.systemImage = systemImage
+        self.accentName = accentName
+    }
+
+    public static let status = CoreFlowStep(
+        tabName: "Status",
+        title: "Start a Quick Block",
+        message: "Choose apps and websites here, then start protection immediately.",
+        systemImage: "bolt.fill",
+        accentName: "gold"
+    )
+
+    public static let schedule = CoreFlowStep(
+        tabName: "Schedule",
+        title: "Automate your routine",
+        message: "Create recurring blocks for work, study, sleep, or mornings.",
+        systemImage: "calendar",
+        accentName: "orange"
+    )
+
+    public static let modes = CoreFlowStep(
+        tabName: "Modes",
+        title: "Add friction",
+        message: "Use templates and delay apps when you need a softer nudge.",
+        systemImage: "sparkles",
+        accentName: "purple"
+    )
+
+    public static let progress = CoreFlowStep(
+        tabName: "Progress",
+        title: "See proof",
+        message: "Check protected minutes, completed blocks, and streaks.",
+        systemImage: "chart.line.uptrend.xyaxis",
+        accentName: "green"
+    )
+
+    public static let all: [CoreFlowStep] = [.status, .schedule, .modes, .progress]
+}
+
+public struct ScreenTimePermissionExplainer: Codable, Equatable, Sendable {
+    public var title: String
+    public var subtitle: String
+    public var bullets: [String]
+    public var privacyLine: String
+    public var ctaTitle: String
+
+    public init(title: String, subtitle: String, bullets: [String], privacyLine: String, ctaTitle: String) {
+        self.title = title
+        self.subtitle = subtitle
+        self.bullets = bullets
+        self.privacyLine = privacyLine
+        self.ctaTitle = ctaTitle
+    }
+
+    public static let standard = ScreenTimePermissionExplainer(
+        title: "Why Screen Time access?",
+        subtitle: "Blocker uses Apple's Screen Time tools to shield the apps and websites you choose.",
+        bullets: [
+            "Needed to start quick blocks and scheduled focus windows.",
+            "Lets you pick apps, categories, and websites from Apple's picker.",
+            "Blocker cannot read your messages, browsing history, or app content."
+        ],
+        privacyLine: "Your choices stay on-device and are only used to apply your blocks.",
+        ctaTitle: "Allow Screen Time Access"
+    )
+}
+
+
+public struct BlockCoverageExplainer: Codable, Equatable, Sendable {
+    public var title: String
+    public var subtitle: String
+    public var bullets: [String]
+    public var deviceRows: [String]
+    public var websiteReminder: String
+
+    public init(title: String, subtitle: String, bullets: [String], deviceRows: [String], websiteReminder: String) {
+        self.title = title
+        self.subtitle = subtitle
+        self.bullets = bullets
+        self.deviceRows = deviceRows
+        self.websiteReminder = websiteReminder
+    }
+
+    public static let standard = BlockCoverageExplainer(
+        title: "Coverage",
+        subtitle: "Blocker protects apps, categories, and websites selected in Apple’s Screen Time picker on this device.",
+        bullets: [
+            "To block YouTube in Safari too, add youtube.com in Websites when choosing apps.",
+            "Apple does not let an iPhone app silently choose the matching website for an app token.",
+            "Mac blocking uses the Mac companion: the iPhone sends selected website domains automatically when Quick Block starts."
+        ],
+        deviceRows: ["This iPhone: Screen Time", "MacBook: auto-sync companion"],
+        websiteReminder: "Add websites in the same picker so app + web stay covered together."
+    )
 }
 
 public struct DelayAppsPauseProgress: Equatable, Sendable {

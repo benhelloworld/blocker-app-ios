@@ -1,0 +1,725 @@
+"Porn & adult websites" = "পর্ন ও প্রাপ্তবয়স্কদের ওয়েবসাইট";
+"Covers the most common porn sites and many more with Apple’s web filter." = "Apple-এর ওয়েব ফিল্টার দিয়ে সবচেয়ে প্রচলিত পর্ন সাইট এবং আরও অনেক সাইট কভার করে।";
+"2h" = "2h";
+"30m" = "30m";
+"Accountability Receipt" = "জবাবদিহিতা প্রাপ্তি";
+"All focus tools unlocked" = "সমস্ত ফোকাস টুল আনলক করা হয়েছে";
+"Apps & Websites" = "Apps & Websites";
+"Better long-term focus control" = "ভাল দীর্ঘমেয়াদী ফোকাস নিয়ন্ত্রণ";
+"Blocker Premium" = "ব্লকার প্রিমিয়াম";
+"Build automatic focus windows instead of starting every block manually." = "প্রতিটি ব্লক ম্যানুয়ালি শুরু করার পরিবর্তে স্বয়ংক্রিয় ফোকাস উইন্ডো তৈরি করুন।";
+"Buy Premium" = "প্রিমিয়াম কিনুন";
+"Choose when the block should start and when your apps open again." = "ব্লক কখন শুরু হবে এবং কখন আপনার অ্যাপগুলি আবার খুলবে তা চয়ন করুন৷";
+"Daily Schedule" = "দৈনিক সময়সূচী";
+"Deep Work" = "গভীর কাজ";
+"Delay Apps" = "বিলম্বিত অ্যাপস";
+"FREE" = "FREE";
+"Focus Progress" = "ফোকাস অগ্রগতি";
+"Focus Templates" = "ফোকাস টেমপ্লেট";
+"Free" = "বিনামূল্যে";
+"Free Quick Blocks are capped at 2 hours. Premium removes the limit." = "ফ্রি কুইক ব্লক 2 ঘন্টার মধ্যে সীমাবদ্ধ। প্রিমিয়াম সীমা সরিয়ে দেয়।";
+"Free user" = "বিনামূল্যে ব্যবহারকারী";
+"Modes" = "মোড";
+"Native Apple purchase flow" = "নেটিভ অ্যাপল ক্রয় প্রবাহ";
+"No Premium purchase found." = "কোনো প্রিমিয়াম কেনাকাটা পাওয়া যায়নি।";
+"No local Premium unlock found yet." = "এখনও কোনো স্থানীয় প্রিমিয়াম আনলক পাওয়া যায়নি।";
+"PREMIUM" = "PREMIUM";
+"Pick the days this schedule should run automatically." = "এই সময়সূচী স্বয়ংক্রিয়ভাবে চলতে হবে এমন দিনগুলি বেছে নিন।";
+"Premium" = "প্রিমিয়াম";
+"Premium Active" = "প্রিমিয়াম সক্রিয়";
+"Premium Focus" = "প্রিমিয়াম ফোকাস";
+"Premium is already unlocked." = "প্রিমিয়াম ইতিমধ্যেই আনলক করা আছে।";
+"Premium purchase is not available in this build yet." = "এই বিল্ডে প্রিমিয়াম ক্রয় এখনও উপলব্ধ নয়।";
+"Premium purchase is not available yet." = "অ্যাপ স্টোর কানেক্টে প্রিমিয়াম ক্রয় এখনও কনফিগার করা হয়নি।";
+"Premium restored from this device." = "এই ডিভাইস থেকে প্রিমিয়াম পুনরুদ্ধার করা হয়েছে।";
+"Premium restored." = "প্রিমিয়াম পুনরুদ্ধার করা হয়েছে।";
+"Premium unlocked for testing." = "প্রিমিয়াম পরীক্ষার জন্য আনলক করা হয়েছে।";
+"Premium unlocked." = "প্রিমিয়াম আনলক করা হয়েছে।";
+"Premium unlocks Quick Blocks longer than 2 hours." = "প্রিমিয়াম 2 ঘন্টার বেশি দ্রুত ব্লক আনলক করে।";
+"Premium unlocks scheduled and recurring blocks." = "প্রিমিয়াম নির্ধারিত এবং পুনরাবৃত্ত ব্লক আনলক করে।";
+"Premium user" = "প্রিমিয়াম ব্যবহারকারী";
+"Progress" = "অগ্রগতি";
+"Purchase cancelled." = "কেনাকাটা বাতিল করা হয়েছে।";
+"Purchase could not be verified." = "ক্রয় যাচাই করা যায়নি.";
+"Purchase pending approval." = "ক্রয় মুলতুবি অনুমোদন.";
+"Purchase status changed. Please try Restore Purchases." = "ক্রয় অবস্থা পরিবর্তিত হয়েছে. ক্রয় পুনরুদ্ধার চেষ্টা করুন.";
+"Quick Block" = "Quick Block";
+"Quick Block is limited to 2 hours in the free version" = "কুইক ব্লক ফ্রি সংস্করণে 2 ঘন্টার মধ্যে সীমাবদ্ধ";
+"Quick Block is the main action" = "কুইক ব্লক হল মূল অ্যাকশন";
+"Quick Block up to 2h" = "2 ঘন্টা পর্যন্ত দ্রুত ব্লক করুন";
+"Quick Reset" = "দ্রুত রিসেট";
+"Recurring Blocks" = "পুনরাবৃত্ত ব্লক";
+"Recurring blocking sessions" = "পুনরাবৃত্ত ব্লকিং সেশন";
+"Recurring blocks are Premium" = "পুনরাবৃত্ত ব্লক প্রিমিয়াম";
+"Repeat on" = "পুনরাবৃত্তি করুন";
+"Repeat your focus sessions across the week with less effort." = "কম প্রচেষ্টায় সপ্তাহ জুড়ে আপনার ফোকাস সেশনগুলি পুনরাবৃত্তি করুন।";
+"Reset clears only your progress stats and leaves blocking settings untouched." = "রিসেট শুধুমাত্র আপনার অগ্রগতির পরিসংখ্যান সাফ করে এবং ব্লকিং সেটিংসকে স্পর্শ না করে।";
+"Reset progress" = "অগ্রগতি রিসেট করুন";
+"Restore Purchases" = "কেনাকাটা পুনরুদ্ধার করুন";
+"Save Scheduled Block" = "নির্ধারিত ব্লক সংরক্ষণ করুন";
+"Save turns this setup into your active weekly blocking plan." = "সংরক্ষণ করুন এই সেটআপটিকে আপনার সক্রিয় সাপ্তাহিক ব্লকিং প্ল্যানে পরিণত করে।";
+"Schedule" = "সময়সূচী";
+"Schedule is Premium" = "সময়সূচী হল প্রিমিয়াম";
+"Scheduled Blocks" = "নির্ধারিত ব্লক";
+"Scheduled blocking" = "নির্ধারিত ব্লকিং";
+"Scheduled time" = "নির্ধারিত সময়";
+"See your completed focus sessions turn into simple proof and momentum." = "আপনার সম্পূর্ণ ফোকাস সেশনগুলিকে সহজ প্রমাণ এবং গতিতে পরিণত করুন।";
+"Select what Quick Block and schedules should shield." = "দ্রুত ব্লক এবং সময়সূচীগুলিকে কী রক্ষা করা উচিত তা নির্বাচন করুন৷";
+"Selected apps show a short impulse pause instead of changing your main block list." = "নির্বাচিত অ্যাপ্লিকেশানগুলি আপনার প্রধান ব্লক তালিকা পরিবর্তন করার পরিবর্তে একটি সংক্ষিপ্ত আবেগ বিরতি দেখায়।";
+"Serious focus" = "গুরুতর ফোকাস";
+"Set automatic blocking windows that protect the same apps and websites every week." = "স্বয়ংক্রিয় ব্লকিং উইন্ডো সেট করুন যা প্রতি সপ্তাহে একই অ্যাপ্লিকেশান এবং ওয়েবসাইটগুলিকে সুরক্ষিত করে৷";
+"Short reset" = "সংক্ষিপ্ত রিসেট";
+"Smart Suggestions" = "স্মার্ট সাজেশন";
+"Start %@ focus" = "%@ ফোকাস শুরু করুন";
+"Start Quick Block" = "দ্রুত ব্লক শুরু করুন";
+"Start a Quick Block" = "একটি দ্রুত ব্লক শুরু করুন";
+"Start an immediate focus block with your current selection." = "আপনার বর্তমান নির্বাচনের সাথে একটি অবিলম্বে ফোকাস ব্লক শুরু করুন।";
+"Status" = "স্ট্যাটাস";
+"Streak" = "স্ট্রিক";
+"Suggestions translate your recent patterns into calm next actions." = "পরামর্শগুলি আপনার সাম্প্রতিক নিদর্শনগুলিকে শান্ত পরবর্তী ক্রিয়াগুলিতে অনুবাদ করে৷";
+"Tap Unlock Premium to simulate purchase." = "কেনাকাটা অনুকরণ করতে আনলক প্রিমিয়াম আলতো চাপুন।";
+"Templates give you ready-made focus setups for common moments." = "টেমপ্লেটগুলি আপনাকে সাধারণ মুহুর্তগুলির জন্য তৈরি ফোকাস সেটআপ দেয়৷";
+"Test mode — no payment required yet." = "পরীক্ষার মোড - এখনও কোন অর্থপ্রদানের প্রয়োজন নেই।";
+"The streak highlights consistency without adding pressure or shame." = "স্ট্রিক চাপ বা লজ্জা যোগ না করেই ধারাবাহিকতা হাইলাইট করে।";
+"These totals count sessions, protected time, and the days you showed up." = "এই টোটালগুলি সেশন, সুরক্ষিত সময় এবং আপনি দেখানো দিনগুলি গণনা করে।";
+"Unlimited Quick Block duration" = "সীমাহীন দ্রুত ব্লক সময়কাল";
+"Unlock Premium" = "প্রিমিয়াম আনলক করুন";
+"Unlock Premium (Simulator)" = "আনলক প্রিমিয়াম (সিমুলেটর)";
+"Unlock Premium Focus" = "প্রিমিয়াম ফোকাস আনলক করুন";
+"Unlock longer Quick Blocks" = "দীর্ঘতর দ্রুত ব্লক আনলক করুন";
+"Use softer focus tools like delays, templates, and smart next steps." = "বিলম্ব, টেমপ্লেট এবং স্মার্ট পরবর্তী পদক্ষেপগুলির মতো নরম ফোকাস সরঞ্জামগুলি ব্যবহার করুন৷";
+"Use the full blocking system for deeper, long-term focus control." = "গভীর, দীর্ঘমেয়াদী ফোকাস নিয়ন্ত্রণের জন্য সম্পূর্ণ ব্লকিং সিস্টেম ব্যবহার করুন।";
+"What Premium unlocks" = "কি প্রিমিয়াম আনলক করে";
+"Your latest finished block is summarized here so progress feels concrete." = "আপনার সাম্প্রতিক সমাপ্ত ব্লক এখানে সংক্ষিপ্ত করা হয়েছে যাতে অগ্রগতি কংক্রিট অনুভূত হয়।";
+"Your totals" = "আপনার মোট";
+"1 hour" = "1 ঘন্টা";
+"%d hours" = "%d ঘন্টা";
+"%@ hours" = "%@ ঘন্টা";
+"1 minute" = "1 মিনিট";
+"%d minutes" = "%d মিনিট";
+"90m" = "90m";
+"8h" = "8h";
+"Study" = "অধ্যয়ন";
+"Sleep" = "ঘুম";
+"Study session" = "অধ্যয়ন অধিবেশন";
+"Sleep shield" = "ঘুমের ঢাল";
+"Custom" = "কাস্টম";
+"Selected • %@" = "নির্বাচিত • %@";
+"seconds" = "সেকেন্ড";
+"Continue intentionally" = "ইচ্ছাকৃতভাবে চালিয়ে যান";
+"Still waiting…" = "এখনো অপেক্ষা করছে…";
+"No, stay focused" = "না, মনোযোগী থাকুন";
+"Shortcut pause" = "শর্টকাট বিরতি";
+"Optional: create an iPhone Shortcuts automation so opening a distracting app launches Blocker’s 15-second pause." = "ঐচ্ছিক: একটি আইফোন শর্টকাট অটোমেশন তৈরি করুন যাতে একটি বিভ্রান্তিকর অ্যাপ খোলার ফলে ব্লকারের 15-সেকেন্ডের বিরতি চালু হয়।";
+"Open Shortcuts → Automation" = "শর্টকাট খুলুন → অটোমেশন";
+"Choose App → pick the distracting app" = "অ্যাপ বেছে নিন → বিভ্রান্তিকর অ্যাপ বেছে নিন";
+"Set Run Immediately, then add Blocker Pause" = "অবিলম্বে রান সেট করুন, তারপর ব্লকার পজ যোগ করুন";
+"Apple requires you to create this automation manually. Blocker cannot silently set it up for you." = "Apple আপনাকে ম্যানুয়ালি এই অটোমেশন তৈরি করতে হবে। ব্লকার নীরবে আপনার জন্য এটি সেট আপ করতে পারে না।";
+"Do you really want to open the app?" = "আপনি কি সত্যিই অ্যাপটি খুলতে চান?";
+"Think about what you had planned." = "আপনি কি পরিকল্পনা করেছিলেন তা নিয়ে ভাবুন।";
+"Delay Apps is active" = "বিলম্ব অ্যাপ্লিকেশন সক্রিয় আছে";
+"Selected apps show a 15-second shield." = "নির্বাচিত অ্যাপ 15-সেকেন্ডের শিল্ড দেখায়।";
+"Turn on after choosing apps to delay." = "দেরি করার জন্য অ্যাপগুলি বেছে নেওয়ার পরে চালু করুন।";
+"Choose Apps to Delay" = "বিলম্ব করার জন্য অ্যাপগুলি বেছে নিন";
+"Edit Delay Apps" = "বিলম্ব অ্যাপ্লিকেশন সম্পাদনা করুন";
+"Preview 15 second timer" = "প্রিভিউ 15 সেকেন্ড টাইমার";
+"Delay Apps uses Apple Screen Time app selection and is available in the iOS app target." = "Delay Apps অ্যাপল স্ক্রীন টাইম অ্যাপ নির্বাচন ব্যবহার করে এবং iOS অ্যাপ টার্গেটে উপলব্ধ।";
+"Skip" = "এড়িয়ে যান";
+"Start using Blocker" = "Blocker ব্যবহার শুরু করুন";
+"Next" = "পরবর্তী";
+"Close" = "বন্ধ করুন";
+"Loading…" = "লোড হচ্ছে…";
+"Screen Time Access" = "Screen Time Access";
+"First, allow Screen Time access so Blocker can shield your choices." = "First, allow Screen Time access so Blocker can shield your choices.";
+"Tap this button to choose the iPhone apps, categories, and websites you want blocked." = "Tap this button to choose the iPhone apps, categories, and websites you want blocked.";
+"Connect your Mac" = "Connect your Mac";
+"Optional: select your Mac so iPhone Quick Blocks can also send website blocks there automatically." = "Optional: select your Mac so iPhone Quick Blocks can also send website blocks there automatically.";
+"Set the recurring time window for automatic blocking." = "Set the recurring time window for automatic blocking.";
+"Track completed sessions, protected time, focus days, and streaks here." = "Track completed sessions, protected time, focus days, and streaks here.";
+"Use Delay Apps, templates, and calm suggestions separately from Quick Block." = "Use Delay Apps, templates, and calm suggestions separately from Quick Block.";
+"Pause first" = "আগে বিরতি নিন";
+"Keep block" = "ব্লক চালু রাখুন";
+"Now answer honestly." = "এখন সৎভাবে উত্তর দিন।";
+"Take a slow breath before unlocking." = "আনলক করার আগে ধীরে শ্বাস নিন।";
+"This short pause adds friction so stopping a block is intentional, not automatic." = "This short pause adds friction so stopping a block is intentional, not automatic.";
+"Questions unlock after the breathing timer." = "শ্বাসের টাইমার শেষ হলে প্রশ্ন খুলবে।";
+"What’s your reason for the block?" = "এই ব্লক শুরু করার কারণ কী?";
+"Example: Finish deep work, study, sleep" = "যেমন: গভীর কাজ শেষ করা, পড়াশোনা, ঘুম";
+"Why do you want to stop it?" = "আপনি কেন এটি থামাতে চান?";
+"Write your reason" = "আপনার কারণ লিখুন";
+"Unlock and stop block" = "আনলক করে ব্লক থামান";
+"You can stop the block now." = "এখন ব্লক থামাতে পারেন।";
+"Answer both questions to unlock the stop button." = "থামানোর বোতাম খুলতে দুই প্রশ্নের উত্তর দিন।";
+"Bored" = "বিরক্ত";
+"Stressed" = "চাপে";
+"Tired" = "ক্লান্ত";
+"Habit" = "অভ্যাস";
+"Need something important" = "Need something important";
+"Other" = "অন্যান্য";
+"Premium button tapped — simulated unlock running." = "Premium button tapped — simulated unlock running.";
+
+/* Blocklists and scheduled active block */
+"Choose blocklist" = "ব্লকলিস্ট বেছে নিন";
+"Create reusable lists like Social without YouTube or Deep Work, then attach the right list to this schedule." = "YouTube ছাড়া Social বা Deep Work-এর মতো পুনঃব্যবহারযোগ্য তালিকা তৈরি করুন, তারপর এই সময়সূচির সঙ্গে সঠিক তালিকাটি যুক্ত করুন।";
+"No blocklists yet" = "এখনও কোনো ব্লকলিস্ট নেই";
+"Create your first list of apps, categories, and websites for scheduled blocks." = "নির্ধারিত ব্লকের জন্য অ্যাপ, বিভাগ ও ওয়েবসাইটের প্রথম তালিকা তৈরি করুন।";
+"Create a blocklist" = "ব্লকলিস্ট তৈরি করুন";
+"Create Blocklist" = "ব্লকলিস্ট তৈরি করুন";
+"Blocklist name" = "ব্লকলিস্টের নাম";
+"Social without YouTube" = "YouTube ছাড়া Social";
+"Blocked apps & websites" = "ব্লক করা অ্যাপ ও ওয়েবসাইট";
+"Add or remove apps" = "অ্যাপ যোগ বা সরান";
+"Blocklist created." = "ব্লকলিস্ট তৈরি হয়েছে।";
+"Scheduled focus is active" = "নির্ধারিত ফোকাস সক্রিয়";
+"Stay locked in" = "ফোকাস ধরে রাখুন";
+"Your scheduled block is running. AntiScroll stays locked until the window ends." = "আপনার নির্ধারিত ব্লক চলছে। সময় শেষ না হওয়া পর্যন্ত AntiScroll লক থাকবে।";
+"Scheduled block ends at %@" = "নির্ধারিত ব্লক শেষ হবে %@-এ";
+"Bypass protection" = "বাইপাস সুরক্ষা";
+"Editing schedules and app lists is disabled while this scheduled block is active. You can change future blocks after the timer finishes." = "এই নির্ধারিত ব্লক সক্রিয় থাকা অবস্থায় সময়সূচি ও অ্যাপ তালিকা সম্পাদনা বন্ধ থাকে। টাইমার শেষ হলে ভবিষ্যতের ব্লক পরিবর্তন করতে পারবেন।";
+"Stay with the plan. Your future self asked for this." = "পরিকল্পনার সঙ্গে থাকুন। আপনার ভবিষ্যৎ নিজেই এটি চেয়েছিল।";
+"The urge will pass. The block is doing its job." = "তাড়নাটা কেটে যাবে। ব্লক তার কাজ করছে।";
+"This is the moment you chose focus over impulse." = "এটাই সেই মুহূর্ত যখন আপনি তাড়নার বদলে ফোকাস বেছে নিচ্ছেন।";
+"Keep going. Boredom is often the doorway back to attention." = "চালিয়ে যান। বিরক্তিই অনেক সময় মনোযোগে ফেরার দরজা।";
+"You are not missing out — you are protecting your time." = "আপনি কিছু মিস করছেন না — আপনি আপনার সময় রক্ষা করছেন।";
+
+"Monthly" = "মাসিক";
+
+"Yearly" = "বার্ষিক";
+
+"€2/month" = "€2/মাস";
+
+"€20/year" = "€20/বছর";
+
+"Flexible monthly access" = "নমনীয় মাসিক অ্যাক্সেস";
+
+"Save compared with monthly" = "মাসিক প্ল্যানের তুলনায় সাশ্রয়";
+
+"Continue" = "চালিয়ে যান";
+
+"Your subscription is active." = "আপনার সাবস্ক্রিপশন সক্রিয়।";
+
+"Loading subscription options…" = "সাবস্ক্রিপশন বিকল্প লোড হচ্ছে…";
+
+"Premium subscriptions are not configured yet. Please try again later." = "Premium সাবস্ক্রিপশন এখনও কনফিগার করা হয়নি। পরে আবার চেষ্টা করুন।";
+
+"Could not load subscriptions." = "সাবস্ক্রিপশন লোড করা যায়নি।";
+
+"Premium is already active." = "Premium ইতিমধ্যে সক্রিয়।";
+
+"Premium subscriptions are not available yet. Please try again later." = "Premium সাবস্ক্রিপশন এখনও উপলভ্য নয়। পরে আবার চেষ্টা করুন।";
+
+"We could not confirm an active subscription yet. Please try Restore Purchases." = "আমরা এখনও সক্রিয় সাবস্ক্রিপশন নিশ্চিত করতে পারিনি। ক্রয় পুনরুদ্ধার করুন।";
+
+"No active Premium subscription found." = "কোনো সক্রিয় Premium সাবস্ক্রিপশন পাওয়া যায়নি।";
+
+"%@ Please try again or restore purchases." = "%@ আবার চেষ্টা করুন বা ক্রয় পুনরুদ্ধার করুন।";
+
+"Maybe Later" = "হয়তো পরে";
+
+"Get your focus back for less than a cup of coffee." = "এক কাপ কফির চেয়েও কম দামে আপনার ফোকাস ফিরে পান।";
+
+"Choose your plan" = "আপনার প্ল্যান বেছে নিন";
+
+"Best value" = "সেরা মূল্য";
+
+"What Premium includes" = "Premium-এ যা আছে";
+
+"Scheduled focus blocks" = "নির্ধারিত ফোকাস ব্লক";
+
+"Recurring focus routines" = "পুনরাবৃত্ত ফোকাস রুটিন";
+
+"Stronger long-term focus control" = "দীর্ঘমেয়াদে আরও শক্তিশালী ফোকাস নিয়ন্ত্রণ";
+
+"AntiScroll Premium" = "AntiScroll Premium";
+
+"SUBSCRIPTION" = "সাবস্ক্রিপশন";
+
+"ACTIVE" = "সক্রিয়";
+
+"Start a focus block here when you need protection right now." = "Start a focus block here when you need protection right now.";
+
+"Subscription options unavailable" = "Subscription options unavailable";
+
+"What unlocks after Premium" = "What unlocks after Premium";
+
+"What changes after Premium" = "What changes after Premium";
+
+"Premium tools you unlock" = "Premium tools you unlock";
+
+"Create named app lists for schedules." = "Create named app lists for schedules.";
+
+"Pick recurring days and time windows." = "Pick recurring days and time windows.";
+
+"Show an active scheduled-block timer when protection is running." = "Show an active scheduled-block timer when protection is running.";
+
+"Use Quick Blocks longer than 2 hours." = "Use Quick Blocks longer than 2 hours.";
+
+"Keep active blocks commitment-locked." = "Keep active blocks commitment-locked.";
+
+"Combine Quick Block with stronger weekly routines." = "Combine Quick Block with stronger weekly routines.";
+
+"Build recurring focus routines." = "Build recurring focus routines.";
+
+"Track long-term focus progress." = "Track long-term focus progress.";
+
+"Use delay tools and templates for calmer control." = "Use delay tools and templates for calmer control.";
+
+"You vs. you" = "You vs. you";
+
+"Protect your attention before the scroll wins." = "Protect your attention before the scroll wins.";
+
+"Less impulse. More intention." = "Less impulse. More intention.";
+
+"A calmer way back to focus." = "A calmer way back to focus.";
+
+"Choose your attention" = "Choose your attention";
+
+"Start small. Stay with it." = "Start small. Stay with it.";
+
+"Why Screen Time access?" = "Why Screen Time access?";
+
+"Apple requires this permission before Blocker can shield selected apps and websites." = "Apple requires this permission before Blocker can shield selected apps and websites.";
+
+"Needed to show Apple’s app and website picker." = "Needed to show Apple’s app and website picker.";
+
+"Needed to apply shields during quick blocks and schedules." = "Needed to apply shields during quick blocks and schedules.";
+
+"Blocker cannot read your messages, browsing history, or private app content." = "Blocker cannot read your messages, browsing history, or private app content.";
+
+"Your choices stay on-device and are saved privately in the app group." = "Your choices stay on-device and are saved privately in the app group.";
+
+"Allow Screen Time Access" = "Allow Screen Time Access";
+
+"Access granted" = "Access granted";
+
+"Apple’s Screen Time picker is available on the iPhone app target." = "Apple’s Screen Time picker is available on the iPhone app target.";
+
+"Websites sent to Mac" = "Websites sent to Mac";
+
+"Only these exact websites are sent to the Mac. Nothing is added automatically." = "Only these exact websites are sent to the Mac. Nothing is added automatically.";
+
+"Apply iPhone Quick Blocks on this laptop" = "Use Screen Time protection on this device";
+
+"Sync ready: sent %d selected website(s) for this %@ block." = "Sync ready: sent %d selected website(s) for this %@ block.";
+
+"Normal" = "সাধারণ";
+"Strong" = "শক্তিশালী";
+"30 sec pause + reflection" = "30 sec pause + reflection";
+
+"Premium commitment with one emergency exit per day" = "Premium commitment with one emergency exit per day";
+
+"Block strength" = "Block strength";
+
+"Strong is Premium" = "Strong is Premium";
+
+"Use emergency exit" = "Use emergency exit";
+
+"Strong exit" = "শক্তিশালী মোড থেকে বের হওয়া";
+"Normal blocks ask for a short pause, honest reflection, then one final wait before stopping." = "সাধারণ ব্লকে থামার আগে ছোট বিরতি, সৎ ভাবনা, তারপর শেষ অপেক্ষা থাকে।";
+"Strong Mode gives you one calm emergency exit per day. Use it only when it truly matters." = "শক্তিশালী মোড প্রতিদিন একটি শান্ত জরুরি বের হওয়ার সুযোগ দেয়। সত্যিই দরকার হলে ব্যবহার করুন।";
+"%d emergency exit left today" = "আজ %dটি জরুরি বের হওয়া বাকি";
+"No emergency exits left today" = "আজ আর কোনো জরুরি বের হওয়া বাকি নেই";
+"Strong Mode is locked in for today. This block can finish naturally." = "আজকের জন্য শক্তিশালী মোড লক করা। এই ব্লক স্বাভাবিকভাবে শেষ হবে।";
+"Final check: %d seconds left" = "শেষ যাচাই: %d সেকেন্ড বাকি";
+"Start final pause" = "শেষ বিরতি শুরু করুন";
+"One final pause keeps stopping intentional." = "শেষ বিরতি থামানোকে সচেতন সিদ্ধান্ত করে।";
+"Stay here for the final check, or keep the block." = "শেষ যাচাইয়ের জন্য থাকুন, অথবা ব্লক চালু রাখুন।";
+"Use emergency exit and stop block." = "জরুরি বের হওয়া ব্যবহার করে ব্লক থামান।";
+"You have used today’s emergency exit." = "আজকের জরুরি বের হওয়া ব্যবহার করেছেন।";
+"Started a %@ block." = "Started a %@ block.";
+
+"Quick block stopped." = "Quick block stopped.";
+
+"Quick block stopped. Progress recorded as elapsed protected time." = "Quick block stopped. Progress recorded as elapsed protected time.";
+
+"Quick block stopped after reflection." = "Quick block stopped after reflection.";
+
+"Emergency exit used. Strong block stopped." = "Emergency exit used. Strong block stopped.";
+
+"30 sec pause" = "৩০ সেকেন্ড বিরতি";
+"1 emergency exit/day" = "প্রতিদিন ১টি জরুরি বের হওয়া";
+"Study Sprint" = "স্টাডি স্প্রিন্ট";
+"Sleep Wind Down" = "ঘুমের প্রস্তুতি";
+"Quick Reset started" = "দ্রুত রিসেট শুরু হয়েছে";
+"Deep Work started" = "গভীর কাজ শুরু হয়েছে";
+"Study Sprint started" = "স্টাডি স্প্রিন্ট শুরু হয়েছে";
+"Sleep Wind Down started" = "ঘুমের প্রস্তুতি শুরু হয়েছে";
+
+/* StoreKit plan switching */
+"Current Plan" = "বর্তমান প্ল্যান";
+"Switch Plan" = "প্ল্যান বদলান";
+"This is your active plan." = "এটি আপনার সক্রিয় প্ল্যান।";
+"Switch to the selected plan." = "নির্বাচিত প্ল্যানে যান।";
+"Manage Plan" = "প্ল্যান পরিচালনা করুন";
+
+/* Shortcut setup instructions */
+"Setup instructions" = "সেটআপ নির্দেশনা";
+"Open the full Shortcuts setup guide." = "সম্পূর্ণ Shortcuts সেটআপ গাইড খুলুন।";
+"Shortcut pause setup" = "শর্টকাট বিরতি সেটআপ";
+"Follow these steps once in Apple Shortcuts so AntiScroll can show the 15-second pause when you open a distracting app." = "Apple Shortcuts-এ একবার এই ধাপগুলি অনুসরণ করুন, যাতে বিভ্রান্তিকর অ্যাপ খুললে AntiScroll ১৫ সেকেন্ডের বিরতি দেখাতে পারে।";
+"Open Apple Shortcuts, then tap the Automation tab." = "Apple Shortcuts খুলুন, তারপর Automation ট্যাবে ট্যাপ করুন।";
+"Create a new app automation" = "নতুন অ্যাপ অটোমেশন তৈরি করুন";
+"Tap +, choose App, then select the app that usually distracts you." = "+ ট্যাপ করুন, App বেছে নিন, তারপর যে অ্যাপটি সাধারণত আপনাকে বিভ্রান্ত করে সেটি নির্বাচন করুন।";
+"Use the opened trigger" = "খোলার ট্রিগার ব্যবহার করুন";
+"Select Is Opened, then choose Run Immediately so the pause starts without another prompt." = "Is Opened নির্বাচন করুন, তারপর Run Immediately বেছে নিন যাতে বিরতি আরেকটি প্রম্পট ছাড়াই শুরু হয়।";
+"Add Blocker Pause" = "Blocker Pause যোগ করুন";
+"Tap Next, add the Blocker Pause action, then save the automation." = "Next ট্যাপ করুন, Blocker Pause অ্যাকশন যোগ করুন, তারপর অটোমেশন সংরক্ষণ করুন।";
+"Repeat for more apps" = "আরও অ্যাপের জন্য পুনরাবৃত্তি করুন";
+"Apple requires one manual automation setup for each distracting app you want to delay." = "আপনি যে প্রতিটি বিভ্রান্তিকর অ্যাপ delay করতে চান, Apple তার জন্য একটি manual automation setup চায়।";
+"Apple requires you to create this automation manually. AntiScroll cannot silently set it up for you." = "Apple চায় আপনি এই automation ম্যানুয়ালি তৈরি করুন। AntiScroll নীরবে এটি আপনার জন্য সেট আপ করতে পারে না।";
+"Done" = "সম্পন্ন";
+
+/* Shortcut automation improvements */
+"Open it" = "Open it";
+"Tip: add the app URL in Shortcuts if you want Open it to jump straight back." = "Tip: add the app URL in Shortcuts if you want Open it to jump straight back.";
+"Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused." = "Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused.";
+"Select Is Opened, choose Run Immediately, and turn off Notify When Run so no Shortcuts notification appears." = "Select Is Opened, choose Run Immediately, and turn off Notify When Run so no Shortcuts notification appears.";
+"Tap Next, add the Blocker Pause action, then save the automation. AntiScroll should open automatically." = "Tap Next, add the Blocker Pause action, then save the automation. AntiScroll should open automatically.";
+"Optional: add a return URL" = "Optional: add a return URL";
+"If you know the app’s URL scheme, add it to Return URL so Open it can jump straight back after the pause." = "If you know the app’s URL scheme, add it to Return URL so Open it can jump straight back after the pause.";
+"Important: Delay Apps should only be used for apps that are not also in your active block list. If an app is blocked by Quick Block or Schedule, Apple will show the hard block instead of the delay pause." = "Important: Delay Apps should only be used for apps that are not also in your active block list. If an app is blocked by Quick Block or Schedule, Apple will show the hard block instead of the delay pause.";
+
+"Add a Return URL in Shortcuts first so AntiScroll knows which app to open." = "Add a Return URL in Shortcuts first so AntiScroll knows which app to open.";
+"AntiScroll could not open that URL. Check the Return URL in Shortcuts." = "AntiScroll could not open that URL. Check the Return URL in Shortcuts.";
+"Add Should Pause?" = "Add Should Pause?";
+"Add AntiScroll’s Should Pause? action first. It returns No once after you tap Open it, which prevents the automation from looping." = "Add AntiScroll’s Should Pause? action first. It returns No once after you tap Open it, which prevents the automation from looping.";
+"Add an If block" = "Add an If block";
+"Use If Should Pause? is Yes, then run Blocker Pause. Leave Otherwise empty." = "Use If Should Pause? is Yes, then run Blocker Pause. Leave Otherwise empty.";
+"Inside the If block, add Blocker Pause. Add the app’s Return URL, for example youtube:// or instagram://, so Open it can jump back." = "Inside the If block, add Blocker Pause. Add the app’s Return URL, for example youtube:// or instagram://, so Open it can jump back.";
+"Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused. The If step prevents a second delay when you choose Open it." = "Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused. The If step prevents a second delay when you choose Open it.";
+"AntiScroll could not allow that app yet. Please try once more." = "AntiScroll could not allow that app yet. Please try once more.";
+"If this opened from the blocked app screen, tap Open it after the pause, then open the app once more." = "If this opened from the blocked app screen, tap Open it after the pause, then open the app once more.";
+"No emergency exits left today." = "No emergency exits left today.";
+"remaining" = "remaining";
+"Terms of Use" = "ব্যবহারের শর্তাবলি";
+"Privacy Policy" = "গোপনীয়তা নীতি";
+"Subscription renews automatically unless cancelled at least 24 hours before the end of the current period." = "বর্তমান মেয়াদ শেষ হওয়ার অন্তত ২৪ ঘণ্টা আগে বাতিল না করলে সাবস্ক্রিপশন স্বয়ংক্রিয়ভাবে নবায়ন হবে।";
+"1 month subscription" = "১ মাসের সাবস্ক্রিপশন";
+"1 year subscription" = "১ বছরের সাবস্ক্রিপশন";
+
+"Automatically from your apps" = "আপনার অ্যাপগুলো থেকে স্বয়ংক্রিয়ভাবে";
+
+"Pick apps" = "অ্যাপ বেছে নিন";
+
+"No apps picked yet — tap Pick apps to choose from your recently used apps." = "এখনো কোনো অ্যাপ বেছে নেওয়া হয়নি — সম্প্রতি ব্যবহৃত অ্যাপগুলো থেকে বেছে নিতে «অ্যাপ বেছে নিন» ট্যাপ করুন।";
+
+"Only checked domains are sent to selected Macs when Quick Block starts." = "Quick Block শুরু হলে শুধুমাত্র চিহ্নিত ডোমেইনগুলোই নির্বাচিত Mac-এ পাঠানো হয়।";
+
+"Websites of the apps you picked are added automatically. No manual step needed." = "আপনার বেছে নেওয়া অ্যাপগুলোর ওয়েবসাইট স্বয়ংক্রিয়ভাবে যোগ হয়। কোনো ম্যানুয়াল ধাপের প্রয়োজন নেই।";
+
+"Websites you pick manually, plus the websites of apps you add from your app list — all sent to your Mac automatically." = "আপনি ম্যানুয়ালি যে ওয়েবসাইটগুলো বেছে নেন, আর আপনার তালিকার অ্যাপগুলোর ওয়েবসাইট — সবগুলোই স্বয়ংক্রিয়ভাবে আপনার Mac-এ পাঠানো হয়।";
+
+"Pick which devices should follow your iPhone Quick Block." = "কোন ডিভাইসগুলো আপনার iPhone-এর Quick Block অনুসরণ করবে তা বেছে নিন।";
+
+"Websites are blocked on this Mac automatically" = "এই Mac-এ ওয়েবসাইটগুলো স্বয়ংক্রিয়ভাবে ব্লক হয়";
+
+"Follows your blocks on this device automatically" = "এই ডিভাইসে আপনার ব্লকগুলো স্বয়ংক্রিয়ভাবে অনুসরণ করে";
+
+"This iPad" = "এই iPad";
+
+"This Device" = "এই ডিভাইস";
+
+"Auto-add websites" = "স্বয়ংক্রিয়ভাবে ওয়েবসাইট যোগ করুন";
+
+"%@ – %@" = "%@ – %@";
+
+"%d apps" = "%dটি অ্যাপ";
+
+"%d categories" = "%dটি বিভাগ";
+
+"%d device(s) follow your blocks" = "%dটি ডিভাইস আপনার ব্লক অনুসরণ করে";
+
+"%d websites" = "%dটি ওয়েবসাইট";
+
+"15-second pause" = "১৫ সেকেন্ডের বিরতি";
+
+"24h" = "২৪ ঘণ্টা";
+
+"30 min" = "৩০ মিনিট";
+
+"30 min – 24 hours" = "৩০ মিনিট – ২৪ ঘণ্টা";
+
+"A simple flow: choose what to protect, start a block, automate it, then review your progress." = "একটি সহজ প্রক্রিয়া: কী সুরক্ষিত করবেন তা বেছে নিন, একটি ব্লক শুরু করুন, এটি স্বয়ংক্রিয় করুন, তারপর আপনার অগ্রগতি দেখুন।";
+
+"Account" = "অ্যাকাউন্ট";
+
+"Active" = "সক্রিয়";
+
+"Active on %@." = "%@ তারিখে সক্রিয়।";
+
+"Active schedule" = "সক্রিয় সময়সূচি";
+
+"Allow Screen Time access to start blocking." = "ব্লক করা শুরু করতে স্ক্রিন টাইম অ্যাক্সেসের অনুমতি দিন।";
+
+"An active longer block cannot be replaced by a shorter one." = "সক্রিয় দীর্ঘ ব্লককে ছোট ব্লক দিয়ে প্রতিস্থাপন করা যায় না।";
+
+"AntiScroll can shield selected apps and websites." = "AntiScroll নির্বাচিত অ্যাপ এবং ওয়েবসাইট সুরক্ষিত করতে পারে।";
+
+"AntiScroll cannot read your messages, browsing history, or private app content." = "AntiScroll আপনার বার্তা, ব্রাউজিং ইতিহাস বা ব্যক্তিগত অ্যাপ সামগ্রী পড়তে পারে না।";
+
+"App language" = "অ্যাপের ভাষা";
+
+"Apps, categories, and websites" = "অ্যাপ, বিভাগ এবং ওয়েবসাইট";
+
+"Automatic blocking windows that protect the same apps and websites every week." = "স্বয়ংক্রিয় ব্লক উইন্ডো যা প্রতি সপ্তাহে একই অ্যাপ এবং ওয়েবসাইট সুরক্ষিত করে।";
+
+"Blocked content" = "ব্লক করা সামগ্রী";
+
+"Blocklist: %@" = "ব্লকলিস্ট: %@";
+
+"Blocklists are available only in the iOS app target." = "ব্লকলিস্ট শুধুমাত্র iOS অ্যাপ টার্গেটে উপলব্ধ।";
+
+"Calm next steps based on your recent focus patterns." = "আপনার সাম্প্রতিক ফোকাস প্যাটার্নের ভিত্তিতে শান্ত পরবর্তী পদক্ষেপ।";
+
+"Cancel" = "বাতিল";
+
+"Choose Apps and Websites" = "অ্যাপ এবং ওয়েবসাইট বেছে নিন";
+
+"Choose a blocklist" = "একটি ব্লকলিস্ট বেছে নিন";
+
+"Choose a length" = "একটি সময়কাল বেছে নিন";
+
+"Choose how long you want selected distractions blocked." = "নির্বাচিত বিভ্রান্তিগুলি কতক্ষণ ব্লক থাকবে তা বেছে নিন।";
+
+"Choose repeat days" = "পুনরাবৃত্তির দিন বেছে নিন";
+
+"Choose start and end time" = "শুরুর এবং শেষের সময় বেছে নিন";
+
+"Clears focus stats only." = "শুধুমাত্র ফোকাস পরিসংখ্যান মুছে দেয়।";
+
+"Completed sessions" = "সম্পন্ন সেশন";
+
+"Connected devices" = "সংযুক্ত ডিভাইস";
+
+"Create Schedule" = "সময়সূচি তৈরি করুন";
+
+"Create a recurring block so focus happens automatically — no need to start it every time." = "একটি পুনরাবৃত্ত ব্লক তৈরি করুন যাতে ফোকাস স্বয়ংক্রিয়ভাবে হয় — প্রতিবার শুরু করার দরকার নেই।";
+
+"Current device" = "বর্তমান ডিভাইস";
+
+"Custom app and website list" = "কাস্টম অ্যাপ এবং ওয়েবসাইট তালিকা";
+
+"Custom quick block" = "কাস্টম কুইক ব্লক";
+
+"Device Sync" = "ডিভাইস সিঙ্ক";
+
+"Duration" = "সময়কাল";
+
+"Edit Apps and Websites" = "অ্যাপ এবং ওয়েবসাইট সম্পাদনা করুন";
+
+"Edit Schedule" = "সময়সূচি সম্পাদনা করুন";
+
+"Edit schedule" = "সময়সূচি সম্পাদনা করুন";
+
+"Enter a valid website like youtube.com." = "youtube.com-এর মতো একটি বৈধ ওয়েবসাইট লিখুন।";
+
+"Focus Modes" = "ফোকাস মোড";
+
+"Focus locked" = "ফোকাস লক";
+
+"Focus now" = "এখনই ফোকাস";
+
+"Focus time" = "ফোকাস সময়";
+
+"Follows your iPhone language automatically." = "স্বয়ংক্রিয়ভাবে আপনার iPhone-এর ভাষা অনুসরণ করে।";
+
+"Four quick steps: blocklist, time, days, save." = "চারটি দ্রুত ধাপ: তালিকা, সময়, দিন, সংরক্ষণ।";
+
+"Help and setup" = "সহায়তা এবং সেটআপ";
+
+"How the app works" = "অ্যাপ কীভাবে কাজ করে";
+
+"Language" = "ভাষা";
+
+"Last session" = "সর্বশেষ সেশন";
+
+"Mac websites" = "Mac ওয়েবসাইট";
+
+"Manage the domains your Mac blocks during Quick Block." = "কুইক ব্লকের সময় আপনার Mac যে ডোমেন ব্লক করে তা পরিচালনা করুন।";
+
+"Manual websites" = "ম্যানুয়াল ওয়েবসাইট";
+
+"Needs Screen Time access" = "স্ক্রিন টাইম অ্যাক্সেস প্রয়োজন";
+
+"Needs access" = "অ্যাক্সেস প্রয়োজন";
+
+"New schedule" = "নতুন সময়সূচি";
+
+"No Macs connected yet. Open the AntiScroll Mac Companion on your Mac to register it." = "এখনও কোনো Mac সংযুক্ত নেই। নিবন্ধন করতে আপনার Mac-এ AntiScroll Mac Companion খুলুন।";
+
+"No apps or websites selected yet" = "এখনও কোনো অ্যাপ বা ওয়েবসাইট নির্বাচন করা হয়নি";
+
+"No focus sessions yet" = "এখনও কোনো ফোকাস সেশন নেই";
+
+"No schedule yet" = "এখনও কোনো সময়সূচি নেই";
+
+"Off" = "বন্ধ";
+
+"Only this iPhone — no Macs connected" = "শুধুমাত্র এই iPhone — কোনো Mac সংযুক্ত নেই";
+
+"Pick a length, choose your block strength, then press Start Focus." = "একটি সময়কাল এবং ব্লকের শক্তি বেছে নিন, তারপর 'ফোকাস শুরু করুন' চাপুন।";
+
+"Pick a preset like Reset, Deep Work, Study, or Sleep — or set a custom duration." = "Reset, Deep Work, Study বা Sleep-এর মতো একটি প্রিসেট বেছে নিন — বা কাস্টম সময়কাল সেট করুন।";
+
+"Pick at least one day to save this schedule." = "এই সময়সূচি সংরক্ষণ করতে কমপক্ষে একটি দিন বেছে নিন।";
+
+"Pick devices that follow your blocks and manage websites sent to Mac." = "আপনার ব্লক অনুসরণ করে এমন ডিভাইস বেছে নিন এবং Mac-এ পাঠানো ওয়েবসাইট পরিচালনা করুন।";
+
+"Press start" = "শুরু চাপুন";
+
+"Privacy" = "গোপনীয়তা";
+
+"Progress reset." = "অগ্রগতি রিসেট হয়েছে।";
+
+"Protected" = "সুরক্ষিত";
+
+"Protection status" = "সুরক্ষা অবস্থা";
+
+"Ready-made focus setups for common moments. Starting one uses your current selection." = "সাধারণ মুহূর্তের জন্য প্রস্তুত ফোকাস সেটআপ। একটি শুরু করলে আপনার বর্তমান নির্বাচন ব্যবহার হয়।";
+
+"Ready-made setups for work, study, sleep, and more." = "কাজ, পড়াশোনা, ঘুম এবং আরও অনেক কিছুর জন্য প্রস্তুত সেটআপ।";
+
+"Reset" = "রিসেট";
+
+"Reset progress?" = "অগ্রগতি রিসেট করবেন?";
+
+"Restore Premium on this device." = "এই ডিভাইসে Premium পুনরুদ্ধার করুন।";
+
+"Save" = "সংরক্ষণ";
+
+"Schedule turned off." = "সময়সূচি বন্ধ হয়েছে।";
+
+"Schedule turned on." = "সময়সূচি চালু হয়েছে।";
+
+"Screen Time" = "স্ক্রিন টাইম";
+
+"Screen Time access is on" = "স্ক্রিন টাইম অ্যাক্সেস চালু আছে";
+
+"Selected apps show a short impulse pause instead of a hard block." = "নির্বাচিত অ্যাপ কঠোর ব্লকের বদলে একটি সংক্ষিপ্ত আবেগ বিরতি দেখায়।";
+
+"Settings" = "সেটিংস";
+
+"Softer focus tools: delays, templates, and smart next steps." = "হালকা ফোকাস টুল: বিলম্ব, টেমপ্লেট এবং স্মার্ট পরবর্তী পদক্ষেপ।";
+
+"Start here" = "এখান থেকে শুরু করুন";
+
+"Start your first focus session" = "আপনার প্রথম ফোকাস সেশন শুরু করুন";
+
+"Stay committed" = "প্রতিশ্রুত থাকুন";
+
+"Strong block active" = "শক্তিশালী ব্লক সক্রিয়";
+
+"Subscription" = "সাবস্ক্রিপশন";
+
+"The focus flow in four short steps." = "চারটি সংক্ষিপ্ত ধাপে ফোকাস প্রক্রিয়া।";
+
+"This clears your focus stats only. Blocking settings stay untouched." = "এটি শুধুমাত্র ফোকাস পরিসংখ্যান মুছে দেয়। ব্লক সেটিংস অপরিবর্তিত থাকে।";
+
+"What Quick Block and schedules protect on this iPhone." = "কুইক ব্লক এবং সময়সূচি এই iPhone-এ কী সুরক্ষিত করে।";
+
+"Your completed focus sessions, protected time, and momentum." = "আপনার সম্পন্ন ফোকাস সেশন, সুরক্ষিত সময় এবং গতি।";
+
+"Your completed sessions, focus time, and streak will show up here." = "আপনার সম্পন্ন সেশন, ফোকাস সময় এবং ধারাবাহিকতা এখানে দেখাবে।";
+
+"Your current block has to finish before you can start another one." = "আরেকটি ব্লক শুরু করার আগে আপনার বর্তমান ব্লক শেষ হতে হবে।";
+
+"Your focus" = "আপনার ফোকাস";
+
+"Your focus flow" = "আপনার ফোকাস প্রক্রিয়া";
+
+"iCloud" = "iCloud";
+
+"iPhone + Macs" = "iPhone + Macs";
+
+"Delay" = "বিলম্ব";
+"Added %@. It will be used on the next Quick Block." = "%@ যোগ করা হয়েছে। এটি পরবর্তী কুইক ব্লকে ব্যবহার করা হবে।";
+"AntiScroll applies only the apps and websites you selected." = "AntiScroll শুধুমাত্র আপনার নির্বাচিত অ্যাপ ও ওয়েবসাইটে প্রয়োগ হয়।";
+"Block failed: %@" = "ব্লক করা যায়নি: %@";
+"Choose what to block" = "কী ব্লক করবেন তা বেছে নিন";
+"Device sync" = "ডিভাইস সিঙ্ক";
+"Step %d of %d" = "ধাপ %d / %d";
+"Use Screen Time protection on this device" = "এই ডিভাইসে স্ক্রিন টাইম সুরক্ষা ব্যবহার করুন";
+
+// Mac connection guide
+"How to connect a Mac" = "Mac কীভাবে সংযুক্ত করবেন";
+"Install the Companion, approve once, then select your Mac." = "Companion ইনস্টল করুন, একবার অনুমতি দিন, তারপর আপনার Mac বেছে নিন।";
+"Mac connection guide" = "Mac সংযোগ নির্দেশিকা";
+"Connect in a few quick steps. Your iPhone remains the source of truth." = "কয়েকটি সহজ ধাপে সংযোগ করুন। নিয়ন্ত্রণ আপনার iPhone থেকেই থাকবে।";
+"Open the Mac Companion" = "Mac Companion খুলুন";
+"Install and open AntiScroll Mac Companion on your Mac." = "আপনার Mac-এ AntiScroll Mac Companion ইনস্টল করে খুলুন।";
+"Use the same iCloud account" = "একই iCloud অ্যাকাউন্ট ব্যবহার করুন";
+"Make sure your iPhone and Mac use the same Apple Account and iCloud Drive is on." = "iPhone ও Mac-এ একই Apple Account ব্যবহার হচ্ছে এবং iCloud Drive চালু আছে কি না নিশ্চিত করুন।";
+"Approve administrator access" = "অ্যাডমিনিস্ট্রেটর অ্যাক্সেস অনুমোদন করুন";
+"When Mac blocking changes, approve the administrator prompt so the Companion can update protected system settings." = "Mac ব্লকিং বদলালে অ্যাডমিনিস্ট্রেটর অনুরোধ অনুমোদন করুন, যাতে Companion সুরক্ষিত সিস্টেম সেটিংস আপডেট করতে পারে।";
+"Select your Mac here" = "এখানে আপনার Mac বেছে নিন";
+"Return to Device Sync and tap your Mac under Connected devices." = "Device Sync-এ ফিরে Connected devices-এর নিচে আপনার Mac-এ ট্যাপ করুন।";
+"Keep the Companion running" = "Companion চালু রাখুন";
+"Leave it in the Mac menu bar. Selected websites will follow your iPhone Quick Blocks automatically." = "এটি Mac মেনু বারে চালু রাখুন। নির্বাচিত ওয়েবসাইটগুলো স্বয়ংক্রিয়ভাবে iPhone Quick Blocks অনুসরণ করবে।";
+"Mac not showing up?" = "Mac দেখা যাচ্ছে না?";
+"Keep the Mac Companion open, then return to this page to refresh the device list." = "Mac Companion খোলা রাখুন, তারপর ডিভাইস তালিকা রিফ্রেশ করতে এই পৃষ্ঠায় ফিরে আসুন।";
+"Connect in a few quick steps. Your iPhone controls what gets blocked." = "কয়েকটি সহজ ধাপে সংযোগ করুন। কী ব্লক হবে তা আপনার iPhone নিয়ন্ত্রণ করে।";
+"Use the same Apple Account" = "একই Apple Account ব্যবহার করুন";
+
+// Cross-device automatic sync
+"Added %@. It is syncing now." = "%@ যোগ করা হয়েছে। এখন সিঙ্ক হচ্ছে।";
+"Apps become websites automatically; schedules follow too." = "অ্যাপ থেকে স্বয়ংক্রিয়ভাবে ওয়েবসাইট যোগ হয়; সময়সূচিও সিঙ্ক হয়।";
+"Pick which devices should follow your iPhone Quick Blocks and schedules." = "কোন ডিভাইসগুলো আপনার iPhone-এর Quick Block ও সময়সূচি অনুসরণ করবে তা বেছে নিন।";
+"Your iPhone sends these websites and schedules to every selected Mac automatically." = "আপনার iPhone এই ওয়েবসাইট ও সময়সূচি প্রতিটি নির্বাচিত Mac-এ স্বয়ংক্রিয়ভাবে পাঠায়।";
+
+// Mac Companion download
+"Download Mac Companion" = "Mac Companion ডাউনলোড করুন";
+"Requires macOS 13 or later." = "macOS 13 বা পরবর্তী সংস্করণ প্রয়োজন।";
+"Copy this link and paste it into a browser on your Mac:" = "এই লিংকটি কপি করে আপনার Mac-এর ব্রাউজারে পেস্ট করুন:";
+"Copy link" = "লিংক কপি করুন";
+"Link copied" = "লিংক কপি হয়েছে";
+
+// Per-schedule protected devices
+"Protected on: %@" = "যেসব ডিভাইসে সুরক্ষিত: %@";
+"%d other device(s)" = "আরও %dটি ডিভাইস";
+"No devices" = "কোনো ডিভাইস নেই";
+"Protected devices" = "সুরক্ষিত ডিভাইস";
+"Choose where this schedule should activate automatically." = "এই সময়সূচি কোন ডিভাইসে স্বয়ংক্রিয়ভাবে চালু হবে তা বেছে নিন।";
+"Screen Time blocks on this iPhone" = "Screen Time এই iPhone-এ ব্লক করে";
+"Websites block automatically in the Mac Companion" = "Mac Companion-এ ওয়েবসাইট স্বয়ংক্রিয়ভাবে ব্লক হয়";
+"Follows this schedule automatically" = "এই সময়সূচি স্বয়ংক্রিয়ভাবে অনুসরণ করে";
+"No other connected devices yet. Connect devices in Settings → Device Sync." = "এখনও অন্য কোনো ডিভাইস সংযুক্ত নেই। Settings → Device Sync থেকে ডিভাইস সংযুক্ত করুন।";
+"Pick at least one protected device." = "অন্তত একটি সুরক্ষিত ডিভাইস বেছে নিন।";
+"Protected now" = "এখন সুরক্ষিত";
+"Ready" = "প্রস্তুত";
+
+// Localization coverage backlog
+"This iPhone" = "এই iPhone";
+"Create" = "তৈরি করুন";
+"15s" = "১৫ সেকেন্ড";
+"Delay Apps is off. Your normal blocks were not changed." = "Delay Apps বন্ধ। আপনার স্বাভাবিক ব্লকগুলো পরিবর্তন করা হয়নি।";
+"Delay Apps updated. Your block list was not changed." = "Delay Apps আপডেট হয়েছে। আপনার ব্লক তালিকা পরিবর্তন করা হয়নি।";
+"Add website, e.g. netflix.com" = "ওয়েবসাইট যোগ করুন, যেমন netflix.com";
+"Delay Apps is on. Chosen apps now pause for 15 seconds." = "Delay Apps চালু। নির্বাচিত অ্যাপ এখন ১৫ সেকেন্ড বিরতি নেয়।";
+"Choose at least one weekday." = "অন্তত একটি দিন বেছে নিন।";
+"Add" = "যোগ করুন";
+"Home" = "হোম";
+"Started %@: %@." = "%@ শুরু হয়েছে: %@।";
+"Use this duration" = "এই সময়কাল ব্যবহার করুন";
+"Close and stay focused" = "বন্ধ করুন এবং মনোযোগ ধরে রাখুন";
+"Take Back Your Time" = "আপনার সময় ফিরে পান";
+"Choose a blocklist, time, and repeat days." = "একটি ব্লক তালিকা, সময় এবং পুনরাবৃত্তির দিন বেছে নিন।";
+"On" = "চালু";
+"Start" = "শুরু করুন";
+
+// Reliable focus activation and flexible schedules
+"Schedule enabled" = "সময়সূচি চালু আছে";
+"Choose at least one app, category, or website before starting a block." = "ব্লক শুরু করার আগে অন্তত একটি অ্যাপ, বিভাগ বা ওয়েবসাইট বেছে নিন।";
+"Add at least one time period." = "অন্তত একটি সময়কাল যোগ করুন।";
+"A time period must have different start and end times." = "সময়কালের শুরু ও শেষের সময় আলাদা হতে হবে।";
+"Time periods cannot overlap, including across midnight." = "সময়কালগুলো ওভারল্যাপ করতে পারবে না, মধ্যরাত পার হলেও নয়।";
+"This schedule uses too many time periods. Use up to %d weekday periods." = "এই সময়সূচিতে অনেক বেশি সময়কাল আছে। সর্বোচ্চ %dটি সাপ্তাহিক সময়কাল ব্যবহার করুন।";
+"Screen Time did not accept the blocking rules. Try again after reopening AntiScroll." = "স্ক্রিন টাইম ব্লকিং নিয়ম গ্রহণ করেনি। AntiScroll আবার খুলে চেষ্টা করুন।";
+"Next day" = "পরের দিন";
+"Time periods by weekday" = "সপ্তাহের দিন অনুযায়ী সময়কাল";
+"Add one or more blocking periods to each day. Overnight periods end on the next day." = "প্রতিটি দিনে এক বা একাধিক ব্লকিং সময়কাল যোগ করুন। রাত পেরোনো সময়কাল পরের দিনে শেষ হয়।";
+"%d of %d weekday periods used" = "%dটির মধ্যে %dটি সাপ্তাহিক সময়কাল ব্যবহৃত";
+"Add time period" = "সময়কাল যোগ করুন";
+"Remove time period" = "সময়কাল সরান";
+"Ends the next day" = "পরের দিনে শেষ হয়";
+"Choose a blocklist, weekday time periods, and protected devices." = "একটি ব্লকলিস্ট, প্রতিদিনের সময়কাল এবং সুরক্ষিত ডিভাইস বেছে নিন।";
+"End" = "শেষ";

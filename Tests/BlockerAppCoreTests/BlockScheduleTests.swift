@@ -89,6 +89,32 @@ final class BlockScheduleTests: XCTestCase {
     }
 
 
+    func testFocusStatsRecordsOnlyElapsedProtectedMinutes() throws {
+        let calendar = Calendar(identifier: .gregorian)
+        let start = calendar.date(from: DateComponents(year: 2026, month: 5, day: 24, hour: 10, minute: 0))!
+        let stopped = calendar.date(from: DateComponents(year: 2026, month: 5, day: 24, hour: 10, minute: 25))!
+        let session = ImmediateBlockSession(start: start, durationMinutes: 480, calendar: calendar)
+
+        var stats = FocusStats()
+        stats.recordCompleted(session: session, completedAt: stopped, calendar: calendar)
+
+        XCTAssertEqual(stats.totalSessions, 1)
+        XCTAssertEqual(stats.totalPlannedMinutes, 25)
+        XCTAssertEqual(stats.totalHoursLabel, "0.4h")
+    }
+
+    func testFocusStatsRecordsFullMinutesOnlyWhenTimerFinishes() throws {
+        let calendar = Calendar(identifier: .gregorian)
+        let start = calendar.date(from: DateComponents(year: 2026, month: 5, day: 24, hour: 10, minute: 0))!
+        let session = ImmediateBlockSession(start: start, durationMinutes: 30, calendar: calendar)
+
+        var stats = FocusStats()
+        stats.recordCompleted(session: session, completedAt: session.end, calendar: calendar)
+
+        XCTAssertEqual(stats.totalSessions, 1)
+        XCTAssertEqual(stats.totalPlannedMinutes, 30)
+    }
+
     func testFocusStatsRecordsQuickBlockSessionsAndMinutes() {
         let calendar = Calendar(identifier: .gregorian)
         let start = calendar.date(from: DateComponents(year: 2026, month: 5, day: 17, hour: 14, minute: 30))!
@@ -139,6 +165,18 @@ final class BlockScheduleTests: XCTestCase {
         XCTAssertEqual(delay.message, "If you still want it, continue.")
     }
 
+
+    func testQuickBlockStartGuardBlocksReplacementWhileSessionIsActive() throws {
+        let calendar = Calendar(identifier: .gregorian)
+        let start = calendar.date(from: DateComponents(year: 2026, month: 5, day: 24, hour: 10, minute: 0))!
+        let activeSession = ImmediateBlockSession(start: start, durationMinutes: 480, calendar: calendar)
+        let now = calendar.date(from: DateComponents(year: 2026, month: 5, day: 24, hour: 10, minute: 30))!
+        let afterEnd = calendar.date(from: DateComponents(year: 2026, month: 5, day: 24, hour: 18, minute: 1))!
+
+        XCTAssertFalse(QuickBlockStartGuard.canStartNewBlock(existing: activeSession, now: now))
+        XCTAssertTrue(QuickBlockStartGuard.canStartNewBlock(existing: activeSession, now: afterEnd))
+        XCTAssertEqual(QuickBlockStartGuard.activeBlockMessage(existing: activeSession, now: now), "Focus already active — 450 min left.")
+    }
 
     func testQuickBlockPresetsOfferFourCompactDurations() {
         XCTAssertEqual(QuickBlockPreset.mainRow.map(\.title), ["Quick Reset", "Deep Work", "Study", "Sleep"])
@@ -258,6 +296,43 @@ final class BlockScheduleTests: XCTestCase {
         XCTAssertEqual(done.barText, "░░░░░░░░░░")
         XCTAssertEqual(mid.statusText, "7s left")
         XCTAssertEqual(done.statusText, "Ready")
+    }
+
+
+
+    func testCoreFlowExplainsTheMainUserPath() {
+        XCTAssertEqual(CoreFlowStep.all.map(\.tabName), ["Status", "Schedule", "Modes", "Progress"])
+        XCTAssertTrue(CoreFlowStep.status.message.contains("apps"))
+        XCTAssertTrue(CoreFlowStep.status.title.contains("Quick Block"))
+        XCTAssertTrue(CoreFlowStep.progress.message.contains("streaks"))
+    }
+
+    func testScreenTimePermissionCopyIsClearAndPrivacyFirst() {
+        let explainer = ScreenTimePermissionExplainer.standard
+
+        XCTAssertEqual(explainer.title, "Why Screen Time access?")
+        XCTAssertEqual(explainer.ctaTitle, "Allow Screen Time Access")
+        XCTAssertTrue(explainer.bullets.contains { $0.contains("cannot read") })
+        XCTAssertTrue(explainer.privacyLine.contains("stay on-device"))
+    }
+
+
+
+    func testBlockCoverageExplainerIsHonestAboutWebsitesAndDevices() {
+        let explainer = BlockCoverageExplainer.standard
+
+        XCTAssertTrue(explainer.websiteReminder.contains("same picker"))
+        XCTAssertTrue(explainer.bullets.contains { line in line.contains("youtube.com") })
+        XCTAssertTrue(explainer.deviceRows.contains { line in line.contains("iPhone") && line.contains("Screen Time") })
+        XCTAssertTrue(explainer.deviceRows.contains { line in line.contains("MacBook") && line.contains("auto-sync") })
+    }
+    func testPremiumAccessPolicyLimitsFreeQuickBlocksToTwoHours() {
+        XCTAssertEqual(PremiumAccessPolicy.maxFreeQuickBlockMinutes, 120)
+        XCTAssertEqual(PremiumAccessPolicy.premiumProductID, "com.benberther.BlockerApp.premium")
+        XCTAssertTrue(PremiumAccessPolicy.canStartQuickBlock(durationMinutes: 120, isPremium: false))
+        XCTAssertFalse(PremiumAccessPolicy.canStartQuickBlock(durationMinutes: 121, isPremium: false))
+        XCTAssertTrue(PremiumAccessPolicy.canStartQuickBlock(durationMinutes: 480, isPremium: true))
+        XCTAssertTrue(PremiumAccessPolicy.requiresPremiumForQuickBlock(durationMinutes: 480))
     }
 
 }

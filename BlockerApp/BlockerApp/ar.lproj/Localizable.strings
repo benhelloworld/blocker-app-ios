@@ -1,0 +1,725 @@
+"Porn & adult websites" = "المواقع الإباحية ومواقع البالغين";
+"Covers the most common porn sites and many more with Apple’s web filter." = "يشمل أشهر المواقع الإباحية والعديد غيرها باستخدام فلتر الويب من Apple.";
+"2h" = "2h";
+"30m" = "30m";
+"Accountability Receipt" = "إيصال المساءلة";
+"All focus tools unlocked" = "جميع أدوات التركيز مقفلة";
+"Apps & Websites" = "Apps & Websites";
+"Better long-term focus control" = "تحكم أفضل في التركيز على المدى الطويل";
+"Blocker Premium" = "مانع بريميوم";
+"Build automatic focus windows instead of starting every block manually." = "أنشئ نوافذ تركيز تلقائية بدلاً من بدء كل كتلة يدويًا.";
+"Buy Premium" = "شراء بريميوم";
+"Choose when the block should start and when your apps open again." = "اختر متى يجب أن يبدأ الحظر ومتى تفتح تطبيقاتك مرة أخرى.";
+"Daily Schedule" = "الجدول اليومي";
+"Deep Work" = "عمل عميق";
+"Delay Apps" = "تطبيقات التأخير";
+"FREE" = "FREE";
+"Focus Progress" = "تقدم التركيز";
+"Focus Templates" = "قوالب التركيز";
+"Free" = "حر";
+"Free Quick Blocks are capped at 2 hours. Premium removes the limit." = "يتم تحديد الحد الأقصى للكتل السريعة المجانية بساعتين. قسط يزيل الحد.";
+"Free user" = "مستخدم مجاني";
+"Modes" = "وسائط";
+"Native Apple purchase flow" = "تدفق الشراء الأصلي لشركة Apple";
+"No Premium purchase found." = "لم يتم العثور على عملية شراء مميزة.";
+"No local Premium unlock found yet." = "لم يتم العثور على فتح Premium محلي حتى الآن.";
+"PREMIUM" = "PREMIUM";
+"Pick the days this schedule should run automatically." = "اختر الأيام التي يجب أن يعمل فيها هذا الجدول تلقائيًا.";
+"Premium" = "غالي";
+"Premium Active" = "قسط نشط";
+"Premium Focus" = "التركيز المتميز";
+"Premium is already unlocked." = "تم فتح الإصدار المميز بالفعل.";
+"Premium purchase is not available in this build yet." = "الشراء المميز غير متوفر في هذا الإصدار حتى الآن.";
+"Premium purchase is not available yet." = "لم يتم تكوين الشراء المميز بعد في App Store Connect.";
+"Premium restored from this device." = "تمت استعادة قسط من هذا الجهاز.";
+"Premium restored." = "تمت استعادة قسط التأمين.";
+"Premium unlocked for testing." = "قسط مقفلة للاختبار.";
+"Premium unlocked." = "قسط مقفلة.";
+"Premium unlocks Quick Blocks longer than 2 hours." = "يفتح Premium عمليات الحظر السريع لمدة تزيد عن ساعتين.";
+"Premium unlocks scheduled and recurring blocks." = "يفتح Premium الكتل المجدولة والمتكررة.";
+"Premium user" = "مستخدم مميز";
+"Progress" = "تقدم";
+"Purchase cancelled." = "تم إلغاء الشراء.";
+"Purchase could not be verified." = "لا يمكن التحقق من الشراء.";
+"Purchase pending approval." = "الشراء في انتظار الموافقة.";
+"Purchase status changed. Please try Restore Purchases." = "تغيرت حالة الشراء. الرجاء محاولة استعادة المشتريات.";
+"Quick Block" = "Quick Block";
+"Quick Block is limited to 2 hours in the free version" = "يقتصر Quick Block على ساعتين في الإصدار المجاني";
+"Quick Block is the main action" = "Quick Block هو الإجراء الرئيسي";
+"Quick Block up to 2h" = "كتلة سريعة تصل إلى 2H";
+"Quick Reset" = "إعادة ضبط سريعة";
+"Recurring Blocks" = "الكتل المتكررة";
+"Recurring blocking sessions" = "جلسات الحظر المتكررة";
+"Recurring blocks are Premium" = "الكتل المتكررة مميزة";
+"Repeat on" = "كرر";
+"Repeat your focus sessions across the week with less effort." = "كرر جلسات التركيز الخاصة بك على مدار الأسبوع بجهد أقل.";
+"Reset clears only your progress stats and leaves blocking settings untouched." = "تؤدي إعادة الضبط إلى مسح إحصائيات تقدمك فقط وتترك إعدادات الحظر دون تغيير.";
+"Reset progress" = "إعادة تعيين التقدم";
+"Restore Purchases" = "استعادة المشتريات";
+"Save Scheduled Block" = "حفظ الكتلة المجدولة";
+"Save turns this setup into your active weekly blocking plan." = "حفظ يحول هذا الإعداد إلى خطة الحظر الأسبوعية النشطة الخاصة بك.";
+"Schedule" = "جدول";
+"Schedule is Premium" = "الجدول الزمني ممتاز";
+"Scheduled Blocks" = "الكتل المجدولة";
+"Scheduled blocking" = "الحظر المجدول";
+"Scheduled time" = "الوقت المقرر";
+"See your completed focus sessions turn into simple proof and momentum." = "شاهد جلسات التركيز المكتملة تتحول إلى دليل بسيط وزخم.";
+"Select what Quick Block and schedules should shield." = "حدد ما يجب أن تحميه Quick Block والجداول الزمنية.";
+"Selected apps show a short impulse pause instead of changing your main block list." = "تعرض التطبيقات المحددة توقفًا مؤقتًا قصيرًا بدلاً من تغيير قائمة الحظر الرئيسية.";
+"Serious focus" = "التركيز الجاد";
+"Set automatic blocking windows that protect the same apps and websites every week." = "قم بتعيين نوافذ الحظر التلقائي التي تحمي نفس التطبيقات ومواقع الويب كل أسبوع.";
+"Short reset" = "إعادة تعيين قصيرة";
+"Smart Suggestions" = "الاقتراحات الذكية";
+"Start %@ focus" = "ابدأ التركيز على %@";
+"Start Quick Block" = "ابدأ الحظر السريع";
+"Start a Quick Block" = "بدء الحظر السريع";
+"Start an immediate focus block with your current selection." = "ابدأ كتلة تركيز فورية مع تحديدك الحالي.";
+"Status" = "حالة";
+"Streak" = "أثَر";
+"Suggestions translate your recent patterns into calm next actions." = "تترجم الاقتراحات أنماطك الأخيرة إلى إجراءات تالية هادئة.";
+"Tap Unlock Premium to simulate purchase." = "اضغط على \"فتح الإصدار المميز\" لمحاكاة عملية الشراء.";
+"Templates give you ready-made focus setups for common moments." = "تمنحك القوالب إعدادات التركيز الجاهزة للحظات المشتركة.";
+"Test mode — no payment required yet." = "وضع الاختبار - لا يلزم الدفع بعد.";
+"The streak highlights consistency without adding pressure or shame." = "يسلط الخط الضوء على الاتساق دون إضافة أي ضغط أو خجل.";
+"These totals count sessions, protected time, and the days you showed up." = "تحسب هذه الإجماليات الجلسات والوقت المحمي والأيام التي ظهرت فيها.";
+"Unlimited Quick Block duration" = "مدة الحظر السريع غير محدودة";
+"Unlock Premium" = "فتح بريميوم";
+"Unlock Premium (Simulator)" = "فتح الإصدار المميز (المحاكي)";
+"Unlock Premium Focus" = "فتح التركيز المتميز";
+"Unlock longer Quick Blocks" = "فتح كتل سريعة أطول";
+"Use softer focus tools like delays, templates, and smart next steps." = "استخدم أدوات التركيز الأكثر ليونة مثل التأخيرات والقوالب والخطوات التالية الذكية.";
+"Use the full blocking system for deeper, long-term focus control." = "استخدم نظام الحجب الكامل للتحكم في التركيز بشكل أعمق وطويل الأمد.";
+"What Premium unlocks" = "ما يفتحه Premium";
+"Your latest finished block is summarized here so progress feels concrete." = "تم تلخيص أحدث قالب تم الانتهاء منه هنا حتى يبدو التقدم ملموسًا.";
+"Your totals" = "المجاميع الخاصة بك";
+"1 hour" = "1 ساعة";
+"%d hours" = "BLOCKERARGNNUMBER ساعة";
+"%@ hours" = "ساعات %@";
+"1 minute" = "1 دقيقة";
+"%d minutes" = "BLOCKERARGNNUMBER دقيقة";
+"90m" = "90m";
+"8h" = "8h";
+"Study" = "يذاكر";
+"Sleep" = "ينام";
+"Study session" = "جلسة دراسية";
+"Sleep shield" = "درع النوم";
+"Custom" = "مخصص";
+"Selected • %@" = "تم التحديد • %@";
+"seconds" = "ثوانٍ";
+"Continue intentionally" = "تواصل عمدا";
+"Still waiting…" = "لازلت أنتظر…";
+"No, stay focused" = "لا، استمر في التركيز";
+"Shortcut pause" = "توقف الاختصار";
+"Optional: create an iPhone Shortcuts automation so opening a distracting app launches Blocker’s 15-second pause." = "اختياري: قم بإنشاء أتمتة لاختصارات iPhone بحيث يؤدي فتح تطبيق مشتت للانتباه إلى تشغيل توقف Blocker لمدة 15 ثانية.";
+"Open Shortcuts → Automation" = "افتح الاختصارات → الأتمتة";
+"Choose App → pick the distracting app" = "اختر التطبيق → اختر التطبيق المشتت للانتباه";
+"Set Run Immediately, then add Blocker Pause" = "قم بتعيين \"التشغيل فورًا\"، ثم قم بإضافة \"إيقاف مؤقت للحظر\".";
+"Apple requires you to create this automation manually. Blocker cannot silently set it up for you." = "تطلب Apple منك إنشاء هذه الأتمتة يدويًا. لا يمكن لـ Blocker إعداده لك بصمت.";
+"Do you really want to open the app?" = "هل تريد حقًا فتح التطبيق؟";
+"Think about what you had planned." = "فكر في ما خططت له.";
+"Delay Apps is active" = "تطبيقات التأخير نشطة";
+"Selected apps show a 15-second shield." = "تعرض التطبيقات المحددة درعًا مدته 15 ثانية.";
+"Turn on after choosing apps to delay." = "قم بالتشغيل بعد اختيار التطبيقات للتأخير.";
+"Choose Apps to Delay" = "اختر التطبيقات للتأخير";
+"Edit Delay Apps" = "تحرير تطبيقات التأخير";
+"Preview 15 second timer" = "معاينة 15 ثانية الموقت";
+"Delay Apps uses Apple Screen Time app selection and is available in the iOS app target." = "تستخدم Delay Apps تحديد تطبيق Apple Screen Time وهي متاحة في تطبيق iOS المستهدف.";
+"Skip" = "تخطي";
+"Start using Blocker" = "ابدأ استخدام Blocker";
+"Next" = "التالي";
+"Close" = "إغلاق";
+"Loading…" = "جارٍ التحميل…";
+"Screen Time Access" = "Screen Time Access";
+"First, allow Screen Time access so Blocker can shield your choices." = "First, allow Screen Time access so Blocker can shield your choices.";
+"Tap this button to choose the iPhone apps, categories, and websites you want blocked." = "Tap this button to choose the iPhone apps, categories, and websites you want blocked.";
+"Connect your Mac" = "Connect your Mac";
+"Optional: select your Mac so iPhone Quick Blocks can also send website blocks there automatically." = "Optional: select your Mac so iPhone Quick Blocks can also send website blocks there automatically.";
+"Set the recurring time window for automatic blocking." = "Set the recurring time window for automatic blocking.";
+"Track completed sessions, protected time, focus days, and streaks here." = "Track completed sessions, protected time, focus days, and streaks here.";
+"Use Delay Apps, templates, and calm suggestions separately from Quick Block." = "Use Delay Apps, templates, and calm suggestions separately from Quick Block.";
+"Pause first" = "توقف أولاً";
+"Keep block" = "إبقاء الحظر";
+"Now answer honestly." = "أجب بصدق الآن.";
+"Take a slow breath before unlocking." = "خذ نفسًا بطيئًا قبل الفتح.";
+"This short pause adds friction so stopping a block is intentional, not automatic." = "This short pause adds friction so stopping a block is intentional, not automatic.";
+"Questions unlock after the breathing timer." = "تُفتح الأسئلة بعد مؤقت التنفس.";
+"What’s your reason for the block?" = "ما سبب بدء هذا الحظر؟";
+"Example: Finish deep work, study, sleep" = "مثال: إنهاء عمل عميق، الدراسة، النوم";
+"Why do you want to stop it?" = "لماذا تريد إيقافه؟";
+"Write your reason" = "اكتب سببك";
+"Unlock and stop block" = "فتح وإيقاف الحظر";
+"You can stop the block now." = "يمكنك إيقاف الحظر الآن.";
+"Answer both questions to unlock the stop button." = "أجب عن السؤالين لفتح زر الإيقاف.";
+"Bored" = "ملل";
+"Stressed" = "توتر";
+"Tired" = "تعب";
+"Habit" = "عادة";
+"Need something important" = "Need something important";
+"Other" = "أخرى";
+"Premium button tapped — simulated unlock running." = "Premium button tapped — simulated unlock running.";
+
+/* Blocklists and scheduled active block */
+"Choose blocklist" = "اختر قائمة الحظر";
+"Create reusable lists like Social without YouTube or Deep Work, then attach the right list to this schedule." = "أنشئ قوائم قابلة لإعادة الاستخدام مثل تواصل بلا يوتيوب أو عمل عميق، ثم اربط القائمة المناسبة بهذا الجدول.";
+"No blocklists yet" = "لا توجد قوائم حظر بعد";
+"Create your first list of apps, categories, and websites for scheduled blocks." = "أنشئ أول قائمة من التطبيقات والفئات والمواقع للحظر المجدول.";
+"Create a blocklist" = "إنشاء قائمة حظر";
+"Create Blocklist" = "إنشاء قائمة حظر";
+"Blocklist name" = "اسم قائمة الحظر";
+"Social without YouTube" = "تواصل بلا يوتيوب";
+"Blocked apps & websites" = "التطبيقات والمواقع المحظورة";
+"Add or remove apps" = "إضافة أو إزالة التطبيقات";
+"Blocklist created." = "تم إنشاء قائمة الحظر.";
+"Scheduled focus is active" = "التركيز المجدول نشط";
+"Stay locked in" = "ابقَ مركزًا";
+"Your scheduled block is running. AntiScroll stays locked until the window ends." = "الحظر المجدول يعمل الآن. سيبقى AntiScroll مقفلاً حتى تنتهي الفترة.";
+"Scheduled block ends at %@" = "ينتهي الحظر المجدول عند %@";
+"Bypass protection" = "حماية من التجاوز";
+"Editing schedules and app lists is disabled while this scheduled block is active. You can change future blocks after the timer finishes." = "تعطّل تعديل الجداول وقوائم التطبيقات أثناء نشاط هذا الحظر المجدول. يمكنك تغيير الحظورات المستقبلية بعد انتهاء المؤقت.";
+"Stay with the plan. Your future self asked for this." = "التزم بالخطة. نفسك المستقبلية طلبت هذا.";
+"The urge will pass. The block is doing its job." = "ستمر الرغبة. الحظر يقوم بعمله.";
+"This is the moment you chose focus over impulse." = "هذه هي اللحظة التي تختار فيها التركيز بدل الاندفاع.";
+"Keep going. Boredom is often the doorway back to attention." = "استمر. الملل غالبًا هو الباب للعودة إلى الانتباه.";
+"You are not missing out — you are protecting your time." = "أنت لا تفوّت شيئًا — أنت تحمي وقتك.";
+
+"Monthly" = "شهري";
+
+"Yearly" = "سنوي";
+
+"€2/month" = "٢ يورو/شهر";
+
+"€20/year" = "٢٠ يورو/سنة";
+
+"Flexible monthly access" = "وصول شهري مرن";
+
+"Save compared with monthly" = "وفّر مقارنة بالخطة الشهرية";
+
+"Continue" = "متابعة";
+
+"Your subscription is active." = "اشتراكك نشط.";
+
+"Loading subscription options…" = "جارٍ تحميل خيارات الاشتراك…";
+
+"Premium subscriptions are not configured yet. Please try again later." = "اشتراكات Premium غير مهيأة بعد. حاول مرة أخرى لاحقًا.";
+
+"Could not load subscriptions." = "تعذر تحميل الاشتراكات.";
+
+"Premium is already active." = "Premium نشط بالفعل.";
+
+"Premium subscriptions are not available yet. Please try again later." = "اشتراكات Premium غير متاحة بعد. حاول مرة أخرى لاحقًا.";
+
+"We could not confirm an active subscription yet. Please try Restore Purchases." = "لم نتمكن بعد من تأكيد اشتراك نشط. جرّب استعادة المشتريات.";
+
+"No active Premium subscription found." = "لم يتم العثور على اشتراك Premium نشط.";
+
+"%@ Please try again or restore purchases." = "%@ حاول مرة أخرى أو استعد المشتريات.";
+
+"Maybe Later" = "ربما لاحقًا";
+
+"Get your focus back for less than a cup of coffee." = "استعد تركيزك بأقل من ثمن فنجان قهوة.";
+
+"Choose your plan" = "اختر خطتك";
+
+"Best value" = "أفضل قيمة";
+
+"What Premium includes" = "ما الذي يتضمنه Premium";
+
+"Scheduled focus blocks" = "حظر تركيز مجدول";
+
+"Recurring focus routines" = "روتينات تركيز متكررة";
+
+"Stronger long-term focus control" = "تحكم أقوى في التركيز على المدى الطويل";
+
+"AntiScroll Premium" = "AntiScroll Premium";
+
+"SUBSCRIPTION" = "اشتراك";
+
+"ACTIVE" = "نشط";
+
+"Start a focus block here when you need protection right now." = "Start a focus block here when you need protection right now.";
+
+"Subscription options unavailable" = "Subscription options unavailable";
+
+"What unlocks after Premium" = "What unlocks after Premium";
+
+"What changes after Premium" = "What changes after Premium";
+
+"Premium tools you unlock" = "Premium tools you unlock";
+
+"Create named app lists for schedules." = "Create named app lists for schedules.";
+
+"Pick recurring days and time windows." = "Pick recurring days and time windows.";
+
+"Show an active scheduled-block timer when protection is running." = "Show an active scheduled-block timer when protection is running.";
+
+"Use Quick Blocks longer than 2 hours." = "Use Quick Blocks longer than 2 hours.";
+
+"Keep active blocks commitment-locked." = "Keep active blocks commitment-locked.";
+
+"Combine Quick Block with stronger weekly routines." = "Combine Quick Block with stronger weekly routines.";
+
+"Build recurring focus routines." = "Build recurring focus routines.";
+
+"Track long-term focus progress." = "Track long-term focus progress.";
+
+"Use delay tools and templates for calmer control." = "Use delay tools and templates for calmer control.";
+
+"You vs. you" = "You vs. you";
+
+"Protect your attention before the scroll wins." = "Protect your attention before the scroll wins.";
+
+"Less impulse. More intention." = "Less impulse. More intention.";
+
+"A calmer way back to focus." = "A calmer way back to focus.";
+
+"Choose your attention" = "Choose your attention";
+
+"Start small. Stay with it." = "Start small. Stay with it.";
+
+"Why Screen Time access?" = "Why Screen Time access?";
+
+"Apple requires this permission before Blocker can shield selected apps and websites." = "Apple requires this permission before Blocker can shield selected apps and websites.";
+
+"Needed to show Apple’s app and website picker." = "Needed to show Apple’s app and website picker.";
+
+"Needed to apply shields during quick blocks and schedules." = "Needed to apply shields during quick blocks and schedules.";
+
+"Blocker cannot read your messages, browsing history, or private app content." = "Blocker cannot read your messages, browsing history, or private app content.";
+
+"Your choices stay on-device and are saved privately in the app group." = "Your choices stay on-device and are saved privately in the app group.";
+
+"Allow Screen Time Access" = "Allow Screen Time Access";
+
+"Access granted" = "Access granted";
+
+"Apple’s Screen Time picker is available on the iPhone app target." = "Apple’s Screen Time picker is available on the iPhone app target.";
+
+"Websites sent to Mac" = "Websites sent to Mac";
+
+"Only these exact websites are sent to the Mac. Nothing is added automatically." = "Only these exact websites are sent to the Mac. Nothing is added automatically.";
+
+"Apply iPhone Quick Blocks on this laptop" = "Use Screen Time protection on this device";
+
+"Sync ready: sent %d selected website(s) for this %@ block." = "Sync ready: sent %d selected website(s) for this %@ block.";
+
+"Normal" = "عادي";
+"Strong" = "قوي";
+"30 sec pause + reflection" = "30 sec pause + reflection";
+
+"Premium commitment with one emergency exit per day" = "Premium commitment with one emergency exit per day";
+
+"Block strength" = "Block strength";
+
+"Strong is Premium" = "Strong is Premium";
+
+"Use emergency exit" = "Use emergency exit";
+
+"Strong exit" = "خروج الوضع القوي";
+"Normal blocks ask for a short pause, honest reflection, then one final wait before stopping." = "تطلب الحظرات العادية توقفًا قصيرًا وتفكيرًا صادقًا، ثم انتظارًا أخيرًا قبل الإيقاف.";
+"Strong Mode gives you one calm emergency exit per day. Use it only when it truly matters." = "يوفر الوضع القوي خروجًا طارئًا هادئًا واحدًا يوميًا. استخدمه فقط عندما يكون الأمر مهمًا حقًا.";
+"%d emergency exit left today" = "بقي %d خروج طارئ اليوم";
+"No emergency exits left today" = "لم يتبقَ أي خروج طارئ اليوم";
+"Strong Mode is locked in for today. This block can finish naturally." = "الوضع القوي مقفل لهذا اليوم. يمكن أن ينتهي هذا الحظر تلقائيًا.";
+"Final check: %d seconds left" = "الفحص الأخير: بقي %d ثانية";
+"Start final pause" = "بدء التوقف الأخير";
+"One final pause keeps stopping intentional." = "توقف أخير يجعل الإيقاف قرارًا واعيًا.";
+"Stay here for the final check, or keep the block." = "ابق هنا للفحص الأخير، أو أبقِ الحظر.";
+"Use emergency exit and stop block." = "استخدم الخروج الطارئ وأوقف الحظر.";
+"You have used today’s emergency exit." = "لقد استخدمت خروج الطوارئ لهذا اليوم.";
+"Started a %@ block." = "Started a %@ block.";
+
+"Quick block stopped." = "Quick block stopped.";
+
+"Quick block stopped. Progress recorded as elapsed protected time." = "Quick block stopped. Progress recorded as elapsed protected time.";
+
+"Quick block stopped after reflection." = "Quick block stopped after reflection.";
+
+"Emergency exit used. Strong block stopped." = "Emergency exit used. Strong block stopped.";
+
+"30 sec pause" = "استراحة 30 ثانية";
+"1 emergency exit/day" = "خروج طارئ واحد/اليوم";
+"Study Sprint" = "دفعة دراسة";
+"Sleep Wind Down" = "تهدئة للنوم";
+"Quick Reset started" = "بدأت إعادة الضبط السريعة";
+"Deep Work started" = "بدأ العمل العميق";
+"Study Sprint started" = "بدأت دفعة الدراسة";
+"Sleep Wind Down started" = "بدأت تهدئة النوم";
+
+/* StoreKit plan switching */
+"Current Plan" = "الخطة الحالية";
+"Switch Plan" = "تغيير الخطة";
+"This is your active plan." = "هذه هي خطتك النشطة.";
+"Switch to the selected plan." = "بدّل إلى الخطة المحددة.";
+"Manage Plan" = "إدارة الخطة";
+
+/* Shortcut setup instructions */
+"Setup instructions" = "تعليمات الإعداد";
+"Open the full Shortcuts setup guide." = "افتح دليل إعداد الاختصارات الكامل.";
+"Shortcut pause setup" = "إعداد توقف الاختصارات";
+"Follow these steps once in Apple Shortcuts so AntiScroll can show the 15-second pause when you open a distracting app." = "اتبع هذه الخطوات مرة واحدة في اختصارات Apple حتى يتمكن AntiScroll من إظهار توقف لمدة 15 ثانية عند فتح تطبيق مشتت.";
+"Open Apple Shortcuts, then tap the Automation tab." = "افتح اختصارات Apple، ثم اضغط على تبويب الأتمتة.";
+"Create a new app automation" = "أنشئ أتمتة تطبيق جديدة";
+"Tap +, choose App, then select the app that usually distracts you." = "اضغط على +، اختر التطبيق، ثم حدد التطبيق الذي يشتتك عادةً.";
+"Use the opened trigger" = "استخدم مشغل الفتح";
+"Select Is Opened, then choose Run Immediately so the pause starts without another prompt." = "حدد عند الفتح، ثم اختر التشغيل فورًا حتى يبدأ التوقف بدون مطالبة أخرى.";
+"Add Blocker Pause" = "أضف Blocker Pause";
+"Tap Next, add the Blocker Pause action, then save the automation." = "اضغط التالي، أضف إجراء Blocker Pause، ثم احفظ الأتمتة.";
+"Repeat for more apps" = "كرر ذلك لمزيد من التطبيقات";
+"Apple requires one manual automation setup for each distracting app you want to delay." = "تطلب Apple إعداد أتمتة يدويًا لكل تطبيق مشتت تريد تأخيره.";
+"Apple requires you to create this automation manually. AntiScroll cannot silently set it up for you." = "تطلب Apple إنشاء هذه الأتمتة يدويًا. لا يستطيع AntiScroll إعدادها لك بصمت.";
+"Done" = "تم";
+
+/* Shortcut automation improvements */
+"Open it" = "Open it";
+"Tip: add the app URL in Shortcuts if you want Open it to jump straight back." = "Tip: add the app URL in Shortcuts if you want Open it to jump straight back.";
+"Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused." = "Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused.";
+"Select Is Opened, choose Run Immediately, and turn off Notify When Run so no Shortcuts notification appears." = "Select Is Opened, choose Run Immediately, and turn off Notify When Run so no Shortcuts notification appears.";
+"Tap Next, add the Blocker Pause action, then save the automation. AntiScroll should open automatically." = "Tap Next, add the Blocker Pause action, then save the automation. AntiScroll should open automatically.";
+"Optional: add a return URL" = "Optional: add a return URL";
+"If you know the app’s URL scheme, add it to Return URL so Open it can jump straight back after the pause." = "If you know the app’s URL scheme, add it to Return URL so Open it can jump straight back after the pause.";
+"Important: Delay Apps should only be used for apps that are not also in your active block list. If an app is blocked by Quick Block or Schedule, Apple will show the hard block instead of the delay pause." = "Important: Delay Apps should only be used for apps that are not also in your active block list. If an app is blocked by Quick Block or Schedule, Apple will show the hard block instead of the delay pause.";
+
+"Add a Return URL in Shortcuts first so AntiScroll knows which app to open." = "Add a Return URL in Shortcuts first so AntiScroll knows which app to open.";
+"AntiScroll could not open that URL. Check the Return URL in Shortcuts." = "AntiScroll could not open that URL. Check the Return URL in Shortcuts.";
+"Add Should Pause?" = "Add Should Pause?";
+"Add AntiScroll’s Should Pause? action first. It returns No once after you tap Open it, which prevents the automation from looping." = "Add AntiScroll’s Should Pause? action first. It returns No once after you tap Open it, which prevents the automation from looping.";
+"Add an If block" = "Add an If block";
+"Use If Should Pause? is Yes, then run Blocker Pause. Leave Otherwise empty." = "Use If Should Pause? is Yes, then run Blocker Pause. Leave Otherwise empty.";
+"Inside the If block, add Blocker Pause. Add the app’s Return URL, for example youtube:// or instagram://, so Open it can jump back." = "Inside the If block, add Blocker Pause. Add the app’s Return URL, for example youtube:// or instagram://, so Open it can jump back.";
+"Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused. The If step prevents a second delay when you choose Open it." = "Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused. The If step prevents a second delay when you choose Open it.";
+"AntiScroll could not allow that app yet. Please try once more." = "AntiScroll could not allow that app yet. Please try once more.";
+"If this opened from the blocked app screen, tap Open it after the pause, then open the app once more." = "If this opened from the blocked app screen, tap Open it after the pause, then open the app once more.";
+"No emergency exits left today." = "No emergency exits left today.";
+"remaining" = "remaining";
+"Terms of Use" = "شروط الاستخدام";
+"Privacy Policy" = "سياسة الخصوصية";
+"Subscription renews automatically unless cancelled at least 24 hours before the end of the current period." = "يتجدد الاشتراك تلقائيًا ما لم يتم إلغاؤه قبل 24 ساعة على الأقل من نهاية الفترة الحالية.";
+"1 month subscription" = "اشتراك لمدة شهر واحد";
+"1 year subscription" = "اشتراك لمدة سنة واحدة";
+
+"Automatically from your apps" = "تلقائيًا من تطبيقاتك";
+
+"Pick apps" = "اختيار التطبيقات";
+
+"No apps picked yet — tap Pick apps to choose from your recently used apps." = "لم تختر أي تطبيقات بعد — اضغط على «اختيار التطبيقات» للاختيار من تطبيقاتك المستخدمة مؤخرًا.";
+
+"Only checked domains are sent to selected Macs when Quick Block starts." = "يتم إرسال النطاقات المحددة فقط إلى أجهزة Mac المختارة عند بدء Quick Block.";
+
+"Websites of the apps you picked are added automatically. No manual step needed." = "تتم إضافة مواقع التطبيقات التي اخترتها تلقائيًا. لا حاجة لأي خطوة يدوية.";
+
+"Websites you pick manually, plus the websites of apps you add from your app list — all sent to your Mac automatically." = "المواقع التي تختارها يدويًا، بالإضافة إلى مواقع التطبيقات في قائمتك — تُرسل جميعها تلقائيًا إلى Mac.";
+
+"Pick which devices should follow your iPhone Quick Block." = "اختر الأجهزة التي يجب أن تتبع Quick Block الخاص بك على iPhone.";
+
+"Websites are blocked on this Mac automatically" = "يتم حظر المواقع على هذا Mac تلقائيًا";
+
+"Follows your blocks on this device automatically" = "يتبع عمليات الحظر الخاصة بك على هذا الجهاز تلقائيًا";
+
+"This iPad" = "هذا iPad";
+
+"This Device" = "هذا الجهاز";
+
+"Auto-add websites" = "إضافة المواقع تلقائيًا";
+
+"%@ – %@" = "%@ – %@";
+
+"%d apps" = "%d تطبيقات";
+
+"%d categories" = "%d فئات";
+
+"%d device(s) follow your blocks" = "%d جهاز (أجهزة) يتبع حظرك";
+
+"%d websites" = "%d مواقع ويب";
+
+"15-second pause" = "إيقاف مؤقت 15 ثانية";
+
+"24h" = "24 ساعة";
+
+"30 min" = "30 دقيقة";
+
+"30 min – 24 hours" = "30 دقيقة – 24 ساعة";
+
+"A simple flow: choose what to protect, start a block, automate it, then review your progress." = "تدفق بسيط: اختر ما تريد حمايته، ابدأ الحظر، أتمتته، ثم راجع تقدمك.";
+
+"Account" = "الحساب";
+
+"Active" = "نشط";
+
+"Active on %@." = "نشط في %@.";
+
+"Active schedule" = "جدول نشط";
+
+"Allow Screen Time access to start blocking." = "اسمح بالوصول إلى وقت الشاشة لبدء الحظر.";
+
+"An active longer block cannot be replaced by a shorter one." = "لا يمكن استبدال حظر نشط أطول بحظر أقصر.";
+
+"AntiScroll can shield selected apps and websites." = "يمكن لـ AntiScroll حماية التطبيقات والمواقع المحددة.";
+
+"AntiScroll cannot read your messages, browsing history, or private app content." = "لا يمكن لـ AntiScroll قراءة رسائلك أو سجل التصفح أو المحتوى الخاص للتطبيقات.";
+
+"App language" = "لغة التطبيق";
+
+"Apps, categories, and websites" = "التطبيقات والفئات والمواقع";
+
+"Automatic blocking windows that protect the same apps and websites every week." = "نوافذ حظر تلقائية تحمي نفس التطبيقات والمواقع كل أسبوع.";
+
+"Blocked content" = "المحتوى المحظور";
+
+"Blocklist: %@" = "قائمة الحظر: %@";
+
+"Blocklists are available only in the iOS app target." = "قوائم الحظر متاحة فقط في تطبيق iOS.";
+
+"Calm next steps based on your recent focus patterns." = "خطوات تالية هادئة بناءً على أنماط تركيزك الأخيرة.";
+
+"Cancel" = "إلغاء";
+
+"Choose Apps and Websites" = "اختيار التطبيقات والمواقع";
+
+"Choose a blocklist" = "اختر قائمة حظر";
+
+"Choose a length" = "اختر المدة";
+
+"Choose how long you want selected distractions blocked." = "اختر المدة التي تريد حظر المشتتات المحددة خلالها.";
+
+"Choose repeat days" = "اختر أيام التكرار";
+
+"Choose start and end time" = "اختر وقت البدء والانتهاء";
+
+"Clears focus stats only." = "يمسح إحصائيات التركيز فقط.";
+
+"Completed sessions" = "الجلسات المكتملة";
+
+"Connected devices" = "الأجهزة المتصلة";
+
+"Create Schedule" = "إنشاء جدول";
+
+"Create a recurring block so focus happens automatically — no need to start it every time." = "أنشئ حظرًا متكررًا ليحدث التركيز تلقائيًا — دون الحاجة لبدءه في كل مرة.";
+
+"Current device" = "الجهاز الحالي";
+
+"Custom app and website list" = "قائمة مخصصة من التطبيقات والمواقع";
+
+"Custom quick block" = "حظر سريع مخصص";
+
+"Device Sync" = "مزامنة الأجهزة";
+
+"Duration" = "المدة";
+
+"Edit Apps and Websites" = "تعديل التطبيقات والمواقع";
+
+"Edit Schedule" = "تعديل الجدول";
+
+"Edit schedule" = "تعديل الجدول";
+
+"Enter a valid website like youtube.com." = "أدخل موقعًا صالحًا مثل youtube.com.";
+
+"Focus Modes" = "أوضاع التركيز";
+
+"Focus locked" = "التركيز مقفل";
+
+"Focus now" = "ركّز الآن";
+
+"Focus time" = "وقت التركيز";
+
+"Follows your iPhone language automatically." = "يتبع لغة iPhone تلقائيًا.";
+
+"Four quick steps: blocklist, time, days, save." = "أربع خطوات سريعة: القائمة، الوقت، الأيام، الحفظ.";
+
+"Help and setup" = "المساعدة والإعداد";
+
+"How the app works" = "كيف يعمل التطبيق";
+
+"Language" = "اللغة";
+
+"Last session" = "الجلسة الأخيرة";
+
+"Mac websites" = "مواقع Mac";
+
+"Manage the domains your Mac blocks during Quick Block." = "إدارة النطاقات التي يحظرها Mac أثناء الحظر السريع.";
+
+"Manual websites" = "مواقع يدوية";
+
+"Needs Screen Time access" = "يتطلب الوصول إلى وقت الشاشة";
+
+"Needs access" = "يتطلب الوصول";
+
+"New schedule" = "جدول جديد";
+
+"No Macs connected yet. Open the AntiScroll Mac Companion on your Mac to register it." = "لا توجد أجهزة Mac متصلة بعد. افتح AntiScroll Mac Companion على جهاز Mac لتسجيله.";
+
+"No apps or websites selected yet" = "لم يتم تحديد أي تطبيقات أو مواقع بعد";
+
+"No focus sessions yet" = "لا توجد جلسات تركيز بعد";
+
+"No schedule yet" = "لا يوجد جدول بعد";
+
+"Off" = "إيقاف";
+
+"Only this iPhone — no Macs connected" = "هذا iPhone فقط — لا توجد أجهزة Mac متصلة";
+
+"Pick a length, choose your block strength, then press Start Focus." = "اختر مدة وقوة الحظر، ثم اضغط على بدء التركيز.";
+
+"Pick a preset like Reset, Deep Work, Study, or Sleep — or set a custom duration." = "اختر إعدادًا مثل إعادة الضبط أو العمل العميق أو الدراسة أو النوم — أو حدد مدة مخصصة.";
+
+"Pick at least one day to save this schedule." = "اختر يومًا واحدًا على الأقل لحفظ هذا الجدول.";
+
+"Pick devices that follow your blocks and manage websites sent to Mac." = "اختر الأجهزة التي تتبع حظرك وأدر المواقع المرسلة إلى Mac.";
+
+"Press start" = "اضغط على بدء";
+
+"Privacy" = "الخصوصية";
+
+"Progress reset." = "تمت إعادة تعيين التقدم.";
+
+"Protected" = "محمي";
+
+"Protection status" = "حالة الحماية";
+
+"Ready-made focus setups for common moments. Starting one uses your current selection." = "إعدادات تركيز جاهزة للحظات الشائعة. يبدأ أحدها باستخدام اختيارك الحالي.";
+
+"Ready-made setups for work, study, sleep, and more." = "إعدادات جاهزة للعمل والدراسة والنوم والمزيد.";
+
+"Reset" = "إعادة تعيين";
+
+"Reset progress?" = "إعادة تعيين التقدم؟";
+
+"Restore Premium on this device." = "استعادة Premium على هذا الجهاز.";
+
+"Save" = "حفظ";
+
+"Schedule turned off." = "تم إيقاف الجدول.";
+
+"Schedule turned on." = "تم تشغيل الجدول.";
+
+"Screen Time" = "وقت الشاشة";
+
+"Screen Time access is on" = "الوصول إلى وقت الشاشة مفعّل";
+
+"Selected apps show a short impulse pause instead of a hard block." = "تعرض التطبيقات المحددة إيقافًا مؤقتًا قصيرًا بدلاً من الحظر الصارم.";
+
+"Settings" = "الإعدادات";
+
+"Softer focus tools: delays, templates, and smart next steps." = "أدوات تركيز أكثر لطفًا: التأخيرات والقوالب والخطوات التالية الذكية.";
+
+"Start here" = "ابدأ من هنا";
+
+"Start your first focus session" = "ابدأ أول جلسة تركيز لك";
+
+"Stay committed" = "ابقَ ملتزمًا";
+
+"Strong block active" = "الحظر الصارم نشط";
+
+"Subscription" = "الاشتراك";
+
+"The focus flow in four short steps." = "تدفق التركيز في أربع خطوات قصيرة.";
+
+"This clears your focus stats only. Blocking settings stay untouched." = "يمسح هذا إحصائيات التركيز فقط. تبقى إعدادات الحظر دون تغيير.";
+
+"What Quick Block and schedules protect on this iPhone." = "ما يحميه الحظر السريع والجداول على هذا iPhone.";
+
+"Your completed focus sessions, protected time, and momentum." = "جلسات التركيز المكتملة والوقت المحمي وزخمك.";
+
+"Your completed sessions, focus time, and streak will show up here." = "ستظهر هنا جلساتك المكتملة ووقت التركيز وسلسلتك.";
+
+"Your current block has to finish before you can start another one." = "يجب أن ينتهي الحظر الحالي قبل أن تبدأ حظرًا آخر.";
+
+"Your focus" = "تركيزك";
+
+"Your focus flow" = "تدفق التركيز الخاص بك";
+
+"iCloud" = "iCloud";
+
+"iPhone + Macs" = "iPhone + أجهزة Mac";
+
+"Delay" = "تأخير";
+"Added %@. It will be used on the next Quick Block." = "تمت إضافة %@. سيتم استخدامه في الحظر السريع التالي.";
+"AntiScroll applies only the apps and websites you selected." = "يطبّق AntiScroll الحظر على التطبيقات والمواقع التي اخترتها فقط.";
+"Block failed: %@" = "فشل الحظر: %@";
+"Choose what to block" = "اختر ما تريد حظره";
+"Device sync" = "مزامنة الأجهزة";
+"Step %d of %d" = "الخطوة %d من %d";
+"Use Screen Time protection on this device" = "استخدام حماية مدة استخدام الجهاز على هذا الجهاز";
+
+// Mac connection guide
+"How to connect a Mac" = "كيفية توصيل جهاز Mac";
+"Install the Companion, approve once, then select your Mac." = "ثبّت التطبيق المصاحب، وامنحه الإذن مرة واحدة، ثم اختر جهاز Mac.";
+"Mac connection guide" = "دليل توصيل Mac";
+"Connect in a few quick steps. Your iPhone remains the source of truth." = "أكمل الاتصال في بضع خطوات. يظل iPhone جهاز التحكم الرئيسي.";
+"Open the Mac Companion" = "افتح التطبيق المصاحب على Mac";
+"Install and open AntiScroll Mac Companion on your Mac." = "ثبّت AntiScroll Mac Companion وافتحه على جهاز Mac.";
+"Use the same iCloud account" = "استخدم حساب iCloud نفسه";
+"Make sure your iPhone and Mac use the same Apple Account and iCloud Drive is on." = "تأكد من استخدام حساب Apple نفسه على iPhone وMac ومن تشغيل iCloud Drive.";
+"Approve administrator access" = "وافق على وصول المسؤول";
+"When Mac blocking changes, approve the administrator prompt so the Companion can update protected system settings." = "عند تغيير الحظر على Mac، وافق على طلب المسؤول ليتمكن التطبيق المصاحب من تحديث إعدادات النظام المحمية.";
+"Select your Mac here" = "اختر جهاز Mac هنا";
+"Return to Device Sync and tap your Mac under Connected devices." = "ارجع إلى مزامنة الأجهزة واضغط على جهاز Mac ضمن الأجهزة المتصلة.";
+"Keep the Companion running" = "اترك التطبيق المصاحب قيد التشغيل";
+"Leave it in the Mac menu bar. Selected websites will follow your iPhone Quick Blocks automatically." = "اتركه في شريط قوائم Mac. ستتبع المواقع المحددة عمليات Quick Block على iPhone تلقائيًا.";
+"Mac not showing up?" = "ألا يظهر جهاز Mac؟";
+"Keep the Mac Companion open, then return to this page to refresh the device list." = "اترك Mac Companion مفتوحًا، ثم ارجع إلى هذه الصفحة لتحديث قائمة الأجهزة.";
+"Connect in a few quick steps. Your iPhone controls what gets blocked." = "أكمل الاتصال في بضع خطوات. يتحكم iPhone في ما يتم حظره.";
+"Use the same Apple Account" = "استخدم حساب Apple نفسه";
+
+// Cross-device automatic sync
+"Added %@. It is syncing now." = "تمت إضافة %@. تجري المزامنة الآن.";
+"Apps become websites automatically; schedules follow too." = "تتحول التطبيقات إلى مواقع تلقائيًا، وتتزامن الجداول أيضًا.";
+"Pick which devices should follow your iPhone Quick Blocks and schedules." = "اختر الأجهزة التي تتبع الحظر السريع والجداول على iPhone.";
+"Your iPhone sends these websites and schedules to every selected Mac automatically." = "يرسل iPhone هذه المواقع والجداول تلقائيًا إلى كل جهاز Mac محدد.";
+
+// Mac Companion download
+"Download Mac Companion" = "تنزيل Mac Companion";
+"Requires macOS 13 or later." = "يتطلب macOS 13 أو أحدث.";
+"Copy this link and paste it into a browser on your Mac:" = "انسخ هذا الرابط والصقه في متصفح على جهاز Mac:";
+"Copy link" = "نسخ الرابط";
+"Link copied" = "تم نسخ الرابط";
+
+// Per-schedule protected devices
+"Protected on: %@" = "محمي على: %@";
+"%d other device(s)" = "%d جهاز/أجهزة أخرى";
+"No devices" = "لا توجد أجهزة";
+"Protected devices" = "الأجهزة المحمية";
+"Choose where this schedule should activate automatically." = "اختر الأجهزة التي يجب تفعيل هذا الجدول عليها تلقائيًا.";
+"Screen Time blocks on this iPhone" = "تحظر ميزة مدة استخدام الجهاز على هذا الـ iPhone";
+"Websites block automatically in the Mac Companion" = "تُحظر المواقع تلقائيًا في Mac Companion";
+"Follows this schedule automatically" = "يتبع هذا الجدول تلقائيًا";
+"No other connected devices yet. Connect devices in Settings → Device Sync." = "لا توجد أجهزة أخرى متصلة بعد. صِل الأجهزة من الإعدادات ← مزامنة الأجهزة.";
+"Pick at least one protected device." = "اختر جهازًا محميًا واحدًا على الأقل.";
+"Protected now" = "محمي الآن";
+"Ready" = "جاهز";
+
+// Localization coverage backlog
+"This iPhone" = "هذا الـ iPhone";
+"Create" = "إنشاء";
+"15s" = "15 ث";
+"Delay Apps is off. Your normal blocks were not changed." = "تأخير التطبيقات متوقف. لم تتغير عمليات الحظر العادية.";
+"Delay Apps updated. Your block list was not changed." = "تم تحديث تأخير التطبيقات. لم تتغير قائمة الحظر.";
+"Add website, e.g. netflix.com" = "أضف موقعًا، مثل netflix.com";
+"Delay Apps is on. Chosen apps now pause for 15 seconds." = "تأخير التطبيقات مفعّل. تتوقف التطبيقات المختارة الآن لمدة 15 ثانية.";
+"Choose at least one weekday." = "اختر يومًا واحدًا على الأقل.";
+"Add" = "إضافة";
+"Home" = "الرئيسية";
+"Started %@: %@." = "بدأ %@: %@.";
+"Use this duration" = "استخدم هذه المدة";
+"Close and stay focused" = "أغلق وحافظ على تركيزك";
+"Take Back Your Time" = "استعد وقتك";
+"Choose a blocklist, time, and repeat days." = "اختر قائمة حظر ووقتًا وأيام التكرار.";
+"On" = "تشغيل";
+"Start" = "ابدأ";
+
+// Reliable focus activation and flexible schedules
+"Schedule enabled" = "الجدول مفعّل";
+"Choose at least one app, category, or website before starting a block." = "اختر تطبيقًا أو فئة أو موقعًا واحدًا على الأقل قبل بدء الحظر.";
+"Add at least one time period." = "أضف فترة زمنية واحدة على الأقل.";
+"A time period must have different start and end times." = "يجب أن يختلف وقت بدء الفترة عن وقت انتهائها.";
+"Time periods cannot overlap, including across midnight." = "لا يمكن أن تتداخل الفترات الزمنية، بما في ذلك الفترات الممتدة بعد منتصف الليل.";
+"This schedule uses too many time periods. Use up to %d weekday periods." = "يستخدم هذا الجدول فترات كثيرة جدًا. استخدم حتى %d فترة أسبوعية.";
+"Screen Time did not accept the blocking rules. Try again after reopening AntiScroll." = "لم تقبل مدة استخدام الجهاز قواعد الحظر. أعد فتح AntiScroll وحاول مرة أخرى.";
+"Next day" = "اليوم التالي";
+"Time periods by weekday" = "الفترات حسب يوم الأسبوع";
+"Add one or more blocking periods to each day. Overnight periods end on the next day." = "أضف فترة حظر واحدة أو أكثر لكل يوم. تنتهي الفترات الليلية في اليوم التالي.";
+"%d of %d weekday periods used" = "تم استخدام %d من أصل %d فترة أسبوعية";
+"Add time period" = "إضافة فترة زمنية";
+"Remove time period" = "إزالة الفترة الزمنية";
+"Ends the next day" = "تنتهي في اليوم التالي";
+"Choose a blocklist, weekday time periods, and protected devices." = "اختر قائمة حظر وفترات لكل يوم والأجهزة المحمية.";
+"End" = "النهاية";
