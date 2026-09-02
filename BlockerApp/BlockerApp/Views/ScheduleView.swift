@@ -125,14 +125,6 @@ struct ScheduleView: View {
 
             schedulePeriodsSummary
 
-            VStack(alignment: .leading, spacing: 10) {
-                Text(L10n.string("Repeat on"))
-                    .font(.caption.weight(.semibold))
-                    .textCase(.uppercase)
-                    .foregroundStyle(.white.opacity(0.55))
-                dayPills
-            }
-
             if let blocklistName {
                 HStack(spacing: 8) {
                     Image(systemName: "list.bullet.rectangle.portrait.fill")
@@ -191,27 +183,6 @@ struct ScheduleView: View {
         .onboardingHighlight("Schedule")
     }
 
-    private var dayPills: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
-                ForEach(BlockSchedule.orderedWeekdays, id: \.weekday) { day in
-                    Text(L10n.string(day.shortName))
-                        .font(.caption.weight(.bold))
-                        .foregroundStyle(savedSchedule.selectedWeekdays.contains(day.weekday) ? .black : .white.opacity(0.72))
-                        .frame(width: 40, height: 40)
-                        .background(
-                            Circle().fill(savedSchedule.selectedWeekdays.contains(day.weekday) ? AnyShapeStyle(AppActionStyle.turquoise[0]) : AnyShapeStyle(.white.opacity(0.10)))
-                        )
-                        .overlay(
-                            Circle().stroke(savedSchedule.selectedWeekdays.contains(day.weekday) ? .white.opacity(0.35) : .white.opacity(0.14), lineWidth: 1)
-                        )
-                        .accessibilityLabel(L10n.string(day.fullName))
-                        .accessibilityAddTraits(savedSchedule.selectedWeekdays.contains(day.weekday) ? [.isSelected] : [])
-                }
-            }
-        }
-    }
-
     private func scheduleMetric(icon: String, value: String, accent: Color) -> some View {
         HStack(spacing: 10) {
             Image(systemName: icon)
@@ -232,40 +203,51 @@ struct ScheduleView: View {
 
     private var schedulePeriodsSummary: some View {
         VStack(alignment: .leading, spacing: 10) {
-            ForEach(BlockSchedule.orderedWeekdays, id: \.weekday) { day in
-                let periods = savedSchedule.periods(for: day.weekday)
-                if !periods.isEmpty {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(L10n.string(day.fullName))
-                            .font(.caption.weight(.bold))
-                            .foregroundStyle(.white.opacity(0.58))
-                        ForEach(periods) { period in
-                            HStack(spacing: 8) {
-                                Image(systemName: "clock.fill")
-                                    .font(.caption)
-                                    .foregroundStyle(.mint)
-                                Text(String(
-                                    format: L10n.string("%@ – %@"),
-                                    timeLabel(hour: period.startHour, minute: period.startMinute),
-                                    timeLabel(hour: period.endHour, minute: period.endMinute)
-                                ))
-                                .font(.subheadline.weight(.semibold))
-                                .foregroundStyle(.white)
-                                if period.crossesMidnight {
-                                    Text(L10n.string("Next day"))
-                                        .font(.caption2.weight(.bold))
-                                        .foregroundStyle(.orange)
-                                }
-                                Spacer()
-                            }
+            ForEach(savedSchedule.summaryGroups) { group in
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(weekdaySummary(group.weekdays))
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(.white.opacity(0.58))
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    HStack(spacing: 8) {
+                        Image(systemName: "clock.fill")
+                            .font(.caption)
+                            .foregroundStyle(.mint)
+                        Text(String(
+                            format: L10n.string("%@ – %@"),
+                            timeLabel(hour: group.period.startHour, minute: group.period.startMinute),
+                            timeLabel(hour: group.period.endHour, minute: group.period.endMinute)
+                        ))
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.white)
+                        if group.period.crossesMidnight {
+                            Text(L10n.string("Next day"))
+                                .font(.caption2.weight(.bold))
+                                .foregroundStyle(.orange)
                         }
+                        Spacer()
                     }
-                    .padding(12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(.white.opacity(0.07), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
                 }
+                .padding(12)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(.white.opacity(0.07), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
             }
         }
+    }
+
+    private func weekdaySummary(_ weekdays: [Int]) -> String {
+        let ordered = BlockSchedule.orderedWeekdays.filter { weekdays.contains($0.weekday) }
+        if Set(weekdays) == BlockSchedule.allWeekdays,
+           let first = ordered.first,
+           let last = ordered.last {
+            return String(
+                format: L10n.string("%@ – %@"),
+                L10n.string(first.fullName),
+                L10n.string(last.fullName)
+            )
+        }
+        return ordered.map { L10n.string($0.fullName) }.joined(separator: ", ")
     }
 
     private var blocklistName: String? {

@@ -6,14 +6,24 @@ import FamilyControls
 
 @MainActor
 final class AuthorizationService: ObservableObject {
+    static let shared = AuthorizationService()
+
     @Published private(set) var isAuthorized = false
     @Published var lastError: String?
 
+    private init() {
+        refresh()
+    }
+
     func requestAuthorization() async {
         #if canImport(FamilyControls)
+        lastError = nil
         do {
             try await AuthorizationCenter.shared.requestAuthorization(for: .individual)
             isAuthorized = AuthorizationCenter.shared.authorizationStatus == .approved
+            if isAuthorized {
+                lastError = nil
+            }
         } catch {
             lastError = error.localizedDescription
             isAuthorized = false
@@ -27,6 +37,9 @@ final class AuthorizationService: ObservableObject {
     func refresh() {
         #if canImport(FamilyControls)
         isAuthorized = AuthorizationCenter.shared.authorizationStatus == .approved
+        if isAuthorized {
+            lastError = nil
+        }
         #endif
     }
 }

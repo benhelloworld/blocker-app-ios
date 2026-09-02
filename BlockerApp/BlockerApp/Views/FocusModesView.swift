@@ -206,6 +206,7 @@ struct FocusModesView: View {
 // MARK: - Delay Apps detail
 
 struct DelayAppsDetailView: View {
+    @Environment(\.scenePhase) private var scenePhase
     #if canImport(FamilyControls)
     @State private var delaySelection = ShieldStorage.shared.loadDelaySelection()
     @State private var delayAppsEnabled = ShieldStorage.shared.loadDelayAppsEnabled()
@@ -335,6 +336,18 @@ struct DelayAppsDetailView: View {
         .sheet(isPresented: $showingDelayMode) {
             DelayModeView()
         }
+        .onAppear {
+            #if canImport(FamilyControls)
+            reconcileDelayAppsState()
+            #endif
+        }
+        .onChange(of: scenePhase) { _, phase in
+            #if canImport(FamilyControls)
+            if phase == .active {
+                reconcileDelayAppsState()
+            }
+            #endif
+        }
     }
 
     #if canImport(FamilyControls)
@@ -357,6 +370,15 @@ struct DelayAppsDetailView: View {
         delaySelection.applicationTokens.isEmpty && delaySelection.categoryTokens.isEmpty && delaySelection.webDomainTokens.isEmpty
     }
 
+    private func reconcileDelayAppsState() {
+        do {
+            try ScheduleService.shared.refreshDelayAppsShieldIfNeeded()
+        } catch {
+            message = error.localizedDescription
+        }
+        delayAppsEnabled = ShieldStorage.shared.loadDelayAppsEnabled()
+    }
+
     private func setDelayAppsEnabled(_ isEnabled: Bool) {
         delayAppsEnabled = isEnabled
         do {
@@ -376,6 +398,7 @@ struct DelayAppsDetailView: View {
             try ScheduleService.shared.updateDelayAppsSelection(selection)
             message = L10n.string("Delay Apps updated. Your block list was not changed.")
         } catch {
+            delayAppsEnabled = ShieldStorage.shared.loadDelayAppsEnabled()
             message = error.localizedDescription
         }
     }
@@ -407,7 +430,8 @@ struct DelayAppsDetailView: View {
 // MARK: - Focus Templates detail
 
 struct FocusTemplatesDetailView: View {
-    @StateObject private var authorization = AuthorizationService()
+    @Environment(\.scenePhase) private var scenePhase
+    @ObservedObject private var authorization = AuthorizationService.shared
     @State private var message: String?
     @State private var activeTemplate = ShieldStorage.shared.loadActiveFocusTemplate()
     @State private var startingTemplate: FocusTemplate?
@@ -444,8 +468,23 @@ struct FocusTemplatesDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbarColorScheme(.dark, for: .navigationBar)
         .onAppear {
-            authorization.refresh()
+            reconcileActiveTemplateState()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                reconcileActiveTemplateState()
+            }
+        }
+    }
+
+    private func reconcileActiveTemplateState() {
+        authorization.refresh()
+        do {
+            _ = try ScheduleService.shared.reconcileImmediateShield()
             activeTemplate = ShieldStorage.shared.loadActiveFocusTemplate()
+        } catch {
+            activeTemplate = nil
+            message = error.localizedDescription
         }
     }
 

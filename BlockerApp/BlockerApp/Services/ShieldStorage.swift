@@ -92,6 +92,30 @@ final class ShieldStorage {
         defaults?.removeObject(forKey: SharedConfig.activeImmediateShieldSelectionKey)
     }
 
+    /// Returns true when a session is stored and still active at `now`.
+    /// Unlike `loadActiveImmediateSession`, this never deletes state, so
+    /// stale-callback guards can check it without destroying a new session.
+    func hasActiveImmediateSession(now: Date = Date()) -> Bool {
+        guard let data = defaults?.data(forKey: SharedConfig.activeImmediateSessionKey),
+              let session = try? JSONDecoder().decode(ImmediateBlockSession.self, from: data) else {
+            return false
+        }
+        return session.isActive(at: now)
+    }
+
+    /// Removes an expired stored session without touching the ManagedSettings
+    /// store. Enforcement cleanup stays with the source that owns it.
+    func clearExpiredImmediateSession(now: Date = Date()) {
+        guard let data = defaults?.data(forKey: SharedConfig.activeImmediateSessionKey),
+              let session = try? JSONDecoder().decode(ImmediateBlockSession.self, from: data),
+              !session.isActive(at: now) else {
+            return
+        }
+        defaults?.removeObject(forKey: SharedConfig.activeImmediateSessionKey)
+        defaults?.removeObject(forKey: SharedConfig.activeFocusTemplateKey)
+        defaults?.removeObject(forKey: SharedConfig.activeImmediateShieldSelectionKey)
+    }
+
     func savePremiumStatus(_ isPremium: Bool) {
         defaults?.set(isPremium, forKey: SharedConfig.premiumStatusKey)
     }
@@ -134,6 +158,88 @@ final class ShieldStorage {
             return FocusStats()
         }
         return stats
+    }
+
+    func saveScheduledFocusStats(_ stats: ScheduledFocusStats) throws {
+        defaults?.set(try JSONEncoder().encode(stats), forKey: SharedConfig.scheduledFocusStatsKey)
+    }
+
+    func loadScheduledFocusStats() -> ScheduledFocusStats {
+        guard let data = defaults?.data(forKey: SharedConfig.scheduledFocusStatsKey),
+              let stats = try? JSONDecoder().decode(ScheduledFocusStats.self, from: data) else {
+            return ScheduledFocusStats()
+        }
+        return stats
+    }
+
+    func startScheduledFocusAccounting(activityName: String, startedAt: Date = Date()) {
+        var starts = loadScheduledFocusStarts()
+        if let existing = starts[activityName],
+           startedAt >= existing,
+           startedAt.timeIntervalSince(existing) < 36 * 60 * 60 {
+            return
+        }
+        starts[activityName] = startedAt
+        saveScheduledFocusStarts(starts)
+    }
+
+    func finishScheduledFocusAccounting(activityName: String, endedAt: Date = Date(), calendar: Calendar = .current) {
+        var starts = loadScheduledFocusStarts()
+        guard let startedAt = starts.removeValue(forKey: activityName) else { return }
+        saveScheduledFocusStarts(starts)
+
+        var stats = loadScheduledFocusStats()
+        stats.recordProtection(
+            start: startedAt,
+            end: endedAt,
+            maximumMinutes: loadScheduledFocusDurations()[activityName],
+            calendar: calendar
+        )
+        try? saveScheduledFocusStats(stats)
+    }
+
+    func finishAllScheduledFocusAccounting(endedAt: Date = Date(), calendar: Calendar = .current) {
+        let starts = loadScheduledFocusStarts()
+        guard !starts.isEmpty else { return }
+        saveScheduledFocusStarts([:])
+
+        var stats = loadScheduledFocusStats()
+        let durations = loadScheduledFocusDurations()
+        for (activityName, startedAt) in starts {
+            stats.recordProtection(
+                start: startedAt,
+                end: endedAt,
+                maximumMinutes: durations[activityName],
+                calendar: calendar
+            )
+        }
+        try? saveScheduledFocusStats(stats)
+    }
+
+    func saveScheduledFocusDurations(_ durations: [String: Int]) {
+        guard let data = try? JSONEncoder().encode(durations) else { return }
+        defaults?.set(data, forKey: SharedConfig.scheduledFocusDurationsKey)
+    }
+
+    private func loadScheduledFocusDurations() -> [String: Int] {
+        guard let data = defaults?.data(forKey: SharedConfig.scheduledFocusDurationsKey),
+              let durations = try? JSONDecoder().decode([String: Int].self, from: data) else {
+            return [:]
+        }
+        return durations
+    }
+
+    private func loadScheduledFocusStarts() -> [String: Date] {
+        guard let data = defaults?.data(forKey: SharedConfig.scheduledFocusStartsKey),
+              let starts = try? JSONDecoder().decode([String: Date].self, from: data) else {
+            return [:]
+        }
+        return starts
+    }
+
+    private func saveScheduledFocusStarts(_ starts: [String: Date]) {
+        guard let data = try? JSONEncoder().encode(starts) else { return }
+        defaults?.set(data, forKey: SharedConfig.scheduledFocusStartsKey)
     }
 
 

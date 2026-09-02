@@ -13,7 +13,7 @@ struct SettingsView: View {
     @EnvironmentObject private var premiumStore: PremiumEntitlementStore
     @Environment(\.dismiss) private var dismiss
 
-    @StateObject private var authorization = AuthorizationService()
+    @ObservedObject private var authorization = AuthorizationService.shared
     @State private var showingUpsell = false
     @State private var showingShortcutInstructions = false
     @State private var showingResetConfirmation = false

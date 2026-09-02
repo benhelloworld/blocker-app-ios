@@ -271,10 +271,223 @@ struct BlockerAppTests {
         #expect(ActiveScheduledBlockWindow.activeWindow(for: schedule, now: overnightNow, calendar: calendar)?.start == calendar.date(from: DateComponents(year: 2026, month: 6, day: 15, hour: 21, minute: 0)))
     }
 
+    @Test func activeScheduledWindowKeepsConfiguredWallClockEndAcrossDSTChanges() throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try #require(TimeZone(identifier: "Europe/Zurich"))
+        let period = ScheduleTimePeriod(startHour: 1, startMinute: 30, endHour: 3, endMinute: 30)
+        let schedule = BlockSchedule(periodsByWeekday: [1: [period]])
+
+        let springNow = try #require(calendar.date(from: DateComponents(year: 2026, month: 3, day: 29, hour: 1, minute: 45)))
+        let autumnNow = try #require(calendar.date(from: DateComponents(year: 2026, month: 10, day: 25, hour: 1, minute: 45)))
+        let springWindow = try #require(ActiveScheduledBlockWindow.activeWindow(for: schedule, now: springNow, calendar: calendar))
+        let autumnWindow = try #require(ActiveScheduledBlockWindow.activeWindow(for: schedule, now: autumnNow, calendar: calendar))
+
+        #expect(calendar.component(.hour, from: springWindow.end) == 3)
+        #expect(calendar.component(.minute, from: springWindow.end) == 30)
+        #expect(calendar.component(.hour, from: autumnWindow.end) == 3)
+        #expect(calendar.component(.minute, from: autumnWindow.end) == 30)
+    }
+
     @Test func hardBlockPreflightRequiresAuthorizationAndARealSelection() {
         #expect(HardBlockActivationPreflight.failure(isAuthorized: false, applicationCount: 1, categoryCount: 0, webDomainCount: 0) == .authorizationRequired)
         #expect(HardBlockActivationPreflight.failure(isAuthorized: true, applicationCount: 0, categoryCount: 0, webDomainCount: 0) == .emptySelection)
         #expect(HardBlockActivationPreflight.failure(isAuthorized: true, applicationCount: 1, categoryCount: 2, webDomainCount: 3) == nil)
+    }
+
+    @Test func immediateReconciliationPolicyTreatsManagedSettingsAsTheSourceOfTruth() {
+        #expect(ImmediateShieldReconciliationPolicy.action(
+            hasActiveSession: false,
+            isAuthorized: true,
+            hasSelection: true,
+            settingsMatch: true
+        ) == .clearStaleEnforcement)
+        #expect(ImmediateShieldReconciliationPolicy.action(
+            hasActiveSession: true,
+            isAuthorized: false,
+            hasSelection: true,
+            settingsMatch: true
+        ) == .invalidateAuthorization)
+        #expect(ImmediateShieldReconciliationPolicy.action(
+            hasActiveSession: true,
+            isAuthorized: true,
+            hasSelection: false,
+            settingsMatch: true
+        ) == .invalidateSelection)
+        #expect(ImmediateShieldReconciliationPolicy.action(
+            hasActiveSession: true,
+            isAuthorized: true,
+            hasSelection: true,
+            settingsMatch: false
+        ) == .reapplyShield)
+        #expect(ImmediateShieldReconciliationPolicy.action(
+            hasActiveSession: true,
+            isAuthorized: true,
+            hasSelection: true,
+            settingsMatch: true
+        ) == .verified)
+        #expect(ImmediateShieldReconciliationPolicy.action(
+            hasActiveSession: true,
+            isAuthorized: true,
+            hasSelection: true,
+            settingsMatch: false
+        ) == .reapplyShield)
+    }
+
+    @Test func reconciliationInvalidationBranchesForceFullImmediateCleanup() throws {
+        let projectRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let serviceSource = try String(
+            contentsOf: projectRoot.appendingPathComponent("BlockerApp/BlockerApp/Services/ScheduleService.swift"),
+            encoding: .utf8
+        )
+        let reconcileBody = serviceSource[
+            try #require(serviceSource.range(of: "func reconcileImmediateShield(now:"))
+                .lowerBound..<serviceSource.endIndex
+        ]
+
+        // When authorization is revoked or the persisted selection becomes
+        // empty while a session is still stored, the guarded cleanup would
+        // return early and leave the stale session to resurrect on every
+        // foreground. Both invalidation branches must force full cleanup.
+        #expect(reconcileBody.contains("case .invalidateAuthorization:"))
+        #expect(reconcileBody.contains("case .invalidateSelection:"))
+        #expect(reconcileBody.contains("case .invalidateAuthorization:\n            // Authorization was revoked or denied while a session is stored:\n            // the session can never be enforced again, so invalidate it fully.\n            clearImmediateEnforcement(force: true)"))
+        #expect(reconcileBody.contains("case .invalidateSelection:\n            // The persisted snapshot lost its effective selection while a\n            // session is stored: this is corrupt state that must not linger.\n            clearImmediateEnforcement(force: true)"))
+    }
+
+    @Test func quickBlockPersistsItsImmutableSelectionBeforeRegisteringTheMonitor() throws {
+        let projectRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let source = try String(
+            contentsOf: projectRoot.appendingPathComponent("BlockerApp/BlockerApp/Services/ScheduleService.swift"),
+            encoding: .utf8
+        )
+        let functionStart = try #require(source.range(of: "func startImmediateBlock("))
+        let functionEnd = try #require(source.range(of: "/// Stops only recurring schedule monitors", range: functionStart.upperBound..<source.endIndex))
+        let functionSource = String(source[functionStart.lowerBound..<functionEnd.lowerBound])
+        let persistRange = try #require(functionSource.range(of: "saveActiveImmediateShieldSelection(selection)"))
+        let monitorRange = try #require(functionSource.range(of: "try center.startMonitoring(activity, during: deviceSchedule)"))
+
+        #expect(persistRange.lowerBound < monitorRange.lowerBound)
+    }
+
+    @Test func activeQuickBlockCanOnlyUnionPickerAdditionsIntoItsSessionSnapshot() throws {
+        let projectRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let serviceSource = try String(
+            contentsOf: projectRoot.appendingPathComponent("BlockerApp/BlockerApp/Services/ScheduleService.swift"),
+            encoding: .utf8
+        )
+        let statusSource = try String(
+            contentsOf: projectRoot.appendingPathComponent("BlockerApp/BlockerApp/Views/StatusView.swift"),
+            encoding: .utf8
+        )
+        let functionStart = try #require(serviceSource.range(of: "func addToActiveHardBlock("))
+        let functionEnd = try #require(serviceSource.range(of: "func clearDelayAppsShield()", range: functionStart.upperBound..<serviceSource.endIndex))
+        let functionSource = String(serviceSource[functionStart.lowerBound..<functionEnd.lowerBound])
+
+        #expect(functionSource.contains("loadActiveImmediateSession(now: now)"))
+        #expect(functionSource.contains("loadActiveImmediateShieldSelection()"))
+        #expect(functionSource.contains("applicationTokens.formUnion(additionalSelection.applicationTokens)"))
+        #expect(functionSource.contains("categoryTokens.formUnion(additionalSelection.categoryTokens)"))
+        #expect(functionSource.contains("webDomainTokens.formUnion(additionalSelection.webDomainTokens)"))
+        #expect(!functionSource.contains("saveSelection(merged)"), "Current-block additions must not replace the reusable global block list")
+        let snapshotRange = try #require(functionSource.range(of: "saveActiveImmediateShieldSelection(merged)"))
+        let applyRange = try #require(functionSource.range(of: "applyHardShield(merged, storeName: SharedConfig.immediateStoreName)"))
+        #expect(snapshotRange.lowerBound < applyRange.lowerBound)
+
+        #expect(statusSource.contains("activeBlockAdditions = FamilyActivitySelection()"))
+        #expect(statusSource.contains("selection: $activeBlockAdditions"))
+        #expect(statusSource.contains("ScheduleService.shared.addToActiveHardBlock(activeBlockAdditions)"))
+        #expect(statusSource.contains("L10n.string(\"Add more apps to your current block:\")"))
+    }
+
+    @Test func immediateMonitorReappliesTheSessionSnapshotInsteadOfTheMutableGlobalPicker() throws {
+        let projectRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let source = try String(
+            contentsOf: projectRoot.appendingPathComponent("BlockerMonitorExtension/DeviceActivityMonitorExtension.swift"),
+            encoding: .utf8
+        )
+
+        let immediateBranchStart = try #require(source.range(of: "if activity.rawValue == immediateActivityName"))
+        let immediateBranchEnd = try #require(source.range(of: "} else if activity.rawValue.hasPrefix(scheduleActivityPrefix)", range: immediateBranchStart.upperBound..<source.endIndex))
+        let immediateBranch = String(source[immediateBranchStart.lowerBound..<immediateBranchEnd.lowerBound])
+
+        #expect(immediateBranch.contains("guard let selection = loadSelection(forKey: activeImmediateSelectionKey)"))
+        #expect(!immediateBranch.contains("normalSelectionKey"))
+        #expect(immediateBranch.contains("guard !hasCurrentSession else { return }"))
+        #expect(source.contains("StoredImmediateSessionPayload"))
+        #expect(source.contains("let storedEnd = defaults?.data(forKey: activeImmediateSessionKey)"))
+        #expect(source.contains("guard let storedEnd, grace < storedEnd else {"))
+        #expect(!source.contains("guard defaults?.data(forKey: activeImmediateSessionKey) == nil else { return }"), "End callback must clear based on session expiry, not mere key presence")
+    }
+
+    @Test func userInitiatedQuickBlockStopForcesImmediateCleanup() throws {
+        let projectRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let statusSource = try String(
+            contentsOf: projectRoot.appendingPathComponent("BlockerApp/BlockerApp/Views/StatusView.swift"),
+            encoding: .utf8
+        )
+
+        // Every explicit user stop (grace cancellation, ordinary stop, and
+        // expiry refresh) must pass force so a still-active stored session can
+        // never make the cleanup guard return early.
+        let occurrences = statusSource.components(separatedBy: "ScheduleService.shared.stopImmediateBlock(force: true)").count - 1
+        #expect(occurrences == 3, "Expected all three user stop paths to force cleanup, found \(occurrences)")
+    }
+
+    @Test func quickBlockUIReconcilesAuthorizationAndManagedSettingsOnForeground() throws {
+        let projectRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let statusSource = try String(
+            contentsOf: projectRoot.appendingPathComponent("BlockerApp/BlockerApp/Views/StatusView.swift"),
+            encoding: .utf8
+        )
+        let serviceSource = try String(
+            contentsOf: projectRoot.appendingPathComponent("BlockerApp/BlockerApp/Services/ScheduleService.swift"),
+            encoding: .utf8
+        )
+        let focusModesSource = try String(
+            contentsOf: projectRoot.appendingPathComponent("BlockerApp/BlockerApp/Views/FocusModesView.swift"),
+            encoding: .utf8
+        )
+
+        #expect(statusSource.contains("reconcileImmediateBlockState()"))
+        #expect(statusSource.contains("recordImmediateBlockCompletion(activeSession, completedAt: activeSession.end)\n                ScheduleService.shared.stopImmediateBlock()"))
+        #expect(focusModesSource.contains("reconcileActiveTemplateState()"))
+        #expect(serviceSource.contains("func reconcileImmediateShield(now:"))
+        #expect(serviceSource.contains("hardShieldMatches($0, storeName: SharedConfig.immediateStoreName)"))
+        #expect(serviceSource.contains("clearImmediateEnforcement(force: true)"))
+        #expect(serviceSource.contains("guard force || !ShieldStorage.shared.hasActiveImmediateSession() else { return }"))
+        #expect(serviceSource.contains("ShieldStorage.shared.clearExpiredImmediateSession(now: now)"))
+    }
+
+    @Test func everyScreenTimeExtensionDeclaresFamilyControlsEntitlement() throws {
+        let projectRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let entitlementPaths = [
+            "BlockerMonitorExtension/BlockerMonitorExtension.entitlements",
+            "BlockerShieldActionExtension/BlockerShieldActionExtension.entitlements",
+            "BlockerShieldConfigurationExtension/BlockerShieldConfigurationExtension.entitlements",
+            "BlockerAppReportExtension/BlockerAppReportExtension.entitlements"
+        ]
+
+        for path in entitlementPaths {
+            let data = try Data(contentsOf: projectRoot.appendingPathComponent(path))
+            let propertyList = try #require(
+                try PropertyListSerialization.propertyList(from: data, format: nil) as? [String: Any]
+            )
+            #expect(propertyList["com.apple.developer.family-controls"] as? Bool == true, "Missing Family Controls entitlement in \(path)")
+        }
     }
 
 
@@ -365,6 +578,47 @@ struct BlockerAppTests {
         #expect(!QuickBlockStartGuard.canStartNewBlock(existing: activeSession, now: now))
         #expect(QuickBlockStartGuard.canStartNewBlock(existing: activeSession, now: afterEnd))
         #expect(QuickBlockStartGuard.activeBlockMessage(existing: activeSession, now: now) == "Focus already active — 450 min left.")
+    }
+
+    @Test func quickBlockLaunchFlowCountsDownThreeSecondsBeforeActivation() {
+        let startedAt = Date(timeIntervalSince1970: 10_000)
+
+        #expect(QuickBlockLaunchPolicy.countdownSeconds == 3)
+        #expect(QuickBlockLaunchPolicy.countdownRemaining(startedAt: startedAt, now: startedAt) == 3)
+        #expect(QuickBlockLaunchPolicy.countdownRemaining(startedAt: startedAt, now: startedAt.addingTimeInterval(1.01)) == 2)
+        #expect(QuickBlockLaunchPolicy.countdownRemaining(startedAt: startedAt, now: startedAt.addingTimeInterval(2.01)) == 1)
+        #expect(QuickBlockLaunchPolicy.countdownRemaining(startedAt: startedAt, now: startedAt.addingTimeInterval(3)) == 0)
+        #expect(!QuickBlockLaunchPolicy.shouldActivate(startedAt: startedAt, now: startedAt.addingTimeInterval(2.99)))
+        #expect(QuickBlockLaunchPolicy.shouldActivate(startedAt: startedAt, now: startedAt.addingTimeInterval(3)))
+    }
+
+    @Test func quickBlockCanBeCancelledWithoutFrictionOnlyForItsFirstTenSeconds() {
+        let sessionStart = Date(timeIntervalSince1970: 20_000)
+
+        #expect(QuickBlockLaunchPolicy.cancellationGraceSeconds == 10)
+        #expect(QuickBlockLaunchPolicy.graceRemaining(sessionStart: sessionStart, now: sessionStart) == 10)
+        #expect(QuickBlockLaunchPolicy.graceRemaining(sessionStart: sessionStart, now: sessionStart.addingTimeInterval(9.01)) == 1)
+        #expect(QuickBlockLaunchPolicy.graceRemaining(sessionStart: sessionStart, now: sessionStart.addingTimeInterval(10)) == 0)
+        #expect(QuickBlockLaunchPolicy.canCancelWithoutFriction(sessionStart: sessionStart, now: sessionStart.addingTimeInterval(9.99)))
+        #expect(!QuickBlockLaunchPolicy.canCancelWithoutFriction(sessionStart: sessionStart, now: sessionStart.addingTimeInterval(10)))
+    }
+
+    @Test func quickBlockStatusViewUsesCountdownAndGraceStopInsteadOfApplyingImmediately() throws {
+        let projectRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let sourceURL = projectRoot.appendingPathComponent("BlockerApp/BlockerApp/Views/StatusView.swift")
+        let source = try String(contentsOf: sourceURL, encoding: .utf8)
+
+        #expect(source.contains("beginQuickBlockCountdown(minutes:"))
+        #expect(source.contains("quick-block-countdown-overlay"))
+        #expect(source.contains("quick-block-grace-stop-button"))
+        #expect(source.contains("QuickBlockLaunchPolicy.canCancelWithoutFriction"))
+        #expect(source.contains(".onChange(of: scenePhase)"))
+        #expect(source.contains("QuickBlockMacSyncCoordinator.shared.enqueueStart"))
+        #expect(!source.contains("@State private var quickBlockMacStartSyncTask"))
+        #expect(source.contains("@Environment(\\.accessibilityReduceMotion)"))
+        #expect(source.contains(".accessibilityAddTraits(.isModal)"))
     }
 
     @Test func quickBlockPresetsOfferFourCompactDurations() async throws {
@@ -842,6 +1096,71 @@ struct BlockerAppTests {
                 #expect((value?.count ?? 0) >= 20, "Long-form copy is unexpectedly short in \(locale).lproj: \(key)")
             }
         }
+    }
+
+    @Test func scheduleSummaryGroupsIdenticalTimeWindowsAcrossWeekdays() {
+        let standard = ScheduleTimePeriod(startHour: 9, startMinute: 0, endHour: 17, endMinute: 0)
+        let short = ScheduleTimePeriod(startHour: 9, startMinute: 0, endHour: 14, endMinute: 0)
+        let schedule = BlockSchedule(periodsByWeekday: [
+            2: [standard], 3: [standard], 4: [standard], 6: [standard],
+            5: [short], 7: [short], 1: [short]
+        ])
+
+        #expect(schedule.summaryGroups.count == 2)
+        #expect(schedule.summaryGroups[0].weekdays == [2, 3, 4, 6])
+        #expect(schedule.summaryGroups[0].period.startTotalMinutes == 9 * 60)
+        #expect(schedule.summaryGroups[0].period.endTotalMinutes == 17 * 60)
+        #expect(schedule.summaryGroups[1].weekdays == [5, 7, 1])
+        #expect(schedule.summaryGroups[1].period.endTotalMinutes == 14 * 60)
+    }
+
+    @Test func scheduleSummaryUsesOneGroupWhenEveryDayHasTheSameWindow() {
+        let schedule = BlockSchedule(startHour: 9, startMinute: 0, endHour: 17, endMinute: 0)
+
+        #expect(schedule.summaryGroups.count == 1)
+        #expect(schedule.summaryGroups[0].weekdays == [2, 3, 4, 5, 6, 7, 1])
+    }
+
+    @Test func scheduledProtectionContributesTimeAndStreakWithoutInflatingQuickSessions() {
+        let calendar = Calendar(identifier: .gregorian)
+        let mondayStart = calendar.date(from: DateComponents(year: 2026, month: 8, day: 24, hour: 9))!
+        let mondayEnd = calendar.date(from: DateComponents(year: 2026, month: 8, day: 24, hour: 17))!
+        let tuesdayStart = calendar.date(from: DateComponents(year: 2026, month: 8, day: 25, hour: 22))!
+        let wednesdayEnd = calendar.date(from: DateComponents(year: 2026, month: 8, day: 26, hour: 2))!
+        var scheduled = ScheduledFocusStats()
+
+        scheduled.recordProtection(start: mondayStart, end: mondayEnd, calendar: calendar)
+        scheduled.recordProtection(start: tuesdayStart, end: wednesdayEnd, calendar: calendar)
+        let quick = FocusStats(totalSessions: 2, totalPlannedMinutes: 90)
+        let summary = FocusProgressSummary(quickStats: quick, scheduledStats: scheduled)
+
+        #expect(scheduled.totalProtectedMinutes == 12 * 60)
+        #expect(summary.totalMinutes == 13 * 60 + 30)
+        #expect(summary.completedSessions == 2)
+        #expect(summary.currentStreakDays(asOf: wednesdayEnd, calendar: calendar) == 3)
+    }
+
+    @Test func selectionSummaryCardsOpenApplesNativePicker() throws {
+        let projectRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let sourceURL = projectRoot.appendingPathComponent("BlockerApp/BlockerApp/Views/SelectionView.swift")
+        let source = try String(contentsOf: sourceURL, encoding: .utf8)
+
+        #expect(source.contains("private func pickerMetricPill"))
+        #expect(source.components(separatedBy: "pickerMetricPill(value:").count - 1 == 4)
+        #expect(source.contains("isPickerPresented = true"))
+    }
+
+    @Test func scheduledProtectionNeverExceedsTheConfiguredWindowDuration() {
+        let calendar = Calendar(identifier: .gregorian)
+        let started = calendar.date(from: DateComponents(year: 2026, month: 8, day: 24, hour: 9))!
+        let delayedCallback = calendar.date(from: DateComponents(year: 2026, month: 8, day: 24, hour: 18, minute: 15))!
+        var scheduled = ScheduledFocusStats()
+
+        scheduled.recordProtection(start: started, end: delayedCallback, maximumMinutes: 8 * 60, calendar: calendar)
+
+        #expect(scheduled.totalProtectedMinutes == 8 * 60)
     }
 
 }

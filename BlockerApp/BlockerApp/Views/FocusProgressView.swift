@@ -11,10 +11,15 @@ struct FocusProgressView: View {
     }
 
     @State private var stats = ShieldStorage.shared.loadFocusStats()
+    @State private var scheduledStats = ShieldStorage.shared.loadScheduledFocusStats()
     @State private var lastReceipt = ShieldStorage.shared.loadLastAccountabilityReceipt()
 
+    private var summary: FocusProgressSummary {
+        FocusProgressSummary(quickStats: stats, scheduledStats: scheduledStats)
+    }
+
     private var hasData: Bool {
-        stats.totalSessions > 0 || stats.totalPlannedMinutes > 0 || stats.focusDayCount > 0
+        summary.hasData
     }
 
     var body: some View {
@@ -28,6 +33,7 @@ struct FocusProgressView: View {
         .tint(AppActionStyle.turquoise[0])
         .onAppear {
             stats = ShieldStorage.shared.loadFocusStats()
+            scheduledStats = ShieldStorage.shared.loadScheduledFocusStats()
             lastReceipt = ShieldStorage.shared.loadLastAccountabilityReceipt()
         }
     }
@@ -96,8 +102,9 @@ struct FocusProgressView: View {
         VStack(alignment: .leading, spacing: 16) {
             Label(L10n.string("Your focus"), systemImage: "number.circle.fill").font(.title2.bold()).foregroundStyle(.white)
             VStack(spacing: 10) {
-                metricRow(value: stats.totalHoursLabel, label: L10n.string("Focus time"), icon: "timer")
-                metricRow(value: "\(stats.totalSessions)", label: L10n.string("Completed sessions"), icon: "checkmark.circle.fill")
+                metricRow(value: summary.totalHoursLabel, label: L10n.string("Focus time"), icon: "timer")
+                metricRow(value: summary.scheduledHoursLabel, label: L10n.string("Scheduled focus"), icon: "calendar.badge.clock")
+                metricRow(value: "\(summary.completedSessions)", label: L10n.string("Completed sessions"), icon: "checkmark.circle.fill")
                 metricRow(value: streakValue, label: L10n.string("Streak"), icon: "flame.fill")
             }
         }.frame(maxWidth: .infinity, alignment: .leading).padding(20).glassCard(cornerRadius: 26)
@@ -180,8 +187,7 @@ struct FocusProgressView: View {
     }
 
     private var streakValue: String {
-        let streak = stats.currentStreakDays()
-        return "\(streak)"
+        "\(summary.currentStreakDays())"
     }
 
     private var appBackground: some View { LinearGradient(colors: [Color(red: 0.002, green: 0.002, blue: 0.004), Color(red: 0.018, green: 0.016, blue: 0.026), Color(red: 0.045, green: 0.034, blue: 0.070)], startPoint: .topLeading, endPoint: .bottomTrailing).ignoresSafeArea() }

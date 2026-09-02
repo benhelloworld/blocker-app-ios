@@ -41,7 +41,7 @@ struct RootView: View {
     @State private var shortcutReturnURL: URL?
     @State private var shortcutHasShieldTarget = false
     @State private var shortcutOpenError: String?
-    @StateObject private var onboardingAuthorization = AuthorizationService()
+    @ObservedObject private var onboardingAuthorization = AuthorizationService.shared
     @StateObject private var premiumStore = PremiumEntitlementStore()
     @AppStorage("hasCompletedFirstLaunchOnboarding", store: UserDefaults(suiteName: SharedConfig.appGroupIdentifier)) private var hasCompletedFirstLaunchOnboarding = false
     private let slogan = AppLaunchSlogan.primary
@@ -102,6 +102,7 @@ struct RootView: View {
         }
         .onAppear {
             Task { await premiumStore.refreshPremiumStatus() }
+            refreshImmediateShieldIfNeeded()
             refreshDelayShieldIfNeeded()
             refreshAdultWebFilterIfNeeded()
             refreshScheduledShieldIfNeeded()
@@ -119,7 +120,9 @@ struct RootView: View {
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
+                onboardingAuthorization.refresh()
                 Task { await premiumStore.refreshPremiumStatus() }
+                refreshImmediateShieldIfNeeded()
                 refreshDelayShieldIfNeeded()
                 refreshAdultWebFilterIfNeeded()
                 refreshScheduledShieldIfNeeded()
@@ -227,6 +230,10 @@ struct RootView: View {
         #if canImport(FamilyControls) && canImport(ManagedSettings)
         try? ScheduleService.shared.refreshDelayAppsShieldIfNeeded()
         #endif
+    }
+
+    private func refreshImmediateShieldIfNeeded() {
+        _ = try? ScheduleService.shared.reconcileImmediateShield()
     }
 
     private func refreshAdultWebFilterIfNeeded() {

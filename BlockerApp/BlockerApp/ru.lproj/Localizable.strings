@@ -723,3 +723,16 @@
 "Ends the next day" = "Заканчивается на следующий день";
 "Choose a blocklist, weekday time periods, and protected devices." = "Выберите список блокировки, периоды по дням недели и защищаемые устройства.";
 "End" = "Конец";
+"Scheduled focus" = "Запланированный фокус";
+
+// Quick Block launch countdown and undo grace period
+"Block starts in" = "Блокировка начнётся через";
+"Undo Quick Block" = "Отменить быструю блокировку";
+"Changed something by mistake? Stop now without friction." = "Что-то настроено по ошибке? Сейчас можно остановить без задержки.";
+"%d seconds to undo" = "%d сек. для отмены";
+"Quick Block cancelled. Nothing was recorded." = "Быстрая блокировка отменена. Ничего не записано.";
+"Block starts in 1 second" = "До начала блокировки: 1 секунда";
+"Block starts in %d seconds" = "До начала блокировки: %d сек.";
+"1 second to undo" = "1 секунда для отмены";
+
+"Add more apps to your current block:" = "Добавьте другие приложения в текущую блокировку:";

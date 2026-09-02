@@ -723,3 +723,16 @@
 "Ends the next day" = "تنتهي في اليوم التالي";
 "Choose a blocklist, weekday time periods, and protected devices." = "اختر قائمة حظر وفترات لكل يوم والأجهزة المحمية.";
 "End" = "النهاية";
+"Scheduled focus" = "التركيز المجدول";
+
+// Quick Block launch countdown and undo grace period
+"Block starts in" = "يبدأ الحظر خلال";
+"Undo Quick Block" = "التراجع عن الحظر السريع";
+"Changed something by mistake? Stop now without friction." = "هل اخترت شيئًا بالخطأ؟ يمكنك الإيقاف الآن دون خطوات إضافية.";
+"%d seconds to undo" = "%d ثوانٍ للتراجع";
+"Quick Block cancelled. Nothing was recorded." = "تم إلغاء الحظر السريع. لم يتم تسجيل أي شيء.";
+"Block starts in 1 second" = "يبدأ الحظر خلال ثانية واحدة";
+"Block starts in %d seconds" = "يبدأ الحظر خلال %d ثوانٍ";
+"1 second to undo" = "ثانية واحدة للتراجع";
+
+"Add more apps to your current block:" = "أضف المزيد من التطبيقات إلى الحظر الحالي:";

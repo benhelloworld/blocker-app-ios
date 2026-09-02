@@ -723,3 +723,16 @@
 "Ends the next day" = "次日结束";
 "Choose a blocklist, weekday time periods, and protected devices." = "选择拦截列表、每周时间段和受保护设备。";
 "End" = "结束";
+"Scheduled focus" = "计划专注";
+
+// Quick Block launch countdown and undo grace period
+"Block starts in" = "屏蔽将在以下时间后开始";
+"Undo Quick Block" = "撤销快速屏蔽";
+"Changed something by mistake? Stop now without friction." = "不小心选错了？现在可以无阻碍停止。";
+"%d seconds to undo" = "还有 %d 秒可撤销";
+"Quick Block cancelled. Nothing was recorded." = "快速屏蔽已取消。未记录任何内容。";
+"Block starts in 1 second" = "1 秒后开始屏蔽";
+"Block starts in %d seconds" = "%d 秒后开始屏蔽";
+"1 second to undo" = "还有 1 秒可撤销";
+
+"Add more apps to your current block:" = "将更多 App 添加到当前屏蔽：";

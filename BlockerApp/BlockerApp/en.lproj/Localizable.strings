@@ -818,3 +818,16 @@
 "Ends the next day" = "Ends the next day";
 "Choose a blocklist, weekday time periods, and protected devices." = "Choose a blocklist, weekday time periods, and protected devices.";
 "End" = "End";
+"Scheduled focus" = "Scheduled focus";
+
+// Quick Block launch countdown and undo grace period
+"Block starts in" = "Block starts in";
+"Undo Quick Block" = "Undo Quick Block";
+"Changed something by mistake? Stop now without friction." = "Changed something by mistake? Stop now without friction.";
+"%d seconds to undo" = "%d seconds to undo";
+"Quick Block cancelled. Nothing was recorded." = "Quick Block cancelled. Nothing was recorded.";
+"Block starts in 1 second" = "Block starts in 1 second";
+"Block starts in %d seconds" = "Block starts in %d seconds";
+"1 second to undo" = "1 second to undo";
+
+"Add more apps to your current block:" = "Add more apps to your current block:";

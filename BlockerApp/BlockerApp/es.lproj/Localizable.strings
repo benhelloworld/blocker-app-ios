@@ -818,3 +818,16 @@
 "Ends the next day" = "Termina al día siguiente";
 "Choose a blocklist, weekday time periods, and protected devices." = "Elige una lista de bloqueo, períodos por día y dispositivos protegidos.";
 "End" = "Fin";
+"Scheduled focus" = "Enfoque programado";
+
+// Quick Block launch countdown and undo grace period
+"Block starts in" = "El bloqueo comienza en";
+"Undo Quick Block" = "Deshacer Bloqueo rápido";
+"Changed something by mistake? Stop now without friction." = "¿Configuraste algo por error? Puedes detenerlo ahora sin fricción.";
+"%d seconds to undo" = "%d segundos para deshacer";
+"Quick Block cancelled. Nothing was recorded." = "Bloqueo rápido cancelado. No se registró nada.";
+"Block starts in 1 second" = "El bloqueo comienza en 1 segundo";
+"Block starts in %d seconds" = "El bloqueo comienza en %d segundos";
+"1 second to undo" = "1 segundo para deshacer";
+
+"Add more apps to your current block:" = "Añade más apps a tu bloqueo actual:";

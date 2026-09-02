@@ -723,3 +723,16 @@
 "Ends the next day" = "পরের দিনে শেষ হয়";
 "Choose a blocklist, weekday time periods, and protected devices." = "একটি ব্লকলিস্ট, প্রতিদিনের সময়কাল এবং সুরক্ষিত ডিভাইস বেছে নিন।";
 "End" = "শেষ";
+"Scheduled focus" = "নির্ধারিত ফোকাস";
+
+// Quick Block launch countdown and undo grace period
+"Block starts in" = "ব্লক শুরু হবে";
+"Undo Quick Block" = "কুইক ব্লক ফিরিয়ে নিন";
+"Changed something by mistake? Stop now without friction." = "ভুল করে কিছু বেছে ফেলেছেন? এখনই কোনো বাধা ছাড়াই থামাতে পারেন।";
+"%d seconds to undo" = "ফিরিয়ে নিতে %d সেকেন্ড";
+"Quick Block cancelled. Nothing was recorded." = "কুইক ব্লক বাতিল হয়েছে। কিছুই রেকর্ড করা হয়নি।";
+"Block starts in 1 second" = "১ সেকেন্ডে ব্লক শুরু হবে";
+"Block starts in %d seconds" = "%d সেকেন্ডে ব্লক শুরু হবে";
+"1 second to undo" = "ফিরিয়ে নিতে ১ সেকেন্ড";
+
+"Add more apps to your current block:" = "আপনার বর্তমান ব্লকে আরও অ্যাপ যোগ করুন:";

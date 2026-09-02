@@ -189,10 +189,21 @@ struct SelectionView: View {
     #if canImport(FamilyControls)
     private var selectionSummary: some View {
         HStack(spacing: 12) {
-            metricPill(value: selection.applicationTokens.count, label: L10n.string("Apps"), explanation: L10n.string("Specific apps"), icon: "app.fill", accent: .mint)
-            metricPill(value: selection.categoryTokens.count, label: L10n.string("Categories"), explanation: L10n.string("Whole groups"), icon: "square.grid.2x2.fill", accent: .orange)
-            metricPill(value: selection.webDomainTokens.count, label: L10n.string("Websites"), explanation: L10n.string("Phone sites"), icon: "globe", accent: .blue)
+            pickerMetricPill(value: selection.applicationTokens.count, label: L10n.string("Apps"), explanation: L10n.string("Specific apps"), icon: "app.fill", accent: .mint)
+            pickerMetricPill(value: selection.categoryTokens.count, label: L10n.string("Categories"), explanation: L10n.string("Whole groups"), icon: "square.grid.2x2.fill", accent: .orange)
+            pickerMetricPill(value: selection.webDomainTokens.count, label: L10n.string("Websites"), explanation: L10n.string("Phone sites"), icon: "globe", accent: .blue)
         }
+    }
+
+    private func pickerMetricPill(value: Int, label: String, explanation: String, icon: String, accent: Color) -> some View {
+        Button {
+            AppHaptics.selection()
+            isPickerPresented = true
+        } label: {
+            metricPill(value: value, label: label, explanation: explanation, icon: icon, accent: accent)
+        }
+        .buttonStyle(PremiumPressButtonStyle())
+        .accessibilityHint(L10n.string("Open Apple’s Screen Time picker, then select any apps, categories, or websites you want AntiScroll to protect you from."))
     }
 
     private var selectionIsEmpty: Bool {

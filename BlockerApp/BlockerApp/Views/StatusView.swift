@@ -15,6 +15,8 @@ enum AppActionStyle {
 
 struct StatusView: View {
     @EnvironmentObject private var premiumStore: PremiumEntitlementStore
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let onboardingTarget: String?
     let onFlowTabSelected: (String) -> Void
 
@@ -23,7 +25,7 @@ struct StatusView: View {
         self.onFlowTabSelected = onFlowTabSelected
     }
 
-    @StateObject private var authorization = AuthorizationService()
+    @ObservedObject private var authorization = AuthorizationService.shared
     @State private var activeSession = ShieldStorage.shared.loadActiveImmediateSession()
     @State private var quickBlockMessage: String?
     @State private var isStartingQuickBlock = false
@@ -36,10 +38,16 @@ struct StatusView: View {
     @State private var selectedQuickBlockPreset: QuickBlockPreset?
     @State private var selectedCommitmentMode: QuickBlockCommitmentMode = .normal
     @State private var showingBlockedContent = false
-    @State private var confirmationPreset: QuickBlockPreset?
-    @State private var showStartConfirmation = false
+    @State private var quickBlockCountdownStartedAt: Date?
+    @State private var pendingQuickBlockMinutes: Int?
+    @State private var pendingQuickBlockPreset: QuickBlockPreset?
+    @State private var pendingQuickBlockCommitmentMode: QuickBlockCommitmentMode = .normal
+    @State private var quickBlockCountdownTask: Task<Void, Never>?
     #if canImport(FamilyControls)
     @State private var selection = ShieldStorage.shared.loadSelection()
+    @State private var activeBlockAdditions = FamilyActivitySelection()
+    @State private var showingActiveBlockAdditionsPicker = false
+    @State private var activeBlockAdditionMessage: String?
     #endif
 
     var body: some View {
@@ -49,7 +57,7 @@ struct StatusView: View {
 
                 ScrollViewReader { proxy in
                     ScrollView {
-                        TimelineView(.periodic(from: .now, by: 15)) { context in
+                        TimelineView(.periodic(from: .now, by: 1)) { context in
                             let session = refreshedSession(now: context.date)
 
                             VStack(spacing: 18) {
@@ -75,10 +83,11 @@ struct StatusView: View {
                     }
                     .onChange(of: onboardingTarget) { _, _ in scrollToOnboardingTarget(with: proxy) }
                 }
+                .accessibilityHidden(quickBlockCountdownStartedAt != nil)
 
-                if showStartConfirmation {
-                    startConfirmationOverlay
-                        .transition(.scale(scale: 0.92).combined(with: .opacity))
+                if let startedAt = quickBlockCountdownStartedAt {
+                    quickBlockCountdownOverlay(startedAt: startedAt)
+                        .transition(reduceMotion ? .opacity : .opacity.combined(with: .scale(scale: 1.02)))
                         .zIndex(2)
                 }
 
@@ -119,9 +128,36 @@ struct StatusView: View {
             .sheet(isPresented: $showingFrictionUnlock) {
                 frictionUnlockSheet
             }
+            #if canImport(FamilyControls)
+            .familyActivityPicker(
+                isPresented: $showingActiveBlockAdditionsPicker,
+                selection: $activeBlockAdditions
+            )
+            .onChange(of: showingActiveBlockAdditionsPicker) { wasPresented, isPresented in
+                if wasPresented && !isPresented {
+                    applyActiveBlockAdditions()
+                }
+            }
+            #endif
         }
         .tint(AppActionStyle.turquoise[0])
-        .onAppear(perform: refreshSelection)
+        .onAppear {
+            authorization.refresh()
+            reconcileImmediateBlockState()
+            refreshSelection()
+        }
+        .onDisappear {
+            cancelQuickBlockCountdown()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                authorization.refresh()
+                reconcileImmediateBlockState()
+                refreshSelection()
+            } else {
+                cancelQuickBlockCountdown()
+            }
+        }
     }
 
     private func scrollToOnboardingTarget(with proxy: ScrollViewProxy) {
@@ -194,7 +230,7 @@ struct StatusView: View {
                     .font(.caption.weight(.semibold))
                     .textCase(.uppercase)
                     .foregroundStyle(.white.opacity(0.55))
-                Text(authorization.isAuthorized ? L10n.string("Protected") : L10n.string("Needs Screen Time access"))
+                Text(authorization.isAuthorized ? L10n.string("Ready") : L10n.string("Needs Screen Time access"))
                     .font(.title3.bold())
                     .foregroundStyle(.white)
                     .fixedSize(horizontal: false, vertical: true)
@@ -305,7 +341,7 @@ struct StatusView: View {
 
             // 4. Start button
             Button {
-                startQuickBlock(minutes: selectedQuickBlockMinutes, preset: selectedQuickBlockPreset)
+                beginQuickBlockCountdown(minutes: selectedQuickBlockMinutes, preset: selectedQuickBlockPreset)
             } label: {
                 HStack(spacing: 10) {
                     Image(systemName: selectedQuickBlockPreset?.systemImage ?? "play.fill")
@@ -604,6 +640,15 @@ struct StatusView: View {
         #endif
     }
 
+    private func reconcileImmediateBlockState() {
+        do {
+            activeSession = try ScheduleService.shared.reconcileImmediateShield()
+        } catch {
+            activeSession = nil
+            quickBlockMessage = error.localizedDescription
+        }
+    }
+
     private func selectionMetric(value: Int, label: String, icon: String, accent: Color) -> some View {
         VStack(spacing: 5) {
             Image(systemName: icon)
@@ -631,8 +676,18 @@ struct StatusView: View {
 
         return VStack(spacing: 18) {
             activeTimerHero(remainingText: remainingText, endText: endText, progress: progress, session: session)
-            stopFrictionButton
+            #if canImport(FamilyControls)
+            activeBlockAdditionCard
+            #endif
+            if QuickBlockLaunchPolicy.canCancelWithoutFriction(sessionStart: session.start, now: now) {
+                quickBlockGraceStopButton(session: session, now: now)
+                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+            } else {
+                stopFrictionButton
+                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+            }
         }
+        .animation(.easeInOut(duration: 0.24), value: QuickBlockLaunchPolicy.canCancelWithoutFriction(sessionStart: session.start, now: now))
     }
 
     private func activeTimerHero(remainingText: String, endText: String, progress: Double, session: ImmediateBlockSession) -> some View {
@@ -695,6 +750,52 @@ struct StatusView: View {
         )
     }
 
+    #if canImport(FamilyControls)
+    private var activeBlockAdditionCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Button {
+                activeBlockAdditions = FamilyActivitySelection()
+                activeBlockAdditionMessage = nil
+                showingActiveBlockAdditionsPicker = true
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "plus.app.fill")
+                        .font(.headline)
+                        .foregroundStyle(AppActionStyle.turquoise[0])
+                        .frame(width: 40, height: 40)
+                        .background(AppActionStyle.turquoise[0].opacity(0.14), in: RoundedRectangle(cornerRadius: 13, style: .continuous))
+
+                    Text(L10n.string("Add more apps to your current block:"))
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.leading)
+
+                    Spacer(minLength: 8)
+
+                    Image(systemName: "chevron.right")
+                        .font(.caption.weight(.bold))
+                        .foregroundStyle(.white.opacity(0.50))
+                }
+                .padding(14)
+                .background(.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .stroke(AppActionStyle.turquoise[0].opacity(0.32), lineWidth: 1)
+                )
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("add-apps-to-active-block-button")
+
+            if let activeBlockAdditionMessage {
+                Text(activeBlockAdditionMessage)
+                    .font(.footnote)
+                    .foregroundStyle(.red)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+    #endif
+
     private func largeRemainingLabel(for session: ImmediateBlockSession, now: Date) -> String {
         let minutes = session.remainingMinutes(at: now)
         let hours = minutes / 60
@@ -702,6 +803,71 @@ struct StatusView: View {
         if hours > 0 && mins > 0 { return "\(hours)h \(mins)m" }
         if hours > 0 { return "\(hours)h" }
         return "\(minutes)m"
+    }
+
+    private func countdownAccessibilityLabel(remainingSeconds: Int) -> String {
+        if remainingSeconds == 1 {
+            return L10n.string("Block starts in 1 second")
+        }
+        return String(format: L10n.string("Block starts in %d seconds"), remainingSeconds)
+    }
+
+    private func undoAccessibilityLabel(remainingSeconds: Int) -> String {
+        if remainingSeconds == 1 {
+            return L10n.string("1 second to undo")
+        }
+        return String(format: L10n.string("%d seconds to undo"), remainingSeconds)
+    }
+
+    private func quickBlockGraceStopButton(session: ImmediateBlockSession, now: Date) -> some View {
+        let remaining = QuickBlockLaunchPolicy.graceRemaining(sessionStart: session.start, now: now)
+
+        return Button {
+            cancelQuickBlockDuringGrace(session)
+        } label: {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(Color.mint.opacity(0.16))
+                        .frame(width: 42, height: 42)
+                    Image(systemName: "arrow.uturn.backward")
+                        .font(.headline.weight(.bold))
+                        .foregroundStyle(.mint)
+                }
+
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(L10n.string("Undo Quick Block"))
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                    Text(L10n.string("Changed something by mistake? Stop now without friction."))
+                        .font(.caption)
+                        .foregroundStyle(.white.opacity(0.64))
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
+                Spacer(minLength: 8)
+
+                HStack(spacing: 4) {
+                    Image(systemName: "clock")
+                        .font(.caption2.weight(.bold))
+                    Text("\(remaining)")
+                        .font(.caption.weight(.black))
+                }
+                .foregroundStyle(.black)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 7)
+                .background(Color.mint, in: Capsule())
+                .accessibilityLabel(undoAccessibilityLabel(remainingSeconds: remaining))
+            }
+            .padding(14)
+            .background(Color.mint.opacity(0.09), in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .stroke(Color.mint.opacity(0.30), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("quick-block-grace-stop-button")
     }
 
     private var stopFrictionButton: some View {
@@ -913,81 +1079,187 @@ struct StatusView: View {
         }
     }
 
-    private var startConfirmationOverlay: some View {
-        let preset = confirmationPreset
-        let accent = preset.map(presetAccentColor) ?? .white
-        return ZStack {
-            Color.black.opacity(0.36)
+    private func quickBlockCountdownOverlay(startedAt: Date) -> some View {
+        let accent = pendingQuickBlockPreset.map(presetAccentColor) ?? AppActionStyle.turquoise[0]
+
+        return TimelineView(.periodic(from: .now, by: reduceMotion ? 1 : 1.0 / 30.0)) { context in
+            let remaining = max(1, QuickBlockLaunchPolicy.countdownRemaining(startedAt: startedAt, now: context.date))
+            let elapsed = max(0, context.date.timeIntervalSince(startedAt))
+            let progress = min(1, elapsed / TimeInterval(QuickBlockLaunchPolicy.countdownSeconds))
+
+            ZStack {
+                LinearGradient(
+                    colors: [Color.black.opacity(0.98), Color(red: 0.025, green: 0.035, blue: 0.070), Color(red: 0.060, green: 0.028, blue: 0.075)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
                 .ignoresSafeArea()
 
-            VStack(spacing: 16) {
-                ZStack {
-                    Circle()
-                        .fill(accent.opacity(0.18))
-                        .frame(width: 98, height: 98)
-                    Circle()
-                        .stroke(accent.opacity(0.42), lineWidth: 1)
-                        .frame(width: 98, height: 98)
-                    AnimatedPresetGlyph(preset: preset ?? .quickReset, isSelected: true, accent: accent)
-                        .frame(width: 54, height: 54)
-                }
+                Circle()
+                    .fill(accent.opacity(0.16))
+                    .frame(width: 320, height: 320)
+                    .blur(radius: 70)
 
-                VStack(spacing: 6) {
-                    Text(preset?.confirmationTitle ?? "Focus started")
-                        .font(.title3.bold())
+                VStack(spacing: 24) {
+                    Spacer()
+
+                    Label(L10n.string("Quick Block"), systemImage: "bolt.shield.fill")
+                        .font(.headline.weight(.semibold))
+                        .foregroundStyle(.white.opacity(0.78))
+
+                    ZStack {
+                        Circle()
+                            .stroke(.white.opacity(0.12), lineWidth: 12)
+                        Circle()
+                            .trim(from: 0, to: progress)
+                            .stroke(
+                                LinearGradient(colors: [accent, AppActionStyle.turquoise[0]], startPoint: .topLeading, endPoint: .bottomTrailing),
+                                style: StrokeStyle(lineWidth: 12, lineCap: .round)
+                            )
+                            .rotationEffect(.degrees(-90))
+                            .shadow(color: accent.opacity(0.36), radius: 18)
+
+                        Group {
+                            if reduceMotion {
+                                Text("\(remaining)")
+                            } else {
+                                Text("\(remaining)")
+                                    .contentTransition(.numericText())
+                                    .animation(.snappy(duration: 0.22), value: remaining)
+                            }
+                        }
+                        .font(.system(size: 92, weight: .black, design: .rounded))
                         .foregroundStyle(.white)
-                    Text(preset?.confirmationSubtitle ?? "Your selected block is active.")
-                        .font(.subheadline)
-                        .foregroundStyle(.white.opacity(0.70))
-                        .multilineTextAlignment(.center)
+                        .accessibilityLabel(countdownAccessibilityLabel(remainingSeconds: remaining))
+                        .accessibilityIdentifier("quick-block-countdown-number")
+                    }
+                    .frame(width: 224, height: 224)
+
+                    VStack(spacing: 8) {
+                        Text(L10n.string("Block starts in"))
+                            .font(.system(size: 32, weight: .bold, design: .rounded))
+                            .foregroundStyle(.white)
+                        if let minutes = pendingQuickBlockMinutes {
+                            Text(durationTitle(minutes))
+                                .font(.title3.weight(.semibold))
+                                .foregroundStyle(.white.opacity(0.66))
+                        }
+                    }
+
+                    Button {
+                        cancelQuickBlockCountdown()
+                    } label: {
+                        Text(L10n.string("Cancel"))
+                            .font(.headline.weight(.semibold))
+                            .foregroundStyle(.white.opacity(0.84))
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 52)
+                            .background(.white.opacity(0.10), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                            .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).stroke(.white.opacity(0.16), lineWidth: 1))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("cancel-quick-block-countdown-button")
+                    .padding(.horizontal, 28)
+
+                    Spacer()
                 }
+                .padding(.vertical, 24)
             }
-            .padding(26)
-            .frame(maxWidth: 310)
-            .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 30, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: 30, style: .continuous)
-                    .stroke(.white.opacity(0.20), lineWidth: 1)
-            )
-            .padding()
-        }
-        .onTapGesture {
-            withAnimation(.easeOut(duration: 0.2)) {
-                showStartConfirmation = false
-            }
+            .accessibilityElement(children: .contain)
+            .accessibilityAddTraits(.isModal)
+            .accessibilityIdentifier("quick-block-countdown-overlay")
         }
     }
 
     // MARK: - Actions
 
-    private func startQuickBlock(minutes: Int, preset: QuickBlockPreset?) {
+    #if canImport(FamilyControls)
+    private func applyActiveBlockAdditions() {
+        let hasAdditions = !activeBlockAdditions.applicationTokens.isEmpty
+            || !activeBlockAdditions.categoryTokens.isEmpty
+            || !activeBlockAdditions.webDomainTokens.isEmpty
+        guard hasAdditions else { return }
+
+        do {
+            guard try ScheduleService.shared.addToActiveHardBlock(activeBlockAdditions) != nil else {
+                reconcileImmediateBlockState()
+                return
+            }
+            activeBlockAdditionMessage = nil
+            activeBlockAdditions = FamilyActivitySelection()
+            playSuccessHaptic()
+        } catch {
+            activeBlockAdditionMessage = error.localizedDescription
+        }
+    }
+    #endif
+
+    private func beginQuickBlockCountdown(minutes: Int, preset: QuickBlockPreset?) {
         guard PremiumAccessPolicy.canStartQuickBlock(durationMinutes: minutes, isPremium: premiumStore.isPremium, commitmentMode: selectedCommitmentMode) else {
             quickBlockMessage = L10n.string("Premium unlocks Quick Blocks longer than 2 hours.")
             presentPremiumUpsellFromQuickBlock()
             return
         }
+        guard !isStartingQuickBlock else { return }
 
+        let startedAt = Date()
+        pendingQuickBlockMinutes = minutes
+        pendingQuickBlockPreset = preset
+        pendingQuickBlockCommitmentMode = selectedCommitmentMode
+        withAnimation(.easeInOut(duration: 0.24)) {
+            quickBlockCountdownStartedAt = startedAt
+        }
+        quickBlockMessage = nil
         isStartingQuickBlock = true
+        playSelectionHaptic()
+
+        quickBlockCountdownTask?.cancel()
+        quickBlockCountdownTask = Task { @MainActor in
+            do {
+                try await Task.sleep(nanoseconds: UInt64(QuickBlockLaunchPolicy.countdownSeconds) * 1_000_000_000)
+            } catch {
+                return
+            }
+            guard !Task.isCancelled else { return }
+            activatePendingQuickBlock()
+        }
+    }
+
+    private func activatePendingQuickBlock() {
+        guard let minutes = pendingQuickBlockMinutes else {
+            cancelQuickBlockCountdown()
+            return
+        }
+        let mode = pendingQuickBlockCommitmentMode
+
+        quickBlockCountdownTask = nil
+        withAnimation(.easeInOut(duration: 0.20)) {
+            quickBlockCountdownStartedAt = nil
+        }
+        pendingQuickBlockMinutes = nil
+        pendingQuickBlockPreset = nil
         defer { isStartingQuickBlock = false }
 
         do {
-            let session = try ScheduleService.shared.startImmediateBlock(durationMinutes: minutes, commitmentMode: selectedCommitmentMode)
+            let session = try ScheduleService.shared.startImmediateBlock(durationMinutes: minutes, commitmentMode: mode)
             activeSession = session
             quickBlockMessage = String(format: L10n.string("Started a %@ block."), L10n.string(session.durationLabel))
-            confirmationPreset = preset
-            withAnimation(.spring(response: 0.42, dampingFraction: 0.78)) {
-                showStartConfirmation = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.55) {
-                withAnimation(.easeOut(duration: 0.28)) {
-                    showStartConfirmation = false
-                }
-            }
             playSuccessHaptic()
             syncMacForStartedQuickBlock(session)
         } catch {
             quickBlockMessage = String(format: L10n.string("Block failed: %@"), error.localizedDescription)
         }
+    }
+
+    private func cancelQuickBlockCountdown() {
+        quickBlockCountdownTask?.cancel()
+        quickBlockCountdownTask = nil
+        withAnimation(.easeInOut(duration: 0.20)) {
+            quickBlockCountdownStartedAt = nil
+        }
+        pendingQuickBlockMinutes = nil
+        pendingQuickBlockPreset = nil
+        isStartingQuickBlock = false
     }
 
     private func confirmCustomDuration() {
@@ -1014,9 +1286,22 @@ struct StatusView: View {
         }
     }
 
+    private func cancelQuickBlockDuringGrace(_ session: ImmediateBlockSession, now: Date = Date()) {
+        guard QuickBlockLaunchPolicy.canCancelWithoutFriction(sessionStart: session.start, now: now) else {
+            showingFrictionUnlock = true
+            return
+        }
+
+        ScheduleService.shared.stopImmediateBlock(force: true)
+        activeSession = nil
+        quickBlockMessage = L10n.string("Quick Block cancelled. Nothing was recorded.")
+        syncMacForStoppedQuickBlock(durationMinutes: session.durationMinutes)
+        playSelectionHaptic()
+    }
+
     private func stopQuickBlock() {
         guard let session = activeSession ?? ShieldStorage.shared.loadActiveImmediateSession() else {
-            ScheduleService.shared.stopImmediateBlock()
+            ScheduleService.shared.stopImmediateBlock(force: true)
             quickBlockMessage = L10n.string("Quick block stopped.")
             return
         }
@@ -1024,7 +1309,7 @@ struct StatusView: View {
         let now = Date()
         saveReceipt(for: session, completedAt: now)
         ScheduleService.shared.recordImmediateBlockCompletion(session, completedAt: now)
-        ScheduleService.shared.stopImmediateBlock()
+        ScheduleService.shared.stopImmediateBlock(force: true)
         activeSession = nil
         quickBlockMessage = L10n.string("Quick block stopped. Progress recorded as elapsed protected time.")
         syncMacForStoppedQuickBlock(durationMinutes: session.durationMinutes)
@@ -1041,31 +1326,23 @@ struct StatusView: View {
             return
         }
 
-        Task {
-            do {
-                try await MacBlockPlanSyncService.shared.saveActiveSession(
-                    domains: domains,
-                    session: session,
-                    targetDeviceIDs: targetDeviceIDs,
-                    adultWebFilterEnabled: adultWebFilterEnabled
-                )
-            } catch {
-                // Sync is best-effort; the block itself is already running.
-            }
-        }
+        QuickBlockMacSyncCoordinator.shared.enqueueStart(
+            domains: domains,
+            session: session,
+            targetDeviceIDs: targetDeviceIDs,
+            adultWebFilterEnabled: adultWebFilterEnabled
+        )
     }
 
     private func syncMacForStoppedQuickBlock(durationMinutes: Int) {
         let domains = AutoWebsiteSync.shared.mergedDomains(withManual: ShieldStorage.shared.loadMacBlockDomains())
         let targetDeviceIDs = ShieldStorage.shared.loadSelectedMacDeviceIDs()
-        Task {
-            try? await MacBlockPlanSyncService.shared.clearActiveSessionKeepingSelection(
-                domains: domains,
-                durationMinutes: durationMinutes,
-                targetDeviceIDs: targetDeviceIDs,
-                adultWebFilterEnabled: ShieldStorage.shared.loadAdultWebFilterEnabled()
-            )
-        }
+        QuickBlockMacSyncCoordinator.shared.enqueueStop(
+            domains: domains,
+            durationMinutes: durationMinutes,
+            targetDeviceIDs: targetDeviceIDs,
+            adultWebFilterEnabled: ShieldStorage.shared.loadAdultWebFilterEnabled()
+        )
     }
 
     private func saveReceipt(for session: ImmediateBlockSession, completedAt: Date) {
@@ -1099,6 +1376,8 @@ struct StatusView: View {
             if now >= activeSession.end {
                 saveReceipt(for: activeSession, completedAt: activeSession.end)
                 ScheduleService.shared.recordImmediateBlockCompletion(activeSession, completedAt: activeSession.end)
+                ScheduleService.shared.stopImmediateBlock()
+                syncMacForStoppedQuickBlock(durationMinutes: activeSession.durationMinutes)
                 self.activeSession = nil
             }
         }
@@ -1127,6 +1406,56 @@ struct StatusView: View {
 
     private func playSuccessHaptic() {
         AppHaptics.success()
+    }
+}
+
+
+@MainActor
+final class QuickBlockMacSyncCoordinator {
+    static let shared = QuickBlockMacSyncCoordinator()
+
+    private var operationTail: Task<Void, Never>?
+
+    private init() {}
+
+    func enqueueStart(
+        domains: [String],
+        session: ImmediateBlockSession,
+        targetDeviceIDs: [String],
+        adultWebFilterEnabled: Bool
+    ) {
+        enqueue {
+            try? await MacBlockPlanSyncService.shared.saveActiveSession(
+                domains: domains,
+                session: session,
+                targetDeviceIDs: targetDeviceIDs,
+                adultWebFilterEnabled: adultWebFilterEnabled
+            )
+        }
+    }
+
+    func enqueueStop(
+        domains: [String],
+        durationMinutes: Int,
+        targetDeviceIDs: [String],
+        adultWebFilterEnabled: Bool
+    ) {
+        enqueue {
+            try? await MacBlockPlanSyncService.shared.clearActiveSessionKeepingSelection(
+                domains: domains,
+                durationMinutes: durationMinutes,
+                targetDeviceIDs: targetDeviceIDs,
+                adultWebFilterEnabled: adultWebFilterEnabled
+            )
+        }
+    }
+
+    private func enqueue(_ operation: @escaping @MainActor () async -> Void) {
+        let previous = operationTail
+        operationTail = Task { @MainActor in
+            await previous?.value
+            await operation()
+        }
     }
 }
 

@@ -27,6 +27,28 @@ struct HardBlockActivationPreflight {
     }
 }
 
+enum ImmediateShieldReconciliationAction: Equatable {
+    case clearStaleEnforcement
+    case invalidateAuthorization
+    case invalidateSelection
+    case reapplyShield
+    case verified
+}
+
+struct ImmediateShieldReconciliationPolicy {
+    static func action(
+        hasActiveSession: Bool,
+        isAuthorized: Bool,
+        hasSelection: Bool,
+        settingsMatch: Bool
+    ) -> ImmediateShieldReconciliationAction {
+        guard hasActiveSession else { return .clearStaleEnforcement }
+        guard isAuthorized else { return .invalidateAuthorization }
+        guard hasSelection else { return .invalidateSelection }
+        return settingsMatch ? .verified : .reapplyShield
+    }
+}
+
 enum ScheduleServiceError: LocalizedError, Equatable {
     case immediateBlockAlreadyActive(String)
     case premiumRequired(String)
@@ -74,6 +96,8 @@ final class ScheduleService {
         let protectsThisDevice = schedule.protectsCurrentDevice(
             defaultRemoteDeviceIDs: ShieldStorage.shared.loadSelectedMacDeviceIDs()
         )
+        let transitionDate = Date()
+        let wasScheduleEnabled = ShieldStorage.shared.loadScheduleEnabled()
 
         #if canImport(FamilyControls)
         let selection = ShieldStorage.shared.loadBlocklist(id: schedule.selectedBlocklistID)?.selection
@@ -93,9 +117,15 @@ final class ScheduleService {
         let oldNames = ShieldStorage.shared.loadRegisteredScheduleActivityNames()
         let namesToStop = Array(Set(oldNames + SharedConfig.legacyDailyActivityNames))
             .map { DeviceActivityName($0) }
+        if wasScheduleEnabled {
+            ShieldStorage.shared.finishAllScheduledFocusAccounting(endedAt: transitionDate)
+        }
         center.stopMonitoring(namesToStop)
 
         let descriptors = protectsThisDevice ? schedule.monitoringDescriptors : []
+        ShieldStorage.shared.saveScheduledFocusDurations(
+            Dictionary(uniqueKeysWithValues: descriptors.map { ($0.id, $0.durationMinutes) })
+        )
         var registered: [DeviceActivityName] = []
         do {
             for descriptor in descriptors {
@@ -118,6 +148,7 @@ final class ScheduleService {
             }
         } catch {
             center.stopMonitoring(registered)
+            ShieldStorage.shared.saveScheduledFocusDurations([:])
             ShieldStorage.shared.saveRegisteredScheduleActivityNames([])
             ShieldStorage.shared.saveScheduleEnabled(false)
             throw error
@@ -128,9 +159,14 @@ final class ScheduleService {
             try ShieldStorage.shared.saveSchedule(schedule)
 
             #if canImport(FamilyControls) && canImport(ManagedSettings)
-            if protectsThisDevice, ActiveScheduledBlockWindow.activeWindow(for: schedule) != nil {
+            if protectsThisDevice,
+               let activeWindow = ActiveScheduledBlockWindow.activeWindow(for: schedule, now: transitionDate) {
                 try applyHardShield(selection, storeName: SharedConfig.scheduledStoreName)
                 try ShieldStorage.shared.saveActiveScheduledShieldSelection(selection)
+                ShieldStorage.shared.startScheduledFocusAccounting(
+                    activityName: activeWindow.activityName,
+                    startedAt: transitionDate
+                )
             } else {
                 clearHardShield(storeName: SharedConfig.scheduledStoreName)
                 try ShieldStorage.shared.saveActiveScheduledShieldSelection(nil)
@@ -147,6 +183,7 @@ final class ScheduleService {
             #if canImport(DeviceActivity)
             center.stopMonitoring(registered)
             #endif
+            ShieldStorage.shared.saveScheduledFocusDurations([:])
             ShieldStorage.shared.saveRegisteredScheduleActivityNames([])
             ShieldStorage.shared.saveActiveScheduleActivityNames([])
             ShieldStorage.shared.saveScheduleEnabled(false)
@@ -195,6 +232,18 @@ final class ScheduleService {
             commitmentMode: commitmentMode
         )
 
+        // Make the immutable session snapshot available to the monitor extension
+        // before registration. The mutable global picker must never replace an
+        // already-started commitment block if the callback is delivered later.
+        #if canImport(FamilyControls)
+        do {
+            try ShieldStorage.shared.saveActiveImmediateShieldSelection(selection)
+        } catch {
+            try? ShieldStorage.shared.saveActiveImmediateShieldSelection(nil)
+            throw error
+        }
+        #endif
+
         #if canImport(DeviceActivity)
         let center = DeviceActivityCenter()
         let activity = DeviceActivityName(SharedConfig.immediateActivityName)
@@ -209,6 +258,9 @@ final class ScheduleService {
             try center.startMonitoring(activity, during: deviceSchedule)
         } catch {
             center.stopMonitoring([activity])
+            #if canImport(FamilyControls)
+            try? ShieldStorage.shared.saveActiveImmediateShieldSelection(nil)
+            #endif
             throw error
         }
         #endif
@@ -216,7 +268,6 @@ final class ScheduleService {
         do {
             #if canImport(FamilyControls) && canImport(ManagedSettings)
             try applyHardShield(selection, storeName: SharedConfig.immediateStoreName)
-            try ShieldStorage.shared.saveActiveImmediateShieldSelection(selection)
             #endif
             try ShieldStorage.shared.saveActiveImmediateSession(session)
             ShieldStorage.shared.saveActiveFocusTemplate(focusTemplate)
@@ -234,8 +285,71 @@ final class ScheduleService {
         }
     }
 
+    @discardableResult
+    func reconcileImmediateShield(now: Date = Date()) throws -> ImmediateBlockSession? {
+        // Discard a stored session that already expired without an end callback.
+        ShieldStorage.shared.clearExpiredImmediateSession(now: now)
+        let session = ShieldStorage.shared.loadActiveImmediateSession(now: now)
+
+        #if canImport(FamilyControls) && canImport(ManagedSettings)
+        let selection = ShieldStorage.shared.loadActiveImmediateShieldSelection()
+        let hasEffectiveSelection = selection.map {
+            !$0.applicationTokens.isEmpty
+                || !$0.categoryTokens.isEmpty
+                || !$0.webDomainTokens.isEmpty
+                || !automaticWebDomains.isEmpty
+        } ?? false
+        let settingsMatch = selection.map {
+            hardShieldMatches($0, storeName: SharedConfig.immediateStoreName)
+        } ?? false
+        let action = ImmediateShieldReconciliationPolicy.action(
+            hasActiveSession: session != nil,
+            isAuthorized: AuthorizationCenter.shared.authorizationStatus == .approved,
+            hasSelection: hasEffectiveSelection,
+            settingsMatch: settingsMatch
+        )
+
+        switch action {
+        case .clearStaleEnforcement:
+            clearImmediateEnforcement()
+            return nil
+        case .invalidateAuthorization:
+            // Authorization was revoked or denied while a session is stored:
+            // the session can never be enforced again, so invalidate it fully.
+            clearImmediateEnforcement(force: true)
+            throw ScheduleServiceError.authorizationRequired
+        case .invalidateSelection:
+            // The persisted snapshot lost its effective selection while a
+            // session is stored: this is corrupt state that must not linger.
+            clearImmediateEnforcement(force: true)
+            throw ScheduleServiceError.emptySelection
+        case .reapplyShield:
+            guard let session, let selection else {
+                clearImmediateEnforcement(force: true)
+                throw ScheduleServiceError.managedSettingsNotApplied
+            }
+            do {
+                try validateHardBlock(selection)
+                try applyHardShield(selection, storeName: SharedConfig.immediateStoreName)
+                return session
+            } catch {
+                // Keep the active commitment and its persisted snapshot intact:
+                // a transient ManagedSettings failure must not delete the block.
+                // The next launch/foreground reconciliation retries reapplication.
+                throw error
+            }
+        case .verified:
+            return session
+        }
+        #else
+        return session
+        #endif
+    }
+
     /// Stops only recurring schedule monitors. Quick Block has an independent activity and store.
     func stopMonitoring() {
+        ShieldStorage.shared.finishAllScheduledFocusAccounting()
+        ShieldStorage.shared.saveScheduledFocusDurations([:])
         #if canImport(DeviceActivity)
         let names = Array(Set(ShieldStorage.shared.loadRegisteredScheduleActivityNames() + SharedConfig.legacyDailyActivityNames))
         DeviceActivityCenter().stopMonitoring(names.map { DeviceActivityName($0) })
@@ -276,9 +390,13 @@ final class ScheduleService {
             stopMonitoring()
             throw error
         }
-        if ActiveScheduledBlockWindow.activeWindow(for: schedule, now: now) != nil {
+        if let activeWindow = ActiveScheduledBlockWindow.activeWindow(for: schedule, now: now) {
             try applyHardShield(selection, storeName: SharedConfig.scheduledStoreName)
             try ShieldStorage.shared.saveActiveScheduledShieldSelection(selection)
+            ShieldStorage.shared.startScheduledFocusAccounting(
+                activityName: activeWindow.activityName,
+                startedAt: now
+            )
         } else {
             clearHardShield(storeName: SharedConfig.scheduledStoreName)
             try ShieldStorage.shared.saveActiveScheduledShieldSelection(nil)
@@ -310,7 +428,16 @@ final class ScheduleService {
         ShieldStorage.shared.clearActiveImmediateSession()
     }
 
-    func stopImmediateBlock() {
+    func stopImmediateBlock(force: Bool = false) {
+        clearImmediateEnforcement(force: force)
+    }
+
+    private func clearImmediateEnforcement(force: Bool = false) {
+        #if canImport(FamilyControls) && canImport(ManagedSettings)
+        // A stale stop/clear call (for example a callback racing a fresh start)
+        // must never erase a newer commitment that is still active.
+        guard force || !ShieldStorage.shared.hasActiveImmediateSession() else { return }
+        #endif
         #if canImport(DeviceActivity)
         DeviceActivityCenter().stopMonitoring([DeviceActivityName(SharedConfig.immediateActivityName)])
         #endif
@@ -389,50 +516,105 @@ final class ScheduleService {
 
     func setDelayAppsEnabled(_ isEnabled: Bool, selection: FamilyActivitySelection? = nil) throws {
         ShieldStorage.shared.clearDelayAppsWait()
-        ShieldStorage.shared.saveDelayAppsEnabled(isEnabled)
         if isEnabled {
             let targetSelection = selection ?? ShieldStorage.shared.loadDelaySelection()
-            try validateHardBlock(targetSelection)
-            try applyDelayAppsShield(selection: targetSelection)
+            do {
+                try validateHardBlock(targetSelection)
+                try applyDelayAppsShield(selection: targetSelection)
+                ShieldStorage.shared.saveDelayAppsEnabled(true)
+            } catch {
+                clearDelayAppsShield()
+                ShieldStorage.shared.saveDelayAppsEnabled(false)
+                throw error
+            }
         } else {
             clearDelayAppsShield()
+            ShieldStorage.shared.saveDelayAppsEnabled(false)
         }
     }
 
     func updateDelayAppsSelection(_ selection: FamilyActivitySelection) throws {
         ShieldStorage.shared.clearDelayAppsWait()
-        try ShieldStorage.shared.saveDelaySelection(selection)
         if ShieldStorage.shared.loadDelayAppsEnabled() {
-            try validateHardBlock(selection)
-            try applyDelayAppsShield(selection: selection)
+            do {
+                try validateHardBlock(selection)
+                try ShieldStorage.shared.saveDelaySelection(selection)
+                try applyDelayAppsShield(selection: selection)
+            } catch {
+                clearDelayAppsShield()
+                ShieldStorage.shared.saveDelayAppsEnabled(false)
+                // Preserve the new picker choice while keeping Delay Apps off;
+                // selection and enforcement state must not contradict each other.
+                try? ShieldStorage.shared.saveDelaySelection(selection)
+                throw error
+            }
+        } else {
+            try ShieldStorage.shared.saveDelaySelection(selection)
         }
     }
 
     func refreshDelayAppsShieldIfNeeded() throws {
         guard ShieldStorage.shared.loadDelayAppsEnabled() else { return }
         let selection = ShieldStorage.shared.loadDelaySelection()
-        try validateHardBlock(selection)
-        try applyDelayAppsShield(selection: selection)
+        do {
+            try validateHardBlock(selection)
+            try applyDelayAppsShield(selection: selection)
+        } catch {
+            clearDelayAppsShield()
+            ShieldStorage.shared.saveDelayAppsEnabled(false)
+            throw error
+        }
     }
 
     private func applyDelayAppsShield(selection: FamilyActivitySelection) throws {
         let delayStore = ManagedSettingsStore(named: .init("delay-apps"))
-        delayStore.shield.applications = selection.applicationTokens.isEmpty ? nil : selection.applicationTokens
-        delayStore.shield.applicationCategories = selection.categoryTokens.isEmpty ? nil : .specific(selection.categoryTokens)
-        delayStore.shield.webDomains = selection.webDomainTokens.isEmpty ? nil : selection.webDomainTokens
+        let applications = selection.applicationTokens.isEmpty ? nil : selection.applicationTokens
+        let categories: ShieldSettings.ActivityCategoryPolicy<Application>? = selection.categoryTokens.isEmpty
+            ? nil
+            : .specific(selection.categoryTokens)
+        let webDomains = selection.webDomainTokens.isEmpty ? nil : selection.webDomainTokens
+
+        delayStore.shield.applications = applications
+        delayStore.shield.applicationCategories = categories
+        delayStore.shield.webDomains = webDomains
+
+        guard delayStore.shield.applications == applications,
+              delayStore.shield.applicationCategories == categories,
+              delayStore.shield.webDomains == webDomains else {
+            delayStore.clearAllSettings()
+            throw ScheduleServiceError.managedSettingsNotApplied
+        }
     }
 
-    func addToActiveHardBlock(_ additionalSelection: FamilyActivitySelection) throws {
-        var merged = ShieldStorage.shared.loadActiveImmediateShieldSelection()
-            ?? ShieldStorage.shared.loadActiveHardShieldSelection()
-            ?? ShieldStorage.shared.loadSelection()
+    @discardableResult
+    func addToActiveHardBlock(
+        _ additionalSelection: FamilyActivitySelection,
+        now: Date = Date()
+    ) throws -> FamilyActivitySelection? {
+        guard ShieldStorage.shared.loadActiveImmediateSession(now: now) != nil,
+              let currentSelection = ShieldStorage.shared.loadActiveImmediateShieldSelection() else {
+            return nil
+        }
+
+        var merged = currentSelection
         merged.applicationTokens.formUnion(additionalSelection.applicationTokens)
         merged.categoryTokens.formUnion(additionalSelection.categoryTokens)
         merged.webDomainTokens.formUnion(additionalSelection.webDomainTokens)
+        try validateHardBlock(merged)
 
-        try ShieldStorage.shared.saveSelection(merged)
-        try applyHardShield(merged, storeName: SharedConfig.immediateStoreName)
-        try ShieldStorage.shared.saveActiveImmediateShieldSelection(merged)
+        // Persist the expanded session snapshot before changing enforcement so
+        // the monitor extension can never reapply the older, smaller selection.
+        do {
+            try ShieldStorage.shared.saveActiveImmediateShieldSelection(merged)
+            try applyHardShield(merged, storeName: SharedConfig.immediateStoreName)
+            return merged
+        } catch {
+            // Keep the existing commitment intact if Screen Time rejects the
+            // expanded rules or persistence fails partway through the update.
+            try? ShieldStorage.shared.saveActiveImmediateShieldSelection(currentSelection)
+            try? applyHardShield(currentSelection, storeName: SharedConfig.immediateStoreName)
+            throw error
+        }
     }
 
     func clearDelayAppsShield() {

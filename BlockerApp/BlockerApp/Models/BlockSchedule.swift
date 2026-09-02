@@ -45,6 +45,14 @@ struct ScheduleMonitoringDescriptor: Equatable, Identifiable {
     let startMinute: Int
     let endHour: Int
     let endMinute: Int
+    let durationMinutes: Int
+}
+
+struct ScheduleSummaryGroup: Equatable, Identifiable {
+    let weekdays: [Int]
+    let period: ScheduleTimePeriod
+
+    var id: String { period.semanticKey }
 }
 
 struct BlockSchedule: Codable, Equatable {
@@ -196,6 +204,28 @@ struct BlockSchedule: Codable, Equatable {
         periodsByWeekday[weekday] ?? []
     }
 
+    var summaryGroups: [ScheduleSummaryGroup] {
+        var groups: [ScheduleSummaryGroup] = []
+        var groupIndexByPeriod: [String: Int] = [:]
+
+        for day in Self.orderedWeekdays {
+            for period in periods(for: day.weekday) {
+                if let index = groupIndexByPeriod[period.semanticKey] {
+                    if !groups[index].weekdays.contains(day.weekday) {
+                        groups[index] = ScheduleSummaryGroup(
+                            weekdays: groups[index].weekdays + [day.weekday],
+                            period: groups[index].period
+                        )
+                    }
+                } else {
+                    groupIndexByPeriod[period.semanticKey] = groups.count
+                    groups.append(ScheduleSummaryGroup(weekdays: [day.weekday], period: period))
+                }
+            }
+        }
+        return groups
+    }
+
     func contains(hour: Int, minute: Int) -> Bool {
         selectedWeekdays.contains { contains(weekday: $0, hour: hour, minute: minute) }
     }
@@ -251,7 +281,8 @@ struct BlockSchedule: Codable, Equatable {
                     startHour: period.startHour,
                     startMinute: period.startMinute,
                     endHour: period.endHour,
-                    endMinute: period.endMinute
+                    endMinute: period.endMinute,
+                    durationMinutes: period.durationMinutes
                 )
             }
         }.sorted { $0.id < $1.id }
@@ -344,6 +375,7 @@ struct NamedBlocklist: Identifiable, Codable, Equatable {
 struct ActiveScheduledBlockWindow: Equatable {
     let start: Date
     let end: Date
+    let activityName: String
 
     static func activeWindow(for schedule: BlockSchedule, now: Date = Date(), calendar: Calendar = .current) -> ActiveScheduledBlockWindow? {
         let today = calendar.startOfDay(for: now)
@@ -353,12 +385,20 @@ struct ActiveScheduledBlockWindow: Equatable {
             let weekday = calendar.component(.weekday, from: startDay)
             for period in schedule.periods(for: weekday) {
                 guard period.durationMinutes > 0 else { continue }
-                guard let start = calendar.date(bySettingHour: period.startHour, minute: period.startMinute, second: 0, of: startDay),
-                      let end = calendar.date(byAdding: .minute, value: period.durationMinutes, to: start) else {
+                let endDay = period.crossesMidnight
+                    ? calendar.date(byAdding: .day, value: 1, to: startDay)
+                    : startDay
+                guard let endDay,
+                      let start = calendar.date(bySettingHour: period.startHour, minute: period.startMinute, second: 0, of: startDay),
+                      let end = calendar.date(bySettingHour: period.endHour, minute: period.endMinute, second: 0, of: endDay) else {
                     continue
                 }
                 if now >= start && now < end {
-                    return ActiveScheduledBlockWindow(start: start, end: end)
+                    return ActiveScheduledBlockWindow(
+                        start: start,
+                        end: end,
+                        activityName: SharedConfig.dailyActivityName(for: weekday, periodID: period.id)
+                    )
                 }
             }
         }
@@ -451,6 +491,39 @@ struct ImmediateBlockSession: Codable, Equatable {
 }
 
 
+struct QuickBlockLaunchPolicy {
+    static let countdownSeconds = 3
+    static let cancellationGraceSeconds = 10
+
+    static func countdownRemaining(startedAt: Date, now: Date = Date()) -> Int {
+        remainingSeconds(
+            until: startedAt.addingTimeInterval(TimeInterval(countdownSeconds)),
+            now: now
+        )
+    }
+
+    static func shouldActivate(startedAt: Date, now: Date = Date()) -> Bool {
+        now >= startedAt.addingTimeInterval(TimeInterval(countdownSeconds))
+    }
+
+    static func graceRemaining(sessionStart: Date, now: Date = Date()) -> Int {
+        guard now >= sessionStart else { return 0 }
+        return remainingSeconds(
+            until: sessionStart.addingTimeInterval(TimeInterval(cancellationGraceSeconds)),
+            now: now
+        )
+    }
+
+    static func canCancelWithoutFriction(sessionStart: Date, now: Date = Date()) -> Bool {
+        graceRemaining(sessionStart: sessionStart, now: now) > 0
+    }
+
+    private static func remainingSeconds(until end: Date, now: Date) -> Int {
+        max(0, Int(ceil(end.timeIntervalSince(now))))
+    }
+}
+
+
 struct QuickBlockStartGuard: Equatable {
     static func canStartNewBlock(existing: ImmediateBlockSession?, now: Date = Date()) -> Bool {
         guard let existing else { return true }
@@ -519,6 +592,75 @@ struct FocusStats: Codable, Equatable {
         let month = components.month ?? 0
         let day = components.day ?? 0
         return String(format: "%04d-%02d-%02d", year, month, day)
+    }
+}
+
+struct ScheduledFocusStats: Codable, Equatable {
+    var totalProtectedMinutes: Int
+    var focusDayStamps: Set<String>
+
+    init(totalProtectedMinutes: Int = 0, focusDayStamps: Set<String> = []) {
+        self.totalProtectedMinutes = totalProtectedMinutes
+        self.focusDayStamps = focusDayStamps
+    }
+
+    mutating func recordProtection(
+        start: Date,
+        end: Date,
+        maximumMinutes: Int? = nil,
+        calendar: Calendar = .current
+    ) {
+        let cappedEnd: Date
+        if let maximumMinutes {
+            cappedEnd = min(end, start.addingTimeInterval(TimeInterval(max(0, maximumMinutes) * 60)))
+        } else {
+            cappedEnd = end
+        }
+        let elapsedMinutes = Int(floor(cappedEnd.timeIntervalSince(start) / 60))
+        guard elapsedMinutes > 0 else { return }
+
+        totalProtectedMinutes += elapsedMinutes
+        var cursor = start
+        while cursor < cappedEnd {
+            focusDayStamps.insert(Self.dayStamp(for: cursor, calendar: calendar))
+            let dayStart = calendar.startOfDay(for: cursor)
+            guard let nextDay = calendar.date(byAdding: .day, value: 1, to: dayStart), nextDay > cursor else { break }
+            cursor = nextDay
+        }
+    }
+
+    private static func dayStamp(for date: Date, calendar: Calendar) -> String {
+        let components = calendar.dateComponents([.year, .month, .day], from: date)
+        return String(format: "%04d-%02d-%02d", components.year ?? 0, components.month ?? 0, components.day ?? 0)
+    }
+}
+
+struct FocusProgressSummary: Equatable {
+    let quickStats: FocusStats
+    let scheduledStats: ScheduledFocusStats
+
+    var totalMinutes: Int { quickStats.totalPlannedMinutes + scheduledStats.totalProtectedMinutes }
+    var scheduledMinutes: Int { scheduledStats.totalProtectedMinutes }
+    var completedSessions: Int { quickStats.totalSessions }
+    var hasData: Bool { completedSessions > 0 || totalMinutes > 0 || !focusDayStamps.isEmpty }
+    var totalHoursLabel: String { Self.hoursLabel(for: totalMinutes) }
+    var scheduledHoursLabel: String { Self.hoursLabel(for: scheduledMinutes) }
+
+    func currentStreakDays(asOf date: Date = Date(), calendar: Calendar = .current) -> Int {
+        var combined = quickStats
+        combined.focusDayStamps = focusDayStamps
+        return combined.currentStreakDays(asOf: date, calendar: calendar)
+    }
+
+    private var focusDayStamps: Set<String> {
+        quickStats.focusDayStamps.union(scheduledStats.focusDayStamps)
+    }
+
+    private static func hoursLabel(for minutes: Int) -> String {
+        guard minutes > 0 else { return "0h" }
+        let hours = Double(minutes) / 60.0
+        if minutes % 60 == 0 { return "\(Int(hours))h" }
+        return "\(hours.formatted(.number.precision(.fractionLength(1))))h"
     }
 }
 
