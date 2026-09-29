@@ -1,0 +1,97 @@
+{
+  "identifier": "8C353181-4D37-4067-B7A3-4942DD426AA2",
+  "products": [],
+  "nonRenewingSubscriptions": [],
+  "subscriptionGroups": [
+    {
+      "id": "D2F79D90-6AD5-4467-8799-E86F381798E5",
+      "localizations": [
+        {
+          "locale": "en_US",
+          "name": "AntiScroll Premium"
+        },
+        {
+          "locale": "de_DE",
+          "name": "AntiScroll Premium"
+        },
+        {
+          "locale": "es_ES",
+          "name": "AntiScroll Premium"
+        }
+      ],
+      "name": "AntiScroll Premium",
+      "subscriptions": [
+        {
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "2.00",
+          "familyShareable": false,
+          "groupNumber": 1,
+          "internalID": "4E7B04F2-0872-4279-8D9B-06C50203FB97",
+          "introductoryOffer": null,
+          "localizations": [
+            {
+              "description": "Unlock all Premium focus tools with monthly access.",
+              "displayName": "Monthly Premium",
+              "locale": "en_US"
+            },
+            {
+              "description": "Schaltet alle Premium-Fokuswerkzeuge mit monatlichem Zugang frei.",
+              "displayName": "Monatliches Premium",
+              "locale": "de_DE"
+            },
+            {
+              "description": "Desbloquea todas las herramientas Premium de concentración con acceso mensual.",
+              "displayName": "Premium mensual",
+              "locale": "es_ES"
+            }
+          ],
+          "productID": "focusblocker.premium_monthly",
+          "recurringSubscriptionPeriod": "P1M",
+          "referenceName": "AntiScroll Premium Monthly",
+          "subscriptionGroupID": "D2F79D90-6AD5-4467-8799-E86F381798E5",
+          "type": "RecurringSubscription"
+        },
+        {
+          "adHocOffers": [],
+          "codeOffers": [],
+          "displayPrice": "20.00",
+          "familyShareable": false,
+          "groupNumber": 2,
+          "internalID": "75A742C8-7EA1-4223-89AE-5364697D3B13",
+          "introductoryOffer": null,
+          "localizations": [
+            {
+              "description": "Best value. Unlock all Premium focus tools for a full year.",
+              "displayName": "Yearly Premium",
+              "locale": "en_US"
+            },
+            {
+              "description": "Bestes Preis-Leistungs-Verhältnis. Schaltet alle Premium-Fokuswerkzeuge für ein ganzes Jahr frei.",
+              "displayName": "Jährliches Premium",
+              "locale": "de_DE"
+            },
+            {
+              "description": "La mejor opción. Desbloquea todas las herramientas Premium de concentración durante un año completo.",
+              "displayName": "Premium anual",
+              "locale": "es_ES"
+            }
+          ],
+          "productID": "focusblocker.premium.yearly",
+          "recurringSubscriptionPeriod": "P1Y",
+          "referenceName": "AntiScroll Premium Yearly",
+          "subscriptionGroupID": "D2F79D90-6AD5-4467-8799-E86F381798E5",
+          "type": "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "_applicationInternalID": "1234567890",
+    "_developerTeamID": ""
+  },
+  "version": {
+    "major": 4,
+    "minor": 0
+  }
+}

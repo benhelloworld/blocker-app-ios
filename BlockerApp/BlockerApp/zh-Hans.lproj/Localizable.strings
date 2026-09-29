@@ -1,0 +1,753 @@
+"Porn & adult websites" = "色情与成人网站";
+"Covers the most common porn sites and many more with Apple’s web filter." = "使用 Apple 的网页过滤器覆盖最常见的色情网站及更多内容。";
+"2h" = "2h";
+"30m" = "30m";
+"Accountability Receipt" = "责任收据";
+"All focus tools unlocked" = "所有对焦工具均已解锁";
+"Apps & Websites" = "Apps & Websites";
+"Better long-term focus control" = "更好的长期焦点控制";
+"Blocker Premium" = "拦截器高级版";
+"Build automatic focus windows instead of starting every block manually." = "构建自动聚焦窗口，而不是手动启动每个块。";
+"Buy Premium" = "购买溢价";
+"Choose when the block should start and when your apps open again." = "选择阻止何时开始以及应用程序何时再次打开。";
+"Daily Schedule" = "每日日程";
+"Deep Work" = "深度工作";
+"Delay Apps" = "延迟应用程序";
+"FREE" = "FREE";
+"Focus Progress" = "焦点进展";
+"Focus Templates" = "焦点模板";
+"Free" = "自由的";
+"Free Quick Blocks are capped at 2 hours. Premium removes the limit." = "免费快速块的上限为 2 小时。高级版消除了限制。";
+"Free user" = "免费用户";
+"Modes" = "模式";
+"Native Apple purchase flow" = "苹果原生购买流程";
+"No Premium purchase found." = "未找到高级购买。";
+"No local Premium unlock found yet." = "尚未找到本地高级解锁。";
+"PREMIUM" = "PREMIUM";
+"Pick the days this schedule should run automatically." = "选择此计划应自动运行的日期。";
+"Premium" = "优质的";
+"Premium Active" = "高级活跃";
+"Premium Focus" = "高级焦点";
+"Premium is already unlocked." = "高级版已经解锁。";
+"Premium purchase is not available in this build yet." = "此版本尚不支持高级购买。";
+"Premium purchase is not available yet." = "App Store Connect 中尚未配置高级购买。";
+"Premium restored from this device." = "从此设备恢复高级版。";
+"Premium restored." = "保费恢复。";
+"Premium unlocked for testing." = "高级版已解锁用于测试。";
+"Premium unlocked." = "高级版已解锁。";
+"Premium unlocks Quick Blocks longer than 2 hours." = "高级版可解锁超过 2 小时的快速区块。";
+"Premium unlocks scheduled and recurring blocks." = "高级版解锁预定和重复块。";
+"Premium user" = "高级用户";
+"Progress" = "进步";
+"Purchase cancelled." = "购买已取消。";
+"Purchase could not be verified." = "无法验证购买情况。";
+"Purchase pending approval." = "购买待批准。";
+"Purchase status changed. Please try Restore Purchases." = "购买状态发生变化。请尝试恢复购买。";
+"Quick Block" = "Quick Block";
+"Quick Block is limited to 2 hours in the free version" = "免费版的快速封锁时间限制为 2 小时";
+"Quick Block is the main action" = "快速阻挡是主要动作";
+"Quick Block up to 2h" = "快速阻止长达 2 小时";
+"Quick Reset" = "快速重置";
+"Recurring Blocks" = "重复块";
+"Recurring blocking sessions" = "重复阻塞会话";
+"Recurring blocks are Premium" = "重复块是高级的";
+"Repeat on" = "重复";
+"Repeat your focus sessions across the week with less effort." = "一周内重复您的焦点课程，花费更少的精力。";
+"Reset clears only your progress stats and leaves blocking settings untouched." = "重置仅清除您的进度统计数据，并保持阻止设置不变。";
+"Reset progress" = "重置进度";
+"Restore Purchases" = "恢复购买";
+"Save Scheduled Block" = "保存预定块";
+"Save turns this setup into your active weekly blocking plan." = "保存将此设置转变为您活跃的每周阻止计划。";
+"Schedule" = "日程";
+"Schedule is Premium" = "时间表是优质的";
+"Scheduled Blocks" = "预定区块";
+"Scheduled blocking" = "预定封锁";
+"Scheduled time" = "预定时间";
+"See your completed focus sessions turn into simple proof and momentum." = "查看您完成的焦点会议变成简单的证据和动力。";
+"Select what Quick Block and schedules should shield." = "选择快速阻止和计划应屏蔽的内容。";
+"Selected apps show a short impulse pause instead of changing your main block list." = "选定的应用程序会显示短暂的脉冲暂停，而不是更改您的主阻止列表。";
+"Serious focus" = "认真专注";
+"Set automatic blocking windows that protect the same apps and websites every week." = "设置自动阻止窗口，每周保护相同的应用程序和网站。";
+"Short reset" = "短复位";
+"Smart Suggestions" = "智能建议";
+"Start %@ focus" = "启动 %@ 焦点";
+"Start Quick Block" = "启动快速块";
+"Start a Quick Block" = "开始快速阻止";
+"Start an immediate focus block with your current selection." = "使用您当前的选择启动即时焦点块。";
+"Status" = "地位";
+"Streak" = "条纹";
+"Suggestions translate your recent patterns into calm next actions." = "建议将您最近的模式转化为冷静的下一步行动。";
+"Tap Unlock Premium to simulate purchase." = "点击解锁高级版以模拟购买。";
+"Templates give you ready-made focus setups for common moments." = "模板为您提供了常见时刻的现成焦点设置。";
+"Test mode — no payment required yet." = "测试模式——尚无需付款。";
+"The streak highlights consistency without adding pressure or shame." = "这一连胜强调了一致性，但没有增加压力或羞耻。";
+"These totals count sessions, protected time, and the days you showed up." = "这些总数包括会话、受保护的时间以及您出现的天数。";
+"Unlimited Quick Block duration" = "无限的快速阻止持续时间";
+"Unlock Premium" = "解锁高级版";
+"Unlock Premium (Simulator)" = "解锁高级版（模拟器）";
+"Unlock Premium Focus" = "解锁高级焦点";
+"Unlock longer Quick Blocks" = "解锁更长的快速块";
+"Use softer focus tools like delays, templates, and smart next steps." = "使用延迟、模板和智能后续步骤等软焦点工具。";
+"Use the full blocking system for deeper, long-term focus control." = "使用完整的阻挡系统进行更深入、长期的焦点控制。";
+"What Premium unlocks" = "高级版可以解锁什么";
+"Your latest finished block is summarized here so progress feels concrete." = "这里总结了您最新完成的块，因此进展感觉具体。";
+"Your totals" = "您的总计";
+"1 hour" = "1小时";
+"%d hours" = "%d 小时";
+"%@ hours" = "%@ 小时";
+"1 minute" = "1分钟";
+"%d minutes" = "%d 分钟";
+"90m" = "90m";
+"8h" = "8h";
+"Study" = "学习";
+"Sleep" = "睡觉";
+"Study session" = "学习会";
+"Sleep shield" = "睡眠盾";
+"Custom" = "风俗";
+"Selected • %@" = "已选择 • %@";
+"seconds" = "秒";
+"Continue intentionally" = "故意继续";
+"Still waiting…" = "还在等待……";
+"No, stay focused" = "不，保持专注";
+"Shortcut pause" = "快捷暂停";
+"Optional: create an iPhone Shortcuts automation so opening a distracting app launches Blocker’s 15-second pause." = "可选：创建 iPhone 快捷方式自动化，以便打开分散注意力的应用程序启动 Blocker 的 15 秒暂停。";
+"Open Shortcuts → Automation" = "打开快捷方式 → 自动化";
+"Choose App → pick the distracting app" = "选择应用程序 → 选择分散注意力的应用程序";
+"Set Run Immediately, then add Blocker Pause" = "设置立即运行，然后添加阻止程序暂停";
+"Apple requires you to create this automation manually. Blocker cannot silently set it up for you." = "Apple 要求您手动创建此自动化。 Blocker 无法默默地为您设置它。";
+"Do you really want to open the app?" = "您真的要打开该应用程序吗？";
+"Think about what you had planned." = "想想你的计划是什么。";
+"Delay Apps is active" = "延迟应用程序处于活动状态";
+"Selected apps show a 15-second shield." = "选定的应用程序会显示 15 秒的屏蔽。";
+"Turn on after choosing apps to delay." = "选择要延迟的应用程序后打开。";
+"Choose Apps to Delay" = "选择要延迟的应用程序";
+"Edit Delay Apps" = "编辑延迟应用程序";
+"Preview 15 second timer" = "预览 15 秒计时器";
+"Delay Apps uses Apple Screen Time app selection and is available in the iOS app target." = "延迟应用程序使用 Apple 屏幕时间应用程序选择，并且可在 iOS 应用程序目标中使用。";
+"Skip" = "跳过";
+"Start using Blocker" = "开始使用 Blocker";
+"Next" = "下一步";
+"Close" = "关闭";
+"Loading…" = "正在加载…";
+"Screen Time Access" = "Screen Time Access";
+"First, allow Screen Time access so Blocker can shield your choices." = "First, allow Screen Time access so Blocker can shield your choices.";
+"Tap this button to choose the iPhone apps, categories, and websites you want blocked." = "Tap this button to choose the iPhone apps, categories, and websites you want blocked.";
+"Connect your Mac" = "Connect your Mac";
+"Optional: select your Mac so iPhone Quick Blocks can also send website blocks there automatically." = "Optional: select your Mac so iPhone Quick Blocks can also send website blocks there automatically.";
+"Set the recurring time window for automatic blocking." = "Set the recurring time window for automatic blocking.";
+"Track completed sessions, protected time, focus days, and streaks here." = "Track completed sessions, protected time, focus days, and streaks here.";
+"Use Delay Apps, templates, and calm suggestions separately from Quick Block." = "Use Delay Apps, templates, and calm suggestions separately from Quick Block.";
+"Pause first" = "先暂停";
+"Keep block" = "继续屏蔽";
+"Now answer honestly." = "现在请诚实回答。";
+"Take a slow breath before unlocking." = "解锁前，先慢慢呼吸。";
+"This short pause adds friction so stopping a block is intentional, not automatic." = "This short pause adds friction so stopping a block is intentional, not automatic.";
+"Questions unlock after the breathing timer." = "呼吸计时结束后会解锁问题。";
+"What’s your reason for the block?" = "你开启这次屏蔽的原因是什么？";
+"Example: Finish deep work, study, sleep" = "例如：完成深度工作、学习、睡觉";
+"Why do you want to stop it?" = "你为什么想停止它？";
+"Write your reason" = "写下你的原因";
+"Unlock and stop block" = "解锁并停止屏蔽";
+"You can stop the block now." = "现在可以停止屏蔽。";
+"Answer both questions to unlock the stop button." = "回答两个问题后才能解锁停止按钮。";
+"Bored" = "无聊";
+"Stressed" = "有压力";
+"Tired" = "疲惫";
+"Habit" = "习惯";
+"Need something important" = "Need something important";
+"Other" = "其他";
+"Premium button tapped — simulated unlock running." = "Premium button tapped — simulated unlock running.";
+
+/* Blocklists and scheduled active block */
+"Choose blocklist" = "选择屏蔽列表";
+"Create reusable lists like Social without YouTube or Deep Work, then attach the right list to this schedule." = "创建可重复使用的列表，例如“无 YouTube 社交”或“深度工作”，然后把合适的列表添加到此日程。";
+"No blocklists yet" = "还没有屏蔽列表";
+"Create your first list of apps, categories, and websites for scheduled blocks." = "创建你的第一个应用、类别和网站列表，用于定时屏蔽。";
+"Create a blocklist" = "创建屏蔽列表";
+"Create Blocklist" = "创建屏蔽列表";
+"Blocklist name" = "屏蔽列表名称";
+"Social without YouTube" = "无 YouTube 社交";
+"Blocked apps & websites" = "已屏蔽的应用和网站";
+"Add or remove apps" = "添加或移除应用";
+"Blocklist created." = "屏蔽列表已创建。";
+"Scheduled focus is active" = "定时专注已开启";
+"Stay locked in" = "保持专注";
+"Your scheduled block is running. AntiScroll stays locked until the window ends." = "你的定时屏蔽正在运行。AntiScroll 会保持锁定，直到时间窗口结束。";
+"Scheduled block ends at %@" = "定时屏蔽将于 %@ 结束";
+"Bypass protection" = "防绕过保护";
+"Editing schedules and app lists is disabled while this scheduled block is active. You can change future blocks after the timer finishes." = "此定时屏蔽激活期间，无法编辑日程和应用列表。计时结束后，你可以更改未来的屏蔽。";
+"Stay with the plan. Your future self asked for this." = "坚持计划。未来的你需要这一刻。";
+"The urge will pass. The block is doing its job." = "冲动会过去。屏蔽正在发挥作用。";
+"This is the moment you chose focus over impulse." = "这一刻，你选择了专注，而不是冲动。";
+"Keep going. Boredom is often the doorway back to attention." = "继续坚持。无聊常常是回到专注的入口。";
+"You are not missing out — you are protecting your time." = "你没有错过什么——你是在保护自己的时间。";
+
+"Monthly" = "每月";
+
+"Yearly" = "每年";
+
+"€2/month" = "€2/月";
+
+"€20/year" = "€20/年";
+
+"Flexible monthly access" = "灵活的月度访问";
+
+"Save compared with monthly" = "相比月付更省";
+
+"Continue" = "继续";
+
+"Your subscription is active." = "你的订阅已激活。";
+
+"Loading subscription options…" = "正在加载订阅选项…";
+
+"Premium subscriptions are not configured yet. Please try again later." = "Premium 订阅尚未配置。请稍后再试。";
+
+"Could not load subscriptions." = "无法加载订阅。";
+
+"Premium is already active." = "Premium 已激活。";
+
+"Premium subscriptions are not available yet. Please try again later." = "Premium 订阅暂不可用。请稍后再试。";
+
+"We could not confirm an active subscription yet. Please try Restore Purchases." = "我们尚无法确认有效订阅。请尝试恢复购买。";
+
+"No active Premium subscription found." = "未找到有效的 Premium 订阅。";
+
+"%@ Please try again or restore purchases." = "%@ 请重试或恢复购买。";
+
+"Maybe Later" = "稍后再说";
+
+"Get your focus back for less than a cup of coffee." = "用不到一杯咖啡的钱，找回专注。";
+
+"Choose your plan" = "选择方案";
+
+"Best value" = "最划算";
+
+"What Premium includes" = "Premium 包含内容";
+
+"Scheduled focus blocks" = "计划专注屏蔽";
+
+"Recurring focus routines" = "重复专注例程";
+
+"Stronger long-term focus control" = "更强的长期专注控制";
+
+"AntiScroll Premium" = "AntiScroll Premium";
+
+"SUBSCRIPTION" = "订阅";
+
+"ACTIVE" = "已激活";
+
+"Start a focus block here when you need protection right now." = "Start a focus block here when you need protection right now.";
+
+"Subscription options unavailable" = "Subscription options unavailable";
+
+"What unlocks after Premium" = "What unlocks after Premium";
+
+"What changes after Premium" = "What changes after Premium";
+
+"Premium tools you unlock" = "Premium tools you unlock";
+
+"Create named app lists for schedules." = "Create named app lists for schedules.";
+
+"Pick recurring days and time windows." = "Pick recurring days and time windows.";
+
+"Show an active scheduled-block timer when protection is running." = "Show an active scheduled-block timer when protection is running.";
+
+"Use Quick Blocks longer than 2 hours." = "Use Quick Blocks longer than 2 hours.";
+
+"Keep active blocks commitment-locked." = "Keep active blocks commitment-locked.";
+
+"Combine Quick Block with stronger weekly routines." = "Combine Quick Block with stronger weekly routines.";
+
+"Build recurring focus routines." = "Build recurring focus routines.";
+
+"Track long-term focus progress." = "Track long-term focus progress.";
+
+"Use delay tools and templates for calmer control." = "Use delay tools and templates for calmer control.";
+
+"You vs. you" = "You vs. you";
+
+"Protect your attention before the scroll wins." = "Protect your attention before the scroll wins.";
+
+"Less impulse. More intention." = "Less impulse. More intention.";
+
+"A calmer way back to focus." = "A calmer way back to focus.";
+
+"Choose your attention" = "Choose your attention";
+
+"Start small. Stay with it." = "Start small. Stay with it.";
+
+"Why Screen Time access?" = "Why Screen Time access?";
+
+"Apple requires this permission before Blocker can shield selected apps and websites." = "Apple requires this permission before Blocker can shield selected apps and websites.";
+
+"Needed to show Apple’s app and website picker." = "Needed to show Apple’s app and website picker.";
+
+"Needed to apply shields during quick blocks and schedules." = "Needed to apply shields during quick blocks and schedules.";
+
+"Blocker cannot read your messages, browsing history, or private app content." = "Blocker cannot read your messages, browsing history, or private app content.";
+
+"Your choices stay on-device and are saved privately in the app group." = "Your choices stay on-device and are saved privately in the app group.";
+
+"Allow Screen Time Access" = "Allow Screen Time Access";
+
+"Access granted" = "Access granted";
+
+"Apple’s Screen Time picker is available on the iPhone app target." = "Apple’s Screen Time picker is available on the iPhone app target.";
+
+"Websites sent to Mac" = "Websites sent to Mac";
+
+"Only these exact websites are sent to the Mac. Nothing is added automatically." = "Only these exact websites are sent to the Mac. Nothing is added automatically.";
+
+"Apply iPhone Quick Blocks on this laptop" = "Use Screen Time protection on this device";
+
+"Sync ready: sent %d selected website(s) for this %@ block." = "Sync ready: sent %d selected website(s) for this %@ block.";
+
+"Normal" = "普通";
+"Strong" = "强力";
+"30 sec pause + reflection" = "30 sec pause + reflection";
+
+"Premium commitment with one emergency exit per day" = "Premium commitment with one emergency exit per day";
+
+"Block strength" = "Block strength";
+
+"Strong is Premium" = "Strong is Premium";
+
+"Use emergency exit" = "Use emergency exit";
+
+"Strong exit" = "强力模式退出";
+"Normal blocks ask for a short pause, honest reflection, then one final wait before stopping." = "普通屏蔽会要求短暂停顿、诚实反思，然后再等待最后一次才停止。";
+"Strong Mode gives you one calm emergency exit per day. Use it only when it truly matters." = "强力模式每天提供一次冷静的紧急退出。请只在真正重要时使用。";
+"%d emergency exit left today" = "今天还剩 %d 次紧急退出";
+"No emergency exits left today" = "今天没有紧急退出次数了";
+"Strong Mode is locked in for today. This block can finish naturally." = "强力模式今天已锁定。这次屏蔽可以自然结束。";
+"Final check: %d seconds left" = "最后确认：还剩 %d 秒";
+"Start final pause" = "开始最后暂停";
+"One final pause keeps stopping intentional." = "最后一次暂停，让停止变成有意识的决定。";
+"Stay here for the final check, or keep the block." = "留在这里完成最后确认，或继续屏蔽。";
+"Use emergency exit and stop block." = "使用紧急退出并停止屏蔽。";
+"You have used today’s emergency exit." = "你已经使用了今天的紧急退出。";
+"Started a %@ block." = "Started a %@ block.";
+
+"Quick block stopped." = "Quick block stopped.";
+
+"Quick block stopped. Progress recorded as elapsed protected time." = "Quick block stopped. Progress recorded as elapsed protected time.";
+
+"Quick block stopped after reflection." = "Quick block stopped after reflection.";
+
+"Emergency exit used. Strong block stopped." = "Emergency exit used. Strong block stopped.";
+
+"30 sec pause" = "30 秒暂停";
+"1 emergency exit/day" = "每天 1 次紧急退出";
+"Study Sprint" = "学习冲刺";
+"Sleep Wind Down" = "睡前放松";
+"Quick Reset started" = "快速重置已开始";
+"Deep Work started" = "深度工作已开始";
+"Study Sprint started" = "学习冲刺已开始";
+"Sleep Wind Down started" = "睡前放松已开始";
+
+/* StoreKit plan switching */
+"Current Plan" = "当前套餐";
+"Switch Plan" = "切换套餐";
+"This is your active plan." = "这是你当前的有效套餐。";
+"Switch to the selected plan." = "切换到所选套餐。";
+"Manage Plan" = "管理套餐";
+
+/* Shortcut setup instructions */
+"Setup instructions" = "设置说明";
+"Open the full Shortcuts setup guide." = "打开完整的快捷指令设置指南。";
+"Shortcut pause setup" = "快捷暂停设置";
+"Follow these steps once in Apple Shortcuts so AntiScroll can show the 15-second pause when you open a distracting app." = "在 Apple 快捷指令中完成一次这些步骤，AntiScroll 就能在你打开分心应用时显示 15 秒暂停。";
+"Open Apple Shortcuts, then tap the Automation tab." = "打开 Apple 快捷指令，然后点按自动化标签。";
+"Create a new app automation" = "创建新的 App 自动化";
+"Tap +, choose App, then select the app that usually distracts you." = "点按 +，选择 App，然后选择通常让你分心的应用。";
+"Use the opened trigger" = "使用打开时触发条件";
+"Select Is Opened, then choose Run Immediately so the pause starts without another prompt." = "选择已打开，然后选择立即运行，这样暂停会直接开始，不再弹出确认。";
+"Add Blocker Pause" = "添加 Blocker Pause";
+"Tap Next, add the Blocker Pause action, then save the automation." = "点按下一步，添加 Blocker Pause 操作，然后保存自动化。";
+"Repeat for more apps" = "为更多应用重复";
+"Apple requires one manual automation setup for each distracting app you want to delay." = "Apple 要求你为每个想延迟的分心应用手动设置一次自动化。";
+"Apple requires you to create this automation manually. AntiScroll cannot silently set it up for you." = "Apple 要求你手动创建此自动化。AntiScroll 无法在后台悄悄为你设置。";
+"Done" = "完成";
+
+/* Shortcut automation improvements */
+"Open it" = "Open it";
+"Tip: add the app URL in Shortcuts if you want Open it to jump straight back." = "Tip: add the app URL in Shortcuts if you want Open it to jump straight back.";
+"Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused." = "Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused.";
+"Select Is Opened, choose Run Immediately, and turn off Notify When Run so no Shortcuts notification appears." = "Select Is Opened, choose Run Immediately, and turn off Notify When Run so no Shortcuts notification appears.";
+"Tap Next, add the Blocker Pause action, then save the automation. AntiScroll should open automatically." = "Tap Next, add the Blocker Pause action, then save the automation. AntiScroll should open automatically.";
+"Optional: add a return URL" = "Optional: add a return URL";
+"If you know the app’s URL scheme, add it to Return URL so Open it can jump straight back after the pause." = "If you know the app’s URL scheme, add it to Return URL so Open it can jump straight back after the pause.";
+"Important: Delay Apps should only be used for apps that are not also in your active block list. If an app is blocked by Quick Block or Schedule, Apple will show the hard block instead of the delay pause." = "Important: Delay Apps should only be used for apps that are not also in your active block list. If an app is blocked by Quick Block or Schedule, Apple will show the hard block instead of the delay pause.";
+
+"Add a Return URL in Shortcuts first so AntiScroll knows which app to open." = "Add a Return URL in Shortcuts first so AntiScroll knows which app to open.";
+"AntiScroll could not open that URL. Check the Return URL in Shortcuts." = "AntiScroll could not open that URL. Check the Return URL in Shortcuts.";
+"Add Should Pause?" = "Add Should Pause?";
+"Add AntiScroll’s Should Pause? action first. It returns No once after you tap Open it, which prevents the automation from looping." = "Add AntiScroll’s Should Pause? action first. It returns No once after you tap Open it, which prevents the automation from looping.";
+"Add an If block" = "Add an If block";
+"Use If Should Pause? is Yes, then run Blocker Pause. Leave Otherwise empty." = "Use If Should Pause? is Yes, then run Blocker Pause. Leave Otherwise empty.";
+"Inside the If block, add Blocker Pause. Add the app’s Return URL, for example youtube:// or instagram://, so Open it can jump back." = "Inside the If block, add Blocker Pause. Add the app’s Return URL, for example youtube:// or instagram://, so Open it can jump back.";
+"Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused. The If step prevents a second delay when you choose Open it." = "Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused. The If step prevents a second delay when you choose Open it.";
+"AntiScroll could not allow that app yet. Please try once more." = "AntiScroll could not allow that app yet. Please try once more.";
+"If this opened from the blocked app screen, tap Open it after the pause, then open the app once more." = "If this opened from the blocked app screen, tap Open it after the pause, then open the app once more.";
+"No emergency exits left today." = "No emergency exits left today.";
+"remaining" = "remaining";
+"Terms of Use" = "使用条款";
+"Privacy Policy" = "隐私政策";
+"Subscription renews automatically unless cancelled at least 24 hours before the end of the current period." = "除非在当前周期结束前至少 24 小时取消，否则订阅会自动续订。";
+"1 month subscription" = "1 个月订阅";
+"1 year subscription" = "1 年订阅";
+
+"Automatically from your apps" = "自动从你的应用获取";
+
+"Pick apps" = "选择应用";
+
+"No apps picked yet — tap Pick apps to choose from your recently used apps." = "尚未选择应用——点按「选择应用」即可从最近使用的应用中选择。";
+
+"Only checked domains are sent to selected Macs when Quick Block starts." = "Quick Block 启动时，仅将勾选的域名发送给选定的 Mac。";
+
+"Websites of the apps you picked are added automatically. No manual step needed." = "你选择的应用的网站会自动添加。无需任何手动步骤。";
+
+"Websites you pick manually, plus the websites of apps you add from your app list — all sent to your Mac automatically." = "你手动选择的网站，加上应用列表中的网站——都会自动发送到你的 Mac。";
+
+"Pick which devices should follow your iPhone Quick Block." = "选择哪些设备应跟随你的 iPhone Quick Block。";
+
+"Websites are blocked on this Mac automatically" = "网站会在此 Mac 上自动被阻止";
+
+"Follows your blocks on this device automatically" = "在此设备上自动跟随你的阻止设置";
+
+"This iPad" = "此 iPad";
+
+"This Device" = "此设备";
+
+"Auto-add websites" = "自动添加网站";
+
+"%@ – %@" = "%@ – %@";
+
+"%d apps" = "%d 个应用";
+
+"%d categories" = "%d 个类别";
+
+"%d device(s) follow your blocks" = "%d 台设备跟随您的屏蔽";
+
+"%d websites" = "%d 个网站";
+
+"15-second pause" = "15 秒暂停";
+
+"24h" = "24 小时";
+
+"30 min" = "30 分钟";
+
+"30 min – 24 hours" = "30 分钟 – 24 小时";
+
+"A simple flow: choose what to protect, start a block, automate it, then review your progress." = "简单流程：选择要保护的内容，开始屏蔽，设置自动化，然后查看进度。";
+
+"Account" = "账户";
+
+"Active" = "已启用";
+
+"Active on %@." = "在 %@ 生效。";
+
+"Active schedule" = "生效中的计划";
+
+"Allow Screen Time access to start blocking." = "允许屏幕使用时间访问以开始屏蔽。";
+
+"An active longer block cannot be replaced by a shorter one." = "已生效的较长屏蔽无法被较短的屏蔽替代。";
+
+"AntiScroll can shield selected apps and websites." = "AntiScroll 可以屏蔽所选的应用和网站。";
+
+"AntiScroll cannot read your messages, browsing history, or private app content." = "AntiScroll 无法读取您的信息、浏览记录或应用中的私人内容。";
+
+"App language" = "应用语言";
+
+"Apps, categories, and websites" = "应用、类别和网站";
+
+"Automatic blocking windows that protect the same apps and websites every week." = "每周自动屏蔽相同应用和网站的时段。";
+
+"Blocked content" = "已屏蔽内容";
+
+"Blocklist: %@" = "屏蔽列表：%@";
+
+"Blocklists are available only in the iOS app target." = "屏蔽列表仅在 iOS 应用中可用。";
+
+"Calm next steps based on your recent focus patterns." = "根据您最近的专注模式提供的平和建议。";
+
+"Cancel" = "取消";
+
+"Choose Apps and Websites" = "选择应用和网站";
+
+"Choose a blocklist" = "选择屏蔽列表";
+
+"Choose a length" = "选择时长";
+
+"Choose how long you want selected distractions blocked." = "选择屏蔽所选干扰项的时长。";
+
+"Choose repeat days" = "选择重复日期";
+
+"Choose start and end time" = "选择开始和结束时间";
+
+"Clears focus stats only." = "仅清除专注统计。";
+
+"Completed sessions" = "已完成专注";
+
+"Connected devices" = "已连接的设备";
+
+"Create Schedule" = "创建计划";
+
+"Create a recurring block so focus happens automatically — no need to start it every time." = "创建定期屏蔽，让专注自动发生——无需每次都手动开始。";
+
+"Current device" = "当前设备";
+
+"Custom app and website list" = "自定义应用和网站列表";
+
+"Custom quick block" = "自定义快速屏蔽";
+
+"Device Sync" = "设备同步";
+
+"Duration" = "时长";
+
+"Edit Apps and Websites" = "编辑应用和网站";
+
+"Edit Schedule" = "编辑计划";
+
+"Edit schedule" = "编辑计划";
+
+"Enter a valid website like youtube.com." = "请输入有效网站，如 youtube.com。";
+
+"Focus Modes" = "专注模式";
+
+"Focus locked" = "专注已锁定";
+
+"Focus now" = "立即专注";
+
+"Focus time" = "专注时间";
+
+"Follows your iPhone language automatically." = "自动跟随您 iPhone 的语言。";
+
+"Four quick steps: blocklist, time, days, save." = "四个快速步骤：列表、时间、日期、保存。";
+
+"Help and setup" = "帮助与设置";
+
+"How the app works" = "应用使用方法";
+
+"Language" = "语言";
+
+"Last session" = "上次专注";
+
+"Mac websites" = "Mac 网站";
+
+"Manage the domains your Mac blocks during Quick Block." = "管理 Mac 在快速屏蔽期间屏蔽的域名。";
+
+"Manual websites" = "手动添加的网站";
+
+"Needs Screen Time access" = "需要屏幕使用时间权限";
+
+"Needs access" = "需要权限";
+
+"New schedule" = "新计划";
+
+"No Macs connected yet. Open the AntiScroll Mac Companion on your Mac to register it." = "尚未连接 Mac。请在 Mac 上打开 AntiScroll Mac 伴侣应用进行注册。";
+
+"No apps or websites selected yet" = "尚未选择应用或网站";
+
+"No focus sessions yet" = "还没有专注记录";
+
+"No schedule yet" = "还没有计划";
+
+"Off" = "已关闭";
+
+"Only this iPhone — no Macs connected" = "仅此 iPhone——未连接 Mac";
+
+"Pick a length, choose your block strength, then press Start Focus." = "选择时长和屏蔽强度，然后按“开始专注”。";
+
+"Pick a preset like Reset, Deep Work, Study, or Sleep — or set a custom duration." = "选择预设（如 Reset、Deep Work、Study 或 Sleep）——或设置自定义时长。";
+
+"Pick at least one day to save this schedule." = "请至少选择一天以保存此计划。";
+
+"Pick devices that follow your blocks and manage websites sent to Mac." = "选择跟随您屏蔽的设备，并管理发送到 Mac 的网站。";
+
+"Press start" = "按下开始";
+
+"Privacy" = "隐私";
+
+"Progress reset." = "进度已重置。";
+
+"Protected" = "已保护";
+
+"Protection status" = "保护状态";
+
+"Ready-made focus setups for common moments. Starting one uses your current selection." = "针对常见场景的现成专注设置。开始时会使用您当前的选择。";
+
+"Ready-made setups for work, study, sleep, and more." = "为工作、学习、睡眠等场景准备的现成设置。";
+
+"Reset" = "重置";
+
+"Reset progress?" = "重置进度？";
+
+"Restore Premium on this device." = "在此设备上恢复 Premium。";
+
+"Save" = "保存";
+
+"Schedule turned off." = "计划已关闭。";
+
+"Schedule turned on." = "计划已开启。";
+
+"Screen Time" = "屏幕使用时间";
+
+"Screen Time access is on" = "屏幕使用时间权限已开启";
+
+"Selected apps show a short impulse pause instead of a hard block." = "所选应用会显示短暂的冲动暂停，而非严格屏蔽。";
+
+"Settings" = "设置";
+
+"Softer focus tools: delays, templates, and smart next steps." = "更温和的专注工具：延迟、模板和智能建议。";
+
+"Start here" = "从这里开始";
+
+"Start your first focus session" = "开始您的第一次专注";
+
+"Stay committed" = "保持专注承诺";
+
+"Strong block active" = "严格屏蔽已生效";
+
+"Subscription" = "订阅";
+
+"The focus flow in four short steps." = "四个简短步骤了解专注流程。";
+
+"This clears your focus stats only. Blocking settings stay untouched." = "仅清除专注统计，屏蔽设置不受影响。";
+
+"What Quick Block and schedules protect on this iPhone." = "快速屏蔽和计划在此 iPhone 上保护的内容。";
+
+"Your completed focus sessions, protected time, and momentum." = "您已完成的专注、受保护的时间与持续动力。";
+
+"Your completed sessions, focus time, and streak will show up here." = "您已完成的专注、专注时间和连续记录将显示在这里。";
+
+"Your current block has to finish before you can start another one." = "当前屏蔽结束后才能开始新的屏蔽。";
+
+"Your focus" = "您的专注";
+
+"Your focus flow" = "您的专注流程";
+
+"iCloud" = "iCloud";
+
+"iPhone + Macs" = "iPhone 与 Mac";
+
+"Delay" = "延迟";
+"Added %@. It will be used on the next Quick Block." = "%@ 已添加。它将在下次快速屏蔽时使用。";
+"AntiScroll applies only the apps and websites you selected." = "AntiScroll 只会屏蔽您选择的应用和网站。";
+"Block failed: %@" = "屏蔽失败：%@";
+"Choose what to block" = "选择要屏蔽的内容";
+"Device sync" = "设备同步";
+"Step %d of %d" = "第 %d 步，共 %d 步";
+"Use Screen Time protection on this device" = "在此设备上使用“屏幕使用时间”保护";
+
+// Mac connection guide
+"How to connect a Mac" = "如何连接 Mac";
+"Install the Companion, approve once, then select your Mac." = "安装伴侣应用，授权一次，然后选择你的 Mac。";
+"Mac connection guide" = "Mac 连接指南";
+"Connect in a few quick steps. Your iPhone remains the source of truth." = "只需几个步骤即可连接。iPhone 仍是主要控制设备。";
+"Open the Mac Companion" = "打开 Mac 伴侣应用";
+"Install and open AntiScroll Mac Companion on your Mac." = "在 Mac 上安装并打开 AntiScroll Mac Companion。";
+"Use the same iCloud account" = "使用同一个 iCloud 账户";
+"Make sure your iPhone and Mac use the same Apple Account and iCloud Drive is on." = "请确保 iPhone 和 Mac 使用同一个 Apple 账户，并已开启 iCloud 云盘。";
+"Approve administrator access" = "批准管理员访问";
+"When Mac blocking changes, approve the administrator prompt so the Companion can update protected system settings." = "当 Mac 屏蔽发生变化时，请批准管理员提示，以便伴侣应用更新受保护的系统设置。";
+"Select your Mac here" = "在此选择你的 Mac";
+"Return to Device Sync and tap your Mac under Connected devices." = "返回“设备同步”，然后在“已连接设备”中轻点你的 Mac。";
+"Keep the Companion running" = "保持伴侣应用运行";
+"Leave it in the Mac menu bar. Selected websites will follow your iPhone Quick Blocks automatically." = "让它在 Mac 菜单栏中保持运行。所选网站会自动跟随 iPhone 的 Quick Block。";
+"Mac not showing up?" = "没有看到 Mac？";
+"Keep the Mac Companion open, then return to this page to refresh the device list." = "保持 Mac Companion 打开，然后返回此页面刷新设备列表。";
+"Connect in a few quick steps. Your iPhone controls what gets blocked." = "只需几个步骤即可连接。iPhone 控制要屏蔽的内容。";
+"Use the same Apple Account" = "使用同一个 Apple 账户";
+
+// Cross-device automatic sync
+"Added %@. It is syncing now." = "已添加 %@，正在同步。";
+"Apps become websites automatically; schedules follow too." = "应用会自动关联网站，计划也会同步。";
+"Pick which devices should follow your iPhone Quick Blocks and schedules." = "选择要跟随 iPhone 快速屏蔽和计划的设备。";
+"Your iPhone sends these websites and schedules to every selected Mac automatically." = "iPhone 会自动将这些网站和计划发送到每台选中的 Mac。";
+
+// Mac Companion download
+"Download Mac Companion" = "下载 Mac Companion";
+"Requires macOS 13 or later." = "需要 macOS 13 或更高版本。";
+"Copy this link and paste it into a browser on your Mac:" = "复制此链接，然后将其粘贴到 Mac 的浏览器中：";
+"Copy link" = "复制链接";
+"Link copied" = "链接已复制";
+
+// Per-schedule protected devices
+"Protected on: %@" = "保护设备：%@";
+"%d other device(s)" = "另外 %d 台设备";
+"No devices" = "无设备";
+"Protected devices" = "受保护的设备";
+"Choose where this schedule should activate automatically." = "选择此计划要在哪些设备上自动启用。";
+"Screen Time blocks on this iPhone" = "屏幕使用时间会在此 iPhone 上屏蔽";
+"Websites block automatically in the Mac Companion" = "网站会在 Mac Companion 中自动屏蔽";
+"Follows this schedule automatically" = "自动跟随此计划";
+"No other connected devices yet. Connect devices in Settings → Device Sync." = "尚未连接其他设备。请前往“设置”→“设备同步”连接设备。";
+"Pick at least one protected device." = "请至少选择一台受保护的设备。";
+"Protected now" = "正在保护";
+"Ready" = "就绪";
+
+// Localization coverage backlog
+"This iPhone" = "此 iPhone";
+"Create" = "创建";
+"15s" = "15 秒";
+"Delay Apps is off. Your normal blocks were not changed." = "应用延迟已关闭。你的常规屏蔽未更改。";
+"Delay Apps updated. Your block list was not changed." = "应用延迟已更新。你的屏蔽列表未更改。";
+"Add website, e.g. netflix.com" = "添加网站，例如 netflix.com";
+"Delay Apps is on. Chosen apps now pause for 15 seconds." = "应用延迟已开启。所选应用现在会暂停 15 秒。";
+"Choose at least one weekday." = "请至少选择一个工作日。";
+"Add" = "添加";
+"Home" = "主页";
+"Started %@: %@." = "已启动 %@：%@。";
+"Use this duration" = "使用此时长";
+"Close and stay focused" = "关闭并保持专注";
+"Take Back Your Time" = "夺回你的时间";
+"Choose a blocklist, time, and repeat days." = "选择屏蔽列表、时间和重复日期。";
+"On" = "开";
+"Start" = "开始";
+
+// Reliable focus activation and flexible schedules
+"Schedule enabled" = "日程已启用";
+"Choose at least one app, category, or website before starting a block." = "开始拦截前，请至少选择一个 App、类别或网站。";
+"Add at least one time period." = "请至少添加一个时间段。";
+"A time period must have different start and end times." = "时间段的开始和结束时间不能相同。";
+"Time periods cannot overlap, including across midnight." = "时间段不能重叠，包括跨午夜的情况。";
+"This schedule uses too many time periods. Use up to %d weekday periods." = "此日程的时间段过多。最多使用 %d 个星期时间段。";
+"Screen Time did not accept the blocking rules. Try again after reopening AntiScroll." = "“屏幕使用时间”未接受拦截规则。请重新打开 AntiScroll 后再试。";
+"Next day" = "次日";
+"Time periods by weekday" = "按星期设置时间段";
+"Add one or more blocking periods to each day. Overnight periods end on the next day." = "可为每天添加一个或多个拦截时间段。跨夜时间段将在次日结束。";
+"%d of %d weekday periods used" = "已使用 %d 个，共 %d 个星期时间段";
+"Add time period" = "添加时间段";
+"Remove time period" = "移除时间段";
+"Ends the next day" = "次日结束";
+"Choose a blocklist, weekday time periods, and protected devices." = "选择拦截列表、每周时间段和受保护设备。";
+"End" = "结束";
+"Scheduled focus" = "计划专注";
+
+// Quick Block launch countdown and undo grace period
+"Block starts in" = "屏蔽将在以下时间后开始";
+"Undo Quick Block" = "撤销快速屏蔽";
+"Changed something by mistake? Stop now without friction." = "不小心选错了？现在可以无阻碍停止。";
+"%d seconds to undo" = "还有 %d 秒可撤销";
+"Quick Block cancelled. Nothing was recorded." = "快速屏蔽已取消。未记录任何内容。";
+"Block starts in 1 second" = "1 秒后开始屏蔽";
+"Block starts in %d seconds" = "%d 秒后开始屏蔽";
+"1 second to undo" = "还有 1 秒可撤销";
+
+"Add more apps to your current block:" = "将更多 App 添加到当前屏蔽：";
+
+// Focus Complete
+"Focus complete" = "专注完成";
+"You protected %@ of focused time." = "你守护了 %@ 的专注时间。";
+"Nice work. Carry that momentum into your next focus block when you’re ready." = "做得很好。准备好后，把这份动力带到下一次专注中。";
+"Keep going for 15 minutes" = "再专注 15 分钟";
+"View progress" = "查看进度";
+
+// Weekly Focus Card
+"Last 7 days" = "过去 7 天";
+"%@ of 7 days with focus" = "专注天数：%@ / 7";
+"Focus recorded" = "已记录专注";
+"No focus recorded" = "未记录专注";
+"Quick Blocks and scheduled focus both count. Every day is a fresh start." = "快速屏蔽和计划专注都会计入。每一天都是新的开始。";
+"Today" = "今天";

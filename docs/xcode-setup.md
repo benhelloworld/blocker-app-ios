@@ -13,7 +13,7 @@ Device Activity Monitor Extension:
 
 Use one value consistently in both targets:
 
-`group.com.benhelloworld.blockerapp`
+`group.com.benberther.BlockerApp`
 
 Update:
 

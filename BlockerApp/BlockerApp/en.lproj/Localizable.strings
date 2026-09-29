@@ -1,0 +1,848 @@
+"Porn & adult websites" = "Porn & adult websites";
+"Covers the most common porn sites and many more with Apple’s web filter." = "Covers the most common porn sites and many more with Apple’s web filter.";
+"2h" = "2h";
+"30m" = "30m";
+"Accountability Receipt" = "Accountability Receipt";
+"All focus tools unlocked" = "All focus tools unlocked";
+"Apps & Websites" = "Apps & Websites";
+"Better long-term focus control" = "Better long-term focus control";
+"Blocker Premium" = "Blocker Premium";
+"Build automatic focus windows instead of starting every block manually." = "Build automatic focus windows instead of starting every block manually.";
+"Buy Premium" = "Buy Premium";
+"Choose when the block should start and when your apps open again." = "Choose when the block should start and when your apps open again.";
+"Daily Schedule" = "Daily Schedule";
+"Deep Work" = "Deep Work";
+"Delay Apps" = "Delay Apps";
+"FREE" = "FREE";
+"Focus Progress" = "Focus Progress";
+"Focus Templates" = "Focus Templates";
+"Free" = "Free";
+"Free Quick Blocks are capped at 2 hours. Premium removes the limit." = "Free Quick Blocks are capped at 2 hours. Premium removes the limit.";
+"Free user" = "Free user";
+"Modes" = "Modes";
+"Native Apple purchase flow" = "Native Apple purchase flow";
+"No Premium purchase found." = "No Premium purchase found.";
+"No local Premium unlock found yet." = "No local Premium unlock found yet.";
+"PREMIUM" = "PREMIUM";
+"Pick the days this schedule should run automatically." = "Pick the days this schedule should run automatically.";
+"Premium" = "Premium";
+"Premium Active" = "Premium Active";
+"Premium Focus" = "Premium Focus";
+"Premium is already unlocked." = "Premium is already unlocked.";
+"Premium purchase is not available in this build yet." = "Premium purchase is not available in this build yet.";
+"Premium purchase is not available yet." = "Premium purchase is not available yet.";
+"Premium restored from this device." = "Premium restored from this device.";
+"Premium restored." = "Premium restored.";
+"Premium unlocked for testing." = "Premium unlocked for testing.";
+"Premium unlocked." = "Premium unlocked.";
+"Premium unlocks Quick Blocks longer than 2 hours." = "Premium unlocks Quick Blocks longer than 2 hours.";
+"Premium unlocks scheduled and recurring blocks." = "Premium unlocks scheduled and recurring blocks.";
+"Premium user" = "Premium user";
+"Progress" = "Progress";
+"Purchase cancelled." = "Purchase cancelled.";
+"Purchase could not be verified." = "Purchase could not be verified.";
+"Purchase pending approval." = "Purchase pending approval.";
+"Purchase status changed. Please try Restore Purchases." = "Purchase status changed. Please try Restore Purchases.";
+"Quick Block" = "Quick Block";
+"Quick Block is limited to 2 hours in the free version" = "Quick Block is limited to 2 hours in the free version";
+"Quick Block is the main action" = "Quick Block is the main action";
+"Quick Block up to 2h" = "Quick Block up to 2h";
+"Quick Reset" = "Quick Reset";
+"Recurring Blocks" = "Recurring Blocks";
+"Recurring blocking sessions" = "Recurring blocking sessions";
+"Recurring blocks are Premium" = "Recurring blocks are Premium";
+"Repeat on" = "Repeat on";
+"Repeat your focus sessions across the week with less effort." = "Repeat your focus sessions across the week with less effort.";
+"Reset clears only your progress stats and leaves blocking settings untouched." = "Reset clears only your progress stats and leaves blocking settings untouched.";
+"Reset progress" = "Reset progress";
+"Restore Purchases" = "Restore Purchases";
+"Save Scheduled Block" = "Save Scheduled Block";
+"Save turns this setup into your active weekly blocking plan." = "Save turns this setup into your active weekly blocking plan.";
+"Schedule" = "Schedule";
+"Schedule is Premium" = "Schedule is Premium";
+"Scheduled Blocks" = "Scheduled Blocks";
+"Scheduled blocking" = "Scheduled blocking";
+"Scheduled time" = "Scheduled time";
+"See your completed focus sessions turn into simple proof and momentum." = "See your completed focus sessions turn into simple proof and momentum.";
+"Select what Quick Block and schedules should shield." = "Select what Quick Block and schedules should shield.";
+"Selected apps show a short impulse pause instead of changing your main block list." = "Selected apps show a short impulse pause instead of changing your main block list.";
+"Serious focus" = "Serious focus";
+"Set automatic blocking windows that protect the same apps and websites every week." = "Set automatic blocking windows that protect the same apps and websites every week.";
+"Short reset" = "Short reset";
+"Smart Suggestions" = "Smart Suggestions";
+"Start %@ focus" = "Start %@ focus";
+"Start Quick Block" = "Start Quick Block";
+"Start a Quick Block" = "Start a Quick Block";
+"Start an immediate focus block with your current selection." = "Start an immediate focus block with your current selection.";
+"Status" = "Status";
+"Streak" = "Streak";
+"Suggestions translate your recent patterns into calm next actions." = "Suggestions translate your recent patterns into calm next actions.";
+"Tap Unlock Premium to simulate purchase." = "Tap Unlock Premium to simulate purchase.";
+"Templates give you ready-made focus setups for common moments." = "Templates give you ready-made focus setups for common moments.";
+"Test mode — no payment required yet." = "Test mode — no payment required yet.";
+"The streak highlights consistency without adding pressure or shame." = "The streak highlights consistency without adding pressure or shame.";
+"These totals count sessions, protected time, and the days you showed up." = "These totals count sessions, protected time, and the days you showed up.";
+"Unlimited Quick Block duration" = "Unlimited Quick Block duration";
+"Unlock Premium" = "Unlock Premium";
+"Unlock Premium (Simulator)" = "Unlock Premium (Simulator)";
+"Unlock Premium Focus" = "Unlock Premium Focus";
+"Unlock longer Quick Blocks" = "Unlock longer Quick Blocks";
+"Use softer focus tools like delays, templates, and smart next steps." = "Use softer focus tools like delays, templates, and smart next steps.";
+"Use the full blocking system for deeper, long-term focus control." = "Use the full blocking system for deeper, long-term focus control.";
+"What Premium unlocks" = "What Premium unlocks";
+"Your latest finished block is summarized here so progress feels concrete." = "Your latest finished block is summarized here so progress feels concrete.";
+"Your totals" = "Your totals";
+"1 hour" = "1 hour";
+"%d hours" = "%d hours";
+"%@ hours" = "%@ hours";
+"1 minute" = "1 minute";
+"%d minutes" = "%d minutes";
+"90m" = "90m";
+"8h" = "8h";
+"Study" = "Study";
+"Sleep" = "Sleep";
+"Study session" = "Study session";
+"Sleep shield" = "Sleep shield";
+"Custom" = "Custom";
+"Selected • %@" = "Selected • %@";
+"seconds" = "seconds";
+"Continue intentionally" = "Continue intentionally";
+"Still waiting…" = "Still waiting…";
+"No, stay focused" = "No, stay focused";
+"Shortcut pause" = "Shortcut pause";
+"Optional: create an iPhone Shortcuts automation so opening a distracting app launches Blocker’s 15-second pause." = "Optional: create an iPhone Shortcuts automation so opening a distracting app launches Blocker’s 15-second pause.";
+"Open Shortcuts → Automation" = "Open Shortcuts → Automation";
+"Choose App → pick the distracting app" = "Choose App → pick the distracting app";
+"Set Run Immediately, then add Blocker Pause" = "Set Run Immediately, then add Blocker Pause";
+"Apple requires you to create this automation manually. Blocker cannot silently set it up for you." = "Apple requires you to create this automation manually. Blocker cannot silently set it up for you.";
+"Do you really want to open the app?" = "Do you really want to open the app?";
+"Think about what you had planned." = "Think about what you had planned.";
+"Delay Apps is active" = "Delay Apps is active";
+"Selected apps show a 15-second shield." = "Selected apps show a 15-second shield.";
+"Turn on after choosing apps to delay." = "Turn on after choosing apps to delay.";
+"Choose Apps to Delay" = "Choose Apps to Delay";
+"Edit Delay Apps" = "Edit Delay Apps";
+"Preview 15 second timer" = "Preview 15 second timer";
+"Delay Apps uses Apple Screen Time app selection and is available in the iOS app target." = "Delay Apps uses Apple Screen Time app selection and is available in the iOS app target.";
+"Skip" = "Skip";
+"Start using Blocker" = "Start using Blocker";
+"Next" = "Next";
+"Close" = "Close";
+"Loading…" = "Loading…";
+"Screen Time Access" = "Screen Time Access";
+"First, allow Screen Time access so Blocker can shield your choices." = "First, allow Screen Time access so Blocker can shield your choices.";
+"Tap this button to choose the iPhone apps, categories, and websites you want blocked." = "Tap this button to choose the iPhone apps, categories, and websites you want blocked.";
+"Connect your Mac" = "Connect your Mac";
+"Optional: select your Mac so iPhone Quick Blocks can also send website blocks there automatically." = "Optional: select your Mac so iPhone Quick Blocks can also send website blocks there automatically.";
+"Set the recurring time window for automatic blocking." = "Set the recurring time window for automatic blocking.";
+"Track completed sessions, protected time, focus days, and streaks here." = "Track completed sessions, protected time, focus days, and streaks here.";
+"Use Delay Apps, templates, and calm suggestions separately from Quick Block." = "Use Delay Apps, templates, and calm suggestions separately from Quick Block.";
+"Pause first" = "Pause first";
+"Keep block" = "Keep block";
+"Now answer honestly." = "Now answer honestly.";
+"Take a slow breath before unlocking." = "Take a slow breath before unlocking.";
+"This short pause adds friction so stopping a block is intentional, not automatic." = "This short pause adds friction so stopping a block is intentional, not automatic.";
+"Questions unlock after the breathing timer." = "Questions unlock after the breathing timer.";
+"What’s your reason for the block?" = "What’s your reason for the block?";
+"Example: Finish deep work, study, sleep" = "Example: Finish deep work, study, sleep";
+"Why do you want to stop it?" = "Why do you want to stop it?";
+"Write your reason" = "Write your reason";
+"Unlock and stop block" = "Unlock and stop block";
+"You can stop the block now." = "You can stop the block now.";
+"Answer both questions to unlock the stop button." = "Answer both questions to unlock the stop button.";
+"Bored" = "Bored";
+"Stressed" = "Stressed";
+"Tired" = "Tired";
+"Habit" = "Habit";
+"Need something important" = "Need something important";
+"Other" = "Other";
+"Premium button tapped — simulated unlock running." = "Premium button tapped — simulated unlock running.";
+
+/* Blocklists and scheduled active block */
+"Choose blocklist" = "Choose blocklist";
+"Create reusable lists like Social without YouTube or Deep Work, then attach the right list to this schedule." = "Create reusable lists like Social without YouTube or Deep Work, then attach the right list to this schedule.";
+"No blocklists yet" = "No blocklists yet";
+"Create your first list of apps, categories, and websites for scheduled blocks." = "Create your first list of apps, categories, and websites for scheduled blocks.";
+"Create a blocklist" = "Create a blocklist";
+"Create Blocklist" = "Create Blocklist";
+"Blocklist name" = "Blocklist name";
+"Social without YouTube" = "Social without YouTube";
+"Blocked apps & websites" = "Blocked apps & websites";
+"Add or remove apps" = "Add or remove apps";
+"Blocklist created." = "Blocklist created.";
+"Scheduled focus is active" = "Scheduled focus is active";
+"Stay locked in" = "Stay locked in";
+"Your scheduled block is running. AntiScroll stays locked until the window ends." = "Your scheduled block is running. AntiScroll stays locked until the window ends.";
+"Scheduled block ends at %@" = "Scheduled block ends at %@";
+"Bypass protection" = "Bypass protection";
+"Editing schedules and app lists is disabled while this scheduled block is active. You can change future blocks after the timer finishes." = "Editing schedules and app lists is disabled while this scheduled block is active. You can change future blocks after the timer finishes.";
+"Stay with the plan. Your future self asked for this." = "Stay with the plan. Your future self asked for this.";
+"The urge will pass. The block is doing its job." = "The urge will pass. The block is doing its job.";
+"This is the moment you chose focus over impulse." = "This is the moment you chose focus over impulse.";
+"Keep going. Boredom is often the doorway back to attention." = "Keep going. Boredom is often the doorway back to attention.";
+"You are not missing out — you are protecting your time." = "You are not missing out — you are protecting your time.";
+
+"Monthly" = "Monthly";
+
+"Yearly" = "Yearly";
+
+"€2/month" = "€2/month";
+
+"€20/year" = "€20/year";
+
+"Flexible monthly access" = "Flexible monthly access";
+
+"Save compared with monthly" = "Save compared with monthly";
+
+"Continue" = "Continue";
+
+"Your subscription is active." = "Your subscription is active.";
+
+"Loading subscription options…" = "Loading subscription options…";
+
+"Premium subscriptions are not configured yet. Please try again later." = "Premium subscriptions are not configured yet. Please try again later.";
+
+"Could not load subscriptions." = "Could not load subscriptions.";
+
+"Premium is already active." = "Premium is already active.";
+
+"Premium subscriptions are not available yet. Please try again later." = "Premium subscriptions are not available yet. Please try again later.";
+
+"We could not confirm an active subscription yet. Please try Restore Purchases." = "We could not confirm an active subscription yet. Please try Restore Purchases.";
+
+"No active Premium subscription found." = "No active Premium subscription found.";
+
+"%@ Please try again or restore purchases." = "%@ Please try again or restore purchases.";
+
+"Maybe Later" = "Maybe Later";
+
+"Get your focus back for less than a cup of coffee." = "Get your focus back for less than a cup of coffee.";
+
+"Choose your plan" = "Choose your plan";
+
+"Best value" = "Best value";
+
+"What Premium includes" = "What Premium includes";
+
+"Scheduled focus blocks" = "Scheduled focus blocks";
+
+"Recurring focus routines" = "Recurring focus routines";
+
+"Stronger long-term focus control" = "Stronger long-term focus control";
+
+"AntiScroll Premium" = "AntiScroll Premium";
+
+"SUBSCRIPTION" = "SUBSCRIPTION";
+
+"ACTIVE" = "ACTIVE";
+
+"Start a focus block here when you need protection right now." = "Start a focus block here when you need protection right now.";
+
+"Subscription options unavailable" = "Subscription options unavailable";
+
+"What unlocks after Premium" = "What unlocks after Premium";
+
+"What changes after Premium" = "What changes after Premium";
+
+"Premium tools you unlock" = "Premium tools you unlock";
+
+"Create named app lists for schedules." = "Create named app lists for schedules.";
+
+"Pick recurring days and time windows." = "Pick recurring days and time windows.";
+
+"Show an active scheduled-block timer when protection is running." = "Show an active scheduled-block timer when protection is running.";
+
+"Use Quick Blocks longer than 2 hours." = "Use Quick Blocks longer than 2 hours.";
+
+"Keep active blocks commitment-locked." = "Keep active blocks commitment-locked.";
+
+"Combine Quick Block with stronger weekly routines." = "Combine Quick Block with stronger weekly routines.";
+
+"Build recurring focus routines." = "Build recurring focus routines.";
+
+"Track long-term focus progress." = "Track long-term focus progress.";
+
+"Use delay tools and templates for calmer control." = "Use delay tools and templates for calmer control.";
+
+"You vs. you" = "You vs. you";
+
+"Protect your attention before the scroll wins." = "Protect your attention before the scroll wins.";
+
+"Less impulse. More intention." = "Less impulse. More intention.";
+
+"A calmer way back to focus." = "A calmer way back to focus.";
+
+"Choose your attention" = "Choose your attention";
+
+"Start small. Stay with it." = "Start small. Stay with it.";
+
+"Why Screen Time access?" = "Why Screen Time access?";
+
+"Apple requires this permission before Blocker can shield selected apps and websites." = "Apple requires this permission before Blocker can shield selected apps and websites.";
+
+"Needed to show Apple’s app and website picker." = "Needed to show Apple’s app and website picker.";
+
+"Needed to apply shields during quick blocks and schedules." = "Needed to apply shields during quick blocks and schedules.";
+
+"Blocker cannot read your messages, browsing history, or private app content." = "Blocker cannot read your messages, browsing history, or private app content.";
+
+"Your choices stay on-device and are saved privately in the app group." = "Your choices stay on-device and are saved privately in the app group.";
+
+"Allow Screen Time Access" = "Allow Screen Time Access";
+
+"Access granted" = "Access granted";
+
+"Apple’s Screen Time picker is available on the iPhone app target." = "Apple’s Screen Time picker is available on the iPhone app target.";
+
+"Websites sent to Mac" = "Websites sent to Mac";
+
+"Only these exact websites are sent to the Mac. Nothing is added automatically." = "Only these exact websites are sent to the Mac. Nothing is added automatically.";
+
+"Apply iPhone Quick Blocks on this laptop" = "Use Screen Time protection on this device";
+
+"Sync ready: sent %d selected website(s) for this %@ block." = "Sync ready: sent %d selected website(s) for this %@ block.";
+
+"Normal" = "Normal";
+
+"Strong" = "Strong";
+
+"30 sec pause + reflection" = "30 sec pause + reflection";
+
+"Premium commitment with one emergency exit per day" = "Premium commitment with one emergency exit per day";
+
+"Block strength" = "Block strength";
+
+"Strong is Premium" = "Strong is Premium";
+
+"Use emergency exit" = "Use emergency exit";
+
+"Strong exit" = "Strong exit";
+
+"Normal blocks ask for a short pause, honest reflection, then one final wait before stopping." = "Normal blocks ask for a short pause, honest reflection, then one final wait before stopping.";
+
+"Strong Mode gives you one calm emergency exit per day. Use it only when it truly matters." = "Strong Mode gives you one calm emergency exit per day. Use it only when it truly matters.";
+
+"%d emergency exit left today" = "%d emergency exit left today";
+
+"No emergency exits left today" = "No emergency exits left today";
+
+"Strong Mode is locked in for today. This block can finish naturally." = "Strong Mode is locked in for today. This block can finish naturally.";
+
+"Final check: %d seconds left" = "Final check: %d seconds left";
+
+"Start final pause" = "Start final pause";
+
+"One final pause keeps stopping intentional." = "One final pause keeps stopping intentional.";
+
+"Stay here for the final check, or keep the block." = "Stay here for the final check, or keep the block.";
+
+"Use emergency exit and stop block." = "Use emergency exit and stop block.";
+
+"You have used today’s emergency exit." = "You have used today’s emergency exit.";
+
+"Started a %@ block." = "Started a %@ block.";
+
+"Quick block stopped." = "Quick block stopped.";
+
+"Quick block stopped. Progress recorded as elapsed protected time." = "Quick block stopped. Progress recorded as elapsed protected time.";
+
+"Quick block stopped after reflection." = "Quick block stopped after reflection.";
+
+"Emergency exit used. Strong block stopped." = "Emergency exit used. Strong block stopped.";
+
+"30 sec pause" = "30 sec pause";
+
+"1 emergency exit/day" = "1 emergency exit/day";
+
+"Study Sprint" = "Study Sprint";
+
+"Sleep Wind Down" = "Sleep Wind Down";
+
+"Quick Reset started" = "Quick Reset started";
+
+"Deep Work started" = "Deep Work started";
+
+"Study Sprint started" = "Study Sprint started";
+
+"Sleep Wind Down started" = "Sleep Wind Down started";
+
+/* StoreKit plan switching */
+"Current Plan" = "Current Plan";
+"Switch Plan" = "Switch Plan";
+"This is your active plan." = "This is your active plan.";
+"Switch to the selected plan." = "Switch to the selected plan.";
+"Manage Plan" = "Manage Plan";
+
+"Start Focusing" = "Start Focusing";
+
+"Step %d of %d" = "Step %d of %d";
+
+"Block distractions" = "Block distractions";
+
+"AntiScroll blocks the apps and websites you choose, only when you start a focus block." = "AntiScroll blocks the apps and websites you choose, only when you start a focus block.";
+
+"Allow Screen Time" = "Allow Screen Time";
+
+"iOS needs Screen Time permission so AntiScroll can show Apple’s picker and apply shields. AntiScroll cannot see private content." = "iOS needs Screen Time permission so AntiScroll can show Apple’s picker and apply shields. AntiScroll cannot see private content.";
+
+"Choose what to block" = "Choose what to block";
+
+"Pick distracting apps, categories, and websites. You can change this anytime." = "Pick distracting apps, categories, and websites. You can change this anytime.";
+
+"Start your first block" = "Start your first block";
+
+"Use Quick Block when you want protection right now. Choose a length, then start focusing." = "Use Quick Block when you want protection right now. Choose a length, then start focusing.";
+
+"This iPhone" = "This iPhone";
+
+"Use Screen Time protection on this device" = "Use Screen Time protection on this device";
+
+"Device sync" = "Device sync";
+
+"Subscription options unavailable" = "Subscription options unavailable";
+
+"Sync ready: sent %d selected website(s) for this %@ block." = "Sync ready: sent %d selected website(s) for this %@ block.";
+
+"Added %@. It will be used on the next Quick Block." = "Added %@. It will be used on the next Quick Block.";
+
+"Choose at least one website. If none are selected, no websites will be synced." = "Choose at least one website. If none are selected, no websites will be synced.";
+
+"Syncing this focus session via iCloud…" = "Syncing this focus session via iCloud…";
+
+"Sync not active yet: %@" = "Sync not active yet: %@";
+
+"Block failed: %@" = "Block failed: %@";
+
+"AntiScroll applies only the apps and websites you selected." = "AntiScroll applies only the apps and websites you selected.";
+
+"Automatically from your apps" = "Automatically from your apps";
+
+"Pick apps" = "Pick apps";
+
+"No apps picked yet — tap Pick apps to choose from your recently used apps." = "No apps picked yet — tap Pick apps to choose from your recently used apps.";
+
+"Only checked domains are sent to selected Macs when Quick Block starts." = "Only checked domains are sent to selected Macs when Quick Block starts.";
+
+"Websites of the apps you picked are added automatically. No manual step needed." = "Websites of the apps you picked are added automatically. No manual step needed.";
+
+"Websites you pick manually, plus the websites of apps you add from your app list — all sent to your Mac automatically." = "Websites you pick manually, plus the websites of apps you add from your app list — all sent to your Mac automatically.";
+
+"Done" = "Done";
+
+"Pick which devices should follow your iPhone Quick Block." = "Pick which devices should follow your iPhone Quick Block.";
+
+"Websites are blocked on this Mac automatically" = "Websites are blocked on this Mac automatically";
+
+"Follows your blocks on this device automatically" = "Follows your blocks on this device automatically";
+
+"This iPad" = "This iPad";
+
+"This Device" = "This Device";
+
+"Auto-add websites" = "Auto-add websites";
+
+"%@ – %@" = "%@ – %@";
+
+"%d apps" = "%d apps";
+
+"%d categories" = "%d categories";
+
+"%d device(s) follow your blocks" = "%d device(s) follow your blocks";
+
+"%d websites" = "%d websites";
+
+"15-second pause" = "15-second pause";
+
+"24h" = "24h";
+
+"30 min" = "30 min";
+
+"30 min – 24 hours" = "30 min – 24 hours";
+
+"A simple flow: choose what to protect, start a block, automate it, then review your progress." = "A simple flow: choose what to protect, start a block, automate it, then review your progress.";
+
+"Account" = "Account";
+
+"Active" = "Active";
+
+"Active on %@." = "Active on %@.";
+
+"Active schedule" = "Active schedule";
+
+"Add a Return URL in Shortcuts first so AntiScroll knows which app to open." = "Add a Return URL in Shortcuts first so AntiScroll knows which app to open.";
+
+"Allow Screen Time access to start blocking." = "Allow Screen Time access to start blocking.";
+
+"An active longer block cannot be replaced by a shorter one." = "An active longer block cannot be replaced by a shorter one.";
+
+"AntiScroll can shield selected apps and websites." = "AntiScroll can shield selected apps and websites.";
+
+"AntiScroll cannot read your messages, browsing history, or private app content." = "AntiScroll cannot read your messages, browsing history, or private app content.";
+
+"AntiScroll could not allow that app yet. Please try once more." = "AntiScroll could not allow that app yet. Please try once more.";
+
+"AntiScroll could not open that URL. Check the Return URL in Shortcuts." = "AntiScroll could not open that URL. Check the Return URL in Shortcuts.";
+
+"App language" = "App language";
+
+"Apps, categories, and websites" = "Apps, categories, and websites";
+
+"Automatic blocking windows that protect the same apps and websites every week." = "Automatic blocking windows that protect the same apps and websites every week.";
+
+"Blocked content" = "Blocked content";
+
+"Blocklist: %@" = "Blocklist: %@";
+
+"Blocklists are available only in the iOS app target." = "Blocklists are available only in the iOS app target.";
+
+"Calm next steps based on your recent focus patterns." = "Calm next steps based on your recent focus patterns.";
+
+"Cancel" = "Cancel";
+
+"Choose Apps and Websites" = "Choose Apps and Websites";
+
+"Choose a blocklist" = "Choose a blocklist";
+
+"Choose a length" = "Choose a length";
+
+"Choose how long you want selected distractions blocked." = "Choose how long you want selected distractions blocked.";
+
+"Choose repeat days" = "Choose repeat days";
+
+"Choose start and end time" = "Choose start and end time";
+
+"Clears focus stats only." = "Clears focus stats only.";
+
+"Completed sessions" = "Completed sessions";
+
+"Connected devices" = "Connected devices";
+
+"Create Schedule" = "Create Schedule";
+
+"Create a recurring block so focus happens automatically — no need to start it every time." = "Create a recurring block so focus happens automatically — no need to start it every time.";
+
+"Current device" = "Current device";
+
+"Custom app and website list" = "Custom app and website list";
+
+"Custom quick block" = "Custom quick block";
+
+"Device Sync" = "Device Sync";
+
+"Duration" = "Duration";
+
+"Edit Apps and Websites" = "Edit Apps and Websites";
+
+"Edit Schedule" = "Edit Schedule";
+
+"Edit schedule" = "Edit schedule";
+
+"Enter a valid website like youtube.com." = "Enter a valid website like youtube.com.";
+
+"Focus Modes" = "Focus Modes";
+
+"Focus locked" = "Focus locked";
+
+"Focus now" = "Focus now";
+
+"Focus time" = "Focus time";
+
+"Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused. The If step prevents a second delay when you choose Open it." = "Follow these steps once in Apple Shortcuts so AntiScroll opens automatically, shows the 15-second pause, then asks: Open it or stay focused. The If step prevents a second delay when you choose Open it.";
+
+"Follows your iPhone language automatically." = "Follows your iPhone language automatically.";
+
+"Four quick steps: blocklist, time, days, save." = "Four quick steps: blocklist, time, days, save.";
+
+"Help and setup" = "Help and setup";
+
+"How the app works" = "How the app works";
+
+"If this opened from the blocked app screen, tap Open it after the pause, then open the app once more." = "If this opened from the blocked app screen, tap Open it after the pause, then open the app once more.";
+
+"Important: Delay Apps should only be used for apps that are not also in your active block list. If an app is blocked by Quick Block or Schedule, Apple will show the hard block instead of the delay pause." = "Important: Delay Apps should only be used for apps that are not also in your active block list. If an app is blocked by Quick Block or Schedule, Apple will show the hard block instead of the delay pause.";
+
+"Language" = "Language";
+
+"Last session" = "Last session";
+
+"Mac websites" = "Mac websites";
+
+"Manage the domains your Mac blocks during Quick Block." = "Manage the domains your Mac blocks during Quick Block.";
+
+"Manual websites" = "Manual websites";
+
+"Needs Screen Time access" = "Needs Screen Time access";
+
+"Needs access" = "Needs access";
+
+"New schedule" = "New schedule";
+
+"No Macs connected yet. Open the AntiScroll Mac Companion on your Mac to register it." = "No Macs connected yet. Open the AntiScroll Mac Companion on your Mac to register it.";
+
+"No apps or websites selected yet" = "No apps or websites selected yet";
+
+"No emergency exits left today." = "No emergency exits left today.";
+
+"No focus sessions yet" = "No focus sessions yet";
+
+"No schedule yet" = "No schedule yet";
+
+"Off" = "Off";
+
+"Only this iPhone — no Macs connected" = "Only this iPhone — no Macs connected";
+
+"Open it" = "Open it";
+
+"Open the full Shortcuts setup guide." = "Open the full Shortcuts setup guide.";
+
+"Pick a length, choose your block strength, then press Start Focus." = "Pick a length, choose your block strength, then press Start Focus.";
+
+"Pick a preset like Reset, Deep Work, Study, or Sleep — or set a custom duration." = "Pick a preset like Reset, Deep Work, Study, or Sleep — or set a custom duration.";
+
+"Pick at least one day to save this schedule." = "Pick at least one day to save this schedule.";
+
+"Pick devices that follow your blocks and manage websites sent to Mac." = "Pick devices that follow your blocks and manage websites sent to Mac.";
+
+"Press start" = "Press start";
+
+"Privacy" = "Privacy";
+
+"Progress reset." = "Progress reset.";
+
+"Protected" = "Protected";
+
+"Protection status" = "Protection status";
+
+"Ready-made focus setups for common moments. Starting one uses your current selection." = "Ready-made focus setups for common moments. Starting one uses your current selection.";
+
+"Ready-made setups for work, study, sleep, and more." = "Ready-made setups for work, study, sleep, and more.";
+
+"Reset" = "Reset";
+
+"Reset progress?" = "Reset progress?";
+
+"Restore Premium on this device." = "Restore Premium on this device.";
+
+"Save" = "Save";
+
+"Schedule turned off." = "Schedule turned off.";
+
+"Schedule turned on." = "Schedule turned on.";
+
+"Screen Time" = "Screen Time";
+
+"Screen Time access is on" = "Screen Time access is on";
+
+"Selected apps show a short impulse pause instead of a hard block." = "Selected apps show a short impulse pause instead of a hard block.";
+
+"Settings" = "Settings";
+
+"Setup instructions" = "Setup instructions";
+
+"Shortcut pause setup" = "Shortcut pause setup";
+
+"Softer focus tools: delays, templates, and smart next steps." = "Softer focus tools: delays, templates, and smart next steps.";
+
+"Start here" = "Start here";
+
+"Start your first focus session" = "Start your first focus session";
+
+"Stay committed" = "Stay committed";
+
+"Strong block active" = "Strong block active";
+
+"Subscription" = "Subscription";
+
+"The focus flow in four short steps." = "The focus flow in four short steps.";
+
+"This clears your focus stats only. Blocking settings stay untouched." = "This clears your focus stats only. Blocking settings stay untouched.";
+
+"What Quick Block and schedules protect on this iPhone." = "What Quick Block and schedules protect on this iPhone.";
+
+"Your completed focus sessions, protected time, and momentum." = "Your completed focus sessions, protected time, and momentum.";
+
+"Your completed sessions, focus time, and streak will show up here." = "Your completed sessions, focus time, and streak will show up here.";
+
+"Your current block has to finish before you can start another one." = "Your current block has to finish before you can start another one.";
+
+"Your focus" = "Your focus";
+
+"Your focus flow" = "Your focus flow";
+
+"iCloud" = "iCloud";
+
+"iPhone + Macs" = "iPhone + Macs";
+
+"Delay" = "Delay";
+
+"remaining" = "remaining";
+
+"Add" = "Add";
+"Add website, e.g. netflix.com" = "Add website, e.g. netflix.com";
+"Apps" = "Apps";
+"Block list" = "Block list";
+"Build focus routines that work on your terms." = "Build focus routines that work on your terms.";
+"Categories" = "Categories";
+"Choose a blocklist, time, and repeat days." = "Choose a blocklist, time, and repeat days.";
+"Choose at least one weekday." = "Choose at least one weekday.";
+"Choose the distractions that should be shielded during quick blocks and scheduled focus windows." = "Choose the distractions that should be shielded during quick blocks and scheduled focus windows.";
+"Close and stay focused" = "Close and stay focused";
+"Create" = "Create";
+"Current" = "Current";
+"FamilyControls picker is available only in the iOS app target." = "The Screen Time picker is available on iPhone.";
+"Home" = "Home";
+"How this is used" = "How this is used";
+"Instant focus sessions use this same list." = "Instant focus sessions use this same list.";
+"Open Apple’s Screen Time picker, then select any apps, categories, or websites you want AntiScroll to protect you from." = "Open Apple’s Screen Time picker, then choose the apps, categories, or websites to protect.";
+"Phone sites" = "Phone sites";
+"Privacy Policy" = "Privacy Policy";
+"Specific apps" = "Specific apps";
+"Start" = "Start";
+"Subscription renews automatically unless cancelled at least 24 hours before the end of the current period." = "Subscription renews automatically unless cancelled at least 24 hours before the end of the current period.";
+"Take Back Your Time" = "Take Back Your Time";
+"Terms of Use" = "Terms of Use";
+"Use this duration" = "Use this duration";
+"Websites" = "Websites";
+"Whole groups" = "Whole groups";
+"Your daily schedule blocks these choices automatically." = "Your daily schedule blocks these choices automatically.";
+"Delay Apps is on. Chosen apps now pause for 15 seconds." = "Delay Apps is on. Chosen apps now pause for 15 seconds.";
+"Delay Apps is off. Your normal blocks were not changed." = "Delay Apps is off. Your normal blocks were not changed.";
+"Delay Apps updated. Your block list was not changed." = "Delay Apps updated. Your block list was not changed.";
+"Started %@: %@." = "Started %@: %@.";
+"Mon" = "Mon";
+"Monday" = "Monday";
+"Tue" = "Tue";
+"Tuesday" = "Tuesday";
+"Wed" = "Wed";
+"Wednesday" = "Wednesday";
+"Thu" = "Thu";
+"Thursday" = "Thursday";
+"Fri" = "Fri";
+"Friday" = "Friday";
+"Sat" = "Sat";
+"Saturday" = "Saturday";
+"Sun" = "Sun";
+"Sunday" = "Sunday";
+"Choose apps and websites here, then start protection immediately." = "Choose apps and websites here, then start protection immediately.";
+"Set a routine" = "Set a routine";
+"Choose days and times for automatic focus windows." = "Choose days and times for automatic focus windows.";
+"Add friction" = "Add friction";
+"Use Delay Apps and templates for softer, intentional blocking." = "Use Delay Apps and templates for softer, intentional blocking.";
+"See proof" = "See proof";
+"Review sessions, streaks, and receipts that show momentum." = "Review sessions, streaks, and receipts that show momentum.";
+"Work Mode" = "Work Mode";
+"Sleep Mode" = "Sleep Mode";
+"Morning Mode" = "Morning Mode";
+"Study Mode" = "Study Mode";
+"Gym Mode" = "Gym Mode";
+"Blocks social + entertainment." = "Blocks social + entertainment.";
+"Blocks everything except essentials." = "Blocks everything except essentials.";
+"Blocks social/news until 10 AM." = "Blocks social/news until 10 AM.";
+"Blocks social + YouTube." = "Blocks social + YouTube.";
+"Blocks social, keeps music apps." = "Blocks social, keeps music apps.";
+"Until 10 AM" = "Until 10 AM";
+"Weekdays 9–12" = "Weekdays 9–12";
+"Nightly wind down" = "Nightly wind down";
+"Try a Sleep Block preset" = "Try a Sleep Block preset";
+"You often start quick blocks at night. Want a calmer wind-down preset?" = "You often start quick blocks at night. Want a calmer wind-down preset?";
+"Schedule a Work Block" = "Schedule a Work Block";
+"You completed 3 work blocks this week. Want to schedule weekdays 9–12?" = "You completed 3 work blocks this week. Want to schedule weekdays 9–12?";
+"Try a shorter 30 min block" = "Try a shorter 30 min block";
+"You stopped early twice after 22:00. A shorter block may fit better tonight." = "You stopped early twice after 22:00. A shorter block may fit better tonight.";
+"Protect your next session" = "Protect your next session";
+"Start with a small 30 minute block and keep it easy to complete." = "Start with a small 30 minute block and keep it easy to complete.";
+"15s" = "15s";
+"On" = "On";
+
+// Mac connection guide
+"How to connect a Mac" = "How to connect a Mac";
+"Install the Companion, approve once, then select your Mac." = "Install the Companion, approve once, then select your Mac.";
+"Mac connection guide" = "Mac connection guide";
+"Connect in a few quick steps. Your iPhone remains the source of truth." = "Connect in a few quick steps. Your iPhone remains the source of truth.";
+"Open the Mac Companion" = "Open the Mac Companion";
+"Install and open AntiScroll Mac Companion on your Mac." = "Install and open AntiScroll Mac Companion on your Mac.";
+"Use the same iCloud account" = "Use the same iCloud account";
+"Make sure your iPhone and Mac use the same Apple Account and iCloud Drive is on." = "Make sure your iPhone and Mac use the same Apple Account and iCloud Drive is on.";
+"Approve administrator access" = "Approve administrator access";
+"When Mac blocking changes, approve the administrator prompt so the Companion can update protected system settings." = "When Mac blocking changes, approve the administrator prompt so the Companion can update protected system settings.";
+"Select your Mac here" = "Select your Mac here";
+"Return to Device Sync and tap your Mac under Connected devices." = "Return to Device Sync and tap your Mac under Connected devices.";
+"Keep the Companion running" = "Keep the Companion running";
+"Leave it in the Mac menu bar. Selected websites will follow your iPhone Quick Blocks automatically." = "Leave it in the Mac menu bar. Selected websites will follow your iPhone Quick Blocks automatically.";
+"Mac not showing up?" = "Mac not showing up?";
+"Keep the Mac Companion open, then return to this page to refresh the device list." = "Keep the Mac Companion open, then return to this page to refresh the device list.";
+"Connect in a few quick steps. Your iPhone controls what gets blocked." = "Connect in a few quick steps. Your iPhone controls what gets blocked.";
+"Use the same Apple Account" = "Use the same Apple Account";
+
+// Cross-device automatic sync
+"Added %@. It is syncing now." = "Added %@. It is syncing now.";
+"Apps become websites automatically; schedules follow too." = "Apps become websites automatically; schedules follow too.";
+"Pick which devices should follow your iPhone Quick Blocks and schedules." = "Pick which devices should follow your iPhone Quick Blocks and schedules.";
+"Your iPhone sends these websites and schedules to every selected Mac automatically." = "Your iPhone sends these websites and schedules to every selected Mac automatically.";
+
+// Mac Companion download
+"Download Mac Companion" = "Download Mac Companion";
+"Requires macOS 13 or later." = "Requires macOS 13 or later.";
+"Copy this link and paste it into a browser on your Mac:" = "Copy this link and paste it into a browser on your Mac:";
+"Copy link" = "Copy link";
+"Link copied" = "Link copied";
+
+// Per-schedule protected devices
+"Protected on: %@" = "Protected on: %@";
+"%d other device(s)" = "%d other device(s)";
+"No devices" = "No devices";
+"Protected devices" = "Protected devices";
+"Choose where this schedule should activate automatically." = "Choose where this schedule should activate automatically.";
+"Screen Time blocks on this iPhone" = "Screen Time blocks on this iPhone";
+"Websites block automatically in the Mac Companion" = "Websites block automatically in the Mac Companion";
+"Follows this schedule automatically" = "Follows this schedule automatically";
+"No other connected devices yet. Connect devices in Settings → Device Sync." = "No other connected devices yet. Connect devices in Settings → Device Sync.";
+"Pick at least one protected device." = "Pick at least one protected device.";
+"Protected now" = "Protected now";
+"Ready" = "Ready";
+
+// Reliable focus activation and flexible schedules
+"Schedule enabled" = "Schedule enabled";
+"Choose at least one app, category, or website before starting a block." = "Choose at least one app, category, or website before starting a block.";
+"Add at least one time period." = "Add at least one time period.";
+"A time period must have different start and end times." = "A time period must have different start and end times.";
+"Time periods cannot overlap, including across midnight." = "Time periods cannot overlap, including across midnight.";
+"This schedule uses too many time periods. Use up to %d weekday periods." = "This schedule uses too many time periods. Use up to %d weekday periods.";
+"Screen Time did not accept the blocking rules. Try again after reopening AntiScroll." = "Screen Time did not accept the blocking rules. Try again after reopening AntiScroll.";
+"Next day" = "Next day";
+"Time periods by weekday" = "Time periods by weekday";
+"Add one or more blocking periods to each day. Overnight periods end on the next day." = "Add one or more blocking periods to each day. Overnight periods end on the next day.";
+"%d of %d weekday periods used" = "%d of %d weekday periods used";
+"Add time period" = "Add time period";
+"Remove time period" = "Remove time period";
+"Ends the next day" = "Ends the next day";
+"Choose a blocklist, weekday time periods, and protected devices." = "Choose a blocklist, weekday time periods, and protected devices.";
+"End" = "End";
+"Scheduled focus" = "Scheduled focus";
+
+// Quick Block launch countdown and undo grace period
+"Block starts in" = "Block starts in";
+"Undo Quick Block" = "Undo Quick Block";
+"Changed something by mistake? Stop now without friction." = "Changed something by mistake? Stop now without friction.";
+"%d seconds to undo" = "%d seconds to undo";
+"Quick Block cancelled. Nothing was recorded." = "Quick Block cancelled. Nothing was recorded.";
+"Block starts in 1 second" = "Block starts in 1 second";
+"Block starts in %d seconds" = "Block starts in %d seconds";
+"1 second to undo" = "1 second to undo";
+
+"Add more apps to your current block:" = "Add more apps to your current block:";
+
+// Focus Complete
+"Focus complete" = "Focus complete";
+"You protected %@ of focused time." = "You protected %@ of focused time.";
+"Nice work. Carry that momentum into your next focus block when you’re ready." = "Nice work. Carry that momentum into your next focus block when you’re ready.";
+"Keep going for 15 minutes" = "Keep going for 15 minutes";
+"View progress" = "View progress";
+
+// Weekly Focus Card
+"Last 7 days" = "Last 7 days";
+"%@ of 7 days with focus" = "%@ of 7 days with focus";
+"Focus recorded" = "Focus recorded";
+"No focus recorded" = "No focus recorded";
+"Quick Blocks and scheduled focus both count. Every day is a fresh start." = "Quick Blocks and scheduled focus both count. Every day is a fresh start.";
+"Today" = "Today";
