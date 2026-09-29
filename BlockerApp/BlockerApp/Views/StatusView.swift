@@ -42,7 +42,9 @@ struct StatusView: View {
     @State private var pendingQuickBlockMinutes: Int?
     @State private var pendingQuickBlockPreset: QuickBlockPreset?
     @State private var pendingQuickBlockCommitmentMode: QuickBlockCommitmentMode = .normal
+    @State private var pendingFocusContinuation: FocusCompletionPrompt?
     @State private var quickBlockCountdownTask: Task<Void, Never>?
+    @State private var focusCompletionPrompt: FocusCompletionPrompt?
     #if canImport(FamilyControls)
     @State private var selection = ShieldStorage.shared.loadSelection()
     @State private var activeBlockAdditions = FamilyActivitySelection()
@@ -58,11 +60,13 @@ struct StatusView: View {
                 ScrollViewReader { proxy in
                     ScrollView {
                         TimelineView(.periodic(from: .now, by: 1)) { context in
-                            let session = refreshedSession(now: context.date)
+                            let session = activeSession.flatMap { $0.isActive(at: context.date) ? $0 : nil }
 
                             VStack(spacing: 18) {
                                 if let session {
                                     activeFocusScreen(session: session, now: context.date)
+                                } else if let completion = focusCompletionPrompt, completion.isAvailable(at: context.date) {
+                                    focusCompleteScreen(completion)
                                 } else {
                                     statusCard
                                     quickBlockCard
@@ -76,6 +80,9 @@ struct StatusView: View {
                             }
                             .padding()
                             .safeAreaPadding(.bottom, 190)
+                            .onChange(of: context.date) { _, now in
+                                handleTimelineTick(now: now)
+                            }
                         }
                     }
                     .onAppear {
@@ -144,6 +151,7 @@ struct StatusView: View {
         .onAppear {
             authorization.refresh()
             reconcileImmediateBlockState()
+            refreshFocusCompletionState()
             refreshSelection()
         }
         .onDisappear {
@@ -153,6 +161,7 @@ struct StatusView: View {
             if phase == .active {
                 authorization.refresh()
                 reconcileImmediateBlockState()
+                refreshFocusCompletionState()
                 refreshSelection()
             } else {
                 cancelQuickBlockCountdown()
@@ -649,6 +658,10 @@ struct StatusView: View {
         }
     }
 
+    private func refreshFocusCompletionState(now: Date = Date()) {
+        focusCompletionPrompt = ScheduleService.shared.reconcileFocusCompletionPrompt(now: now)
+    }
+
     private func selectionMetric(value: Int, label: String, icon: String, accent: Color) -> some View {
         VStack(spacing: 5) {
             Image(systemName: icon)
@@ -668,6 +681,114 @@ struct StatusView: View {
     }
 
     // MARK: - Active session
+
+    private func focusCompleteScreen(_ completion: FocusCompletionPrompt) -> some View {
+        VStack(spacing: 22) {
+            ZStack {
+                Circle()
+                    .fill(AppActionStyle.turquoise[0].opacity(0.16))
+                    .frame(width: 94, height: 94)
+                Circle()
+                    .stroke(AppActionStyle.turquoise[0].opacity(0.42), lineWidth: 1)
+                    .frame(width: 94, height: 94)
+                Image(systemName: "checkmark")
+                    .font(.system(size: 40, weight: .bold))
+                    .foregroundStyle(AppActionStyle.turquoise[0])
+            }
+            .accessibilityHidden(true)
+
+            VStack(spacing: 9) {
+                Text(L10n.string("Focus complete"))
+                    .font(.largeTitle.weight(.bold))
+                    .foregroundStyle(.white)
+                    .multilineTextAlignment(.center)
+                Text(String(format: L10n.string("You protected %@ of focused time."), durationTitle(completion.session.durationMinutes)))
+                    .font(.title3.weight(.semibold))
+                    .foregroundStyle(.white.opacity(0.82))
+                    .multilineTextAlignment(.center)
+                Text(L10n.string("Nice work. Carry that momentum into your next focus block when you’re ready."))
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.64))
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            VStack(spacing: 11) {
+                Button {
+                    continueFocus(from: completion)
+                } label: {
+                    Label(L10n.string("Keep going for 15 minutes"), systemImage: "play.fill")
+                        .font(.headline)
+                        .foregroundStyle(.black)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 15)
+                        .background(
+                            LinearGradient(colors: AppActionStyle.turquoise, startPoint: .topLeading, endPoint: .bottomTrailing),
+                            in: RoundedRectangle(cornerRadius: 18, style: .continuous)
+                        )
+                }
+                .buttonStyle(PremiumPressButtonStyle())
+                .accessibilityIdentifier("keep-going-15-minutes-button")
+
+                Button {
+                    dismissFocusComplete()
+                    onFlowTabSelected("Progress")
+                } label: {
+                    Label(L10n.string("View progress"), systemImage: "chart.line.uptrend.xyaxis")
+                        .font(.headline)
+                        .foregroundStyle(.white.opacity(0.90))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(.white.opacity(0.09), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                        .overlay(RoundedRectangle(cornerRadius: 18, style: .continuous).stroke(.white.opacity(0.14), lineWidth: 1))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("view-focus-progress-button")
+
+                Button {
+                    dismissFocusComplete()
+                } label: {
+                    Text(L10n.string("Done"))
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundStyle(.white.opacity(0.82))
+                        .frame(maxWidth: .infinity, minHeight: 44)
+                        .background(Color.white.opacity(0.04), in: Capsule())
+                        .overlay(Capsule().stroke(Color.white.opacity(0.10), lineWidth: 1))
+                }
+                .buttonStyle(.plain)
+                .accessibilityIdentifier("dismiss-focus-complete-button")
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 22)
+        .padding(.vertical, 28)
+        .background(
+            LinearGradient(
+                colors: [AppActionStyle.turquoise[0].opacity(0.13), Color.indigo.opacity(0.10), .white.opacity(0.05)],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            ),
+            in: RoundedRectangle(cornerRadius: 30, style: .continuous)
+        )
+        .overlay(RoundedRectangle(cornerRadius: 30, style: .continuous).stroke(.white.opacity(0.18), lineWidth: 1))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("focus-complete-screen")
+    }
+
+    private func continueFocus(from completion: FocusCompletionPrompt) {
+        beginQuickBlockCountdown(
+            minutes: FocusCompletionPolicy.continuationMinutes,
+            preset: nil,
+            commitmentMode: completion.session.commitmentMode,
+            continuationPrompt: completion
+        )
+    }
+
+    private func dismissFocusComplete() {
+        ScheduleService.shared.dismissFocusCompletionPrompt()
+        focusCompletionPrompt = nil
+        playSelectionHaptic()
+    }
 
     private func activeFocusScreen(session: ImmediateBlockSession, now: Date) -> some View {
         let remainingText = largeRemainingLabel(for: session, now: now)
@@ -1194,8 +1315,14 @@ struct StatusView: View {
     }
     #endif
 
-    private func beginQuickBlockCountdown(minutes: Int, preset: QuickBlockPreset?) {
-        guard PremiumAccessPolicy.canStartQuickBlock(durationMinutes: minutes, isPremium: premiumStore.isPremium, commitmentMode: selectedCommitmentMode) else {
+    private func beginQuickBlockCountdown(
+        minutes: Int,
+        preset: QuickBlockPreset?,
+        commitmentMode: QuickBlockCommitmentMode? = nil,
+        continuationPrompt: FocusCompletionPrompt? = nil
+    ) {
+        let mode = commitmentMode ?? selectedCommitmentMode
+        guard PremiumAccessPolicy.canStartQuickBlock(durationMinutes: minutes, isPremium: premiumStore.isPremium, commitmentMode: mode) else {
             quickBlockMessage = L10n.string("Premium unlocks Quick Blocks longer than 2 hours.")
             presentPremiumUpsellFromQuickBlock()
             return
@@ -1205,7 +1332,8 @@ struct StatusView: View {
         let startedAt = Date()
         pendingQuickBlockMinutes = minutes
         pendingQuickBlockPreset = preset
-        pendingQuickBlockCommitmentMode = selectedCommitmentMode
+        pendingQuickBlockCommitmentMode = mode
+        pendingFocusContinuation = continuationPrompt
         withAnimation(.easeInOut(duration: 0.24)) {
             quickBlockCountdownStartedAt = startedAt
         }
@@ -1243,10 +1371,17 @@ struct StatusView: View {
         do {
             let session = try ScheduleService.shared.startImmediateBlock(durationMinutes: minutes, commitmentMode: mode)
             activeSession = session
+            focusCompletionPrompt = nil
+            pendingFocusContinuation = nil
             quickBlockMessage = String(format: L10n.string("Started a %@ block."), L10n.string(session.durationLabel))
             playSuccessHaptic()
             syncMacForStartedQuickBlock(session)
         } catch {
+            if let continuation = pendingFocusContinuation {
+                try? ShieldStorage.shared.saveFocusCompletionPrompt(continuation)
+                focusCompletionPrompt = continuation
+            }
+            pendingFocusContinuation = nil
             quickBlockMessage = String(format: L10n.string("Block failed: %@"), error.localizedDescription)
         }
     }
@@ -1259,6 +1394,7 @@ struct StatusView: View {
         }
         pendingQuickBlockMinutes = nil
         pendingQuickBlockPreset = nil
+        pendingFocusContinuation = nil
         isStartingQuickBlock = false
     }
 
@@ -1293,6 +1429,7 @@ struct StatusView: View {
         }
 
         ScheduleService.shared.stopImmediateBlock(force: true)
+        ScheduleService.shared.dismissFocusCompletionPrompt()
         activeSession = nil
         quickBlockMessage = L10n.string("Quick Block cancelled. Nothing was recorded.")
         syncMacForStoppedQuickBlock(durationMinutes: session.durationMinutes)
@@ -1368,22 +1505,22 @@ struct StatusView: View {
         quickBlockMessage = mode == .strong ? L10n.string("Emergency exit used. Strong block stopped.") : L10n.string("Quick block stopped after reflection.")
     }
 
-    private func refreshedSession(now: Date) -> ImmediateBlockSession? {
-        if let activeSession {
-            if activeSession.isActive(at: now) {
-                return activeSession
-            }
-            if now >= activeSession.end {
-                saveReceipt(for: activeSession, completedAt: activeSession.end)
-                ScheduleService.shared.recordImmediateBlockCompletion(activeSession, completedAt: activeSession.end)
-                ScheduleService.shared.stopImmediateBlock()
-                syncMacForStoppedQuickBlock(durationMinutes: activeSession.durationMinutes)
-                self.activeSession = nil
-            }
+    private func handleTimelineTick(now: Date) {
+        if let session = activeSession, now >= session.end {
+            saveReceipt(for: session, completedAt: session.end)
+            ScheduleService.shared.recordImmediateBlockCompletion(session, completedAt: session.end, presentsFocusComplete: true)
+            ScheduleService.shared.stopImmediateBlock(preserveFocusCompletion: true)
+            syncMacForStoppedQuickBlock(durationMinutes: session.durationMinutes)
+            activeSession = nil
+            focusCompletionPrompt = ScheduleService.shared.reconcileFocusCompletionPrompt(now: now)
+            return
         }
 
-        guard let stored = ShieldStorage.shared.loadActiveImmediateSession(now: now) else { return nil }
-        return stored
+        if let completion = focusCompletionPrompt,
+           now >= completion.completedAt.addingTimeInterval(FocusCompletionPolicy.availabilitySeconds) {
+            ScheduleService.shared.dismissFocusCompletionPrompt()
+            focusCompletionPrompt = nil
+        }
     }
 
     private func durationTitle(_ minutes: Int) -> String {

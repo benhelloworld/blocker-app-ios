@@ -736,3 +736,18 @@
 "1 second to undo" = "ثانية واحدة للتراجع";
 
 "Add more apps to your current block:" = "أضف المزيد من التطبيقات إلى الحظر الحالي:";
+
+// Focus Complete
+"Focus complete" = "اكتمل التركيز";
+"You protected %@ of focused time." = "لقد حافظت على %@ من وقت التركيز.";
+"Nice work. Carry that momentum into your next focus block when you’re ready." = "عمل رائع. احمل هذا الزخم إلى جلسة التركيز التالية عندما تكون مستعدًا.";
+"Keep going for 15 minutes" = "استمر لمدة 15 دقيقة أخرى";
+"View progress" = "عرض التقدم";
+
+// Weekly Focus Card
+"Last 7 days" = "آخر 7 أيام";
+"%@ of 7 days with focus" = "أيام التركيز: %@ من 7";
+"Focus recorded" = "تم تسجيل التركيز";
+"No focus recorded" = "لم يتم تسجيل تركيز";
+"Quick Blocks and scheduled focus both count. Every day is a fresh start." = "يُحتسب كل من الحظر السريع والتركيز المجدول. كل يوم بداية جديدة.";
+"Today" = "اليوم";

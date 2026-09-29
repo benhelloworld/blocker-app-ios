@@ -490,6 +490,31 @@ struct ImmediateBlockSession: Codable, Equatable {
     }
 }
 
+struct FocusCompletionPolicy: Equatable {
+    static let availabilitySeconds: TimeInterval = 60 * 60
+    static let continuationMinutes = 15
+
+    static func isAvailable(completedAt: Date, now: Date = Date()) -> Bool {
+        now >= completedAt && now < completedAt.addingTimeInterval(availabilitySeconds)
+    }
+}
+
+struct FocusCompletionPrompt: Codable, Equatable {
+    let session: ImmediateBlockSession
+    var progressRecorded: Bool
+
+    init(session: ImmediateBlockSession, progressRecorded: Bool = false) {
+        self.session = session
+        self.progressRecorded = progressRecorded
+    }
+
+    var completedAt: Date { session.end }
+
+    func isAvailable(at date: Date = Date()) -> Bool {
+        FocusCompletionPolicy.isAvailable(completedAt: completedAt, now: date)
+    }
+}
+
 
 struct QuickBlockLaunchPolicy {
     static let countdownSeconds = 3
@@ -541,12 +566,14 @@ struct FocusStats: Codable, Equatable {
     var totalPlannedMinutes: Int
     var focusDayStamps: Set<String>
     var lastSessionStart: Date?
+    private var recordedSessionStarts: Set<Date>?
 
     init(totalSessions: Int = 0, totalPlannedMinutes: Int = 0, focusDayStamps: Set<String> = [], lastSessionStart: Date? = nil) {
         self.totalSessions = totalSessions
         self.totalPlannedMinutes = totalPlannedMinutes
         self.focusDayStamps = focusDayStamps
         self.lastSessionStart = lastSessionStart
+        self.recordedSessionStarts = nil
     }
 
     var focusDayCount: Int { focusDayStamps.count }
@@ -568,6 +595,14 @@ struct FocusStats: Codable, Equatable {
         let elapsedSeconds = completedAt.timeIntervalSince(session.start)
         let elapsedMinutes = max(0, min(session.durationMinutes, Int(floor(elapsedSeconds / 60))))
         guard elapsedMinutes > 0 else { return }
+
+        var recordedStarts = recordedSessionStarts ?? []
+        guard !recordedStarts.contains(session.start) else { return }
+        recordedStarts.insert(session.start)
+        if recordedStarts.count > 128 {
+            recordedStarts = Set(recordedStarts.sorted(by: >).prefix(128))
+        }
+        recordedSessionStarts = recordedStarts
 
         totalSessions += 1
         totalPlannedMinutes += elapsedMinutes
@@ -635,9 +670,29 @@ struct ScheduledFocusStats: Codable, Equatable {
     }
 }
 
+struct FocusActivityDay: Equatable, Identifiable {
+    let id: String
+    let date: Date
+    let hasFocus: Bool
+    let isToday: Bool
+}
+
 struct FocusProgressSummary: Equatable {
     let quickStats: FocusStats
     let scheduledStats: ScheduledFocusStats
+
+    /// The local calendar day today and the six preceding days, oldest first.
+    func recentFocusDays(asOf date: Date = Date(), calendar: Calendar = .current) -> [FocusActivityDay] {
+        let today = calendar.startOfDay(for: date)
+        let recordedDays = focusDayStamps
+        return (-6...0).compactMap { offset in
+            // Calendar arithmetic, not 24-hour subtraction: local days can be 23 or 25 hours.
+            guard let day = calendar.date(byAdding: .day, value: offset, to: today) else { return nil }
+            let components = calendar.dateComponents([.year, .month, .day], from: day)
+            let stamp = String(format: "%04d-%02d-%02d", components.year ?? 0, components.month ?? 0, components.day ?? 0)
+            return FocusActivityDay(id: stamp, date: day, hasFocus: recordedDays.contains(stamp), isToday: offset == 0)
+        }
+    }
 
     var totalMinutes: Int { quickStats.totalPlannedMinutes + scheduledStats.totalProtectedMinutes }
     var scheduledMinutes: Int { scheduledStats.totalProtectedMinutes }

@@ -271,6 +271,7 @@ final class ScheduleService {
             #endif
             try ShieldStorage.shared.saveActiveImmediateSession(session)
             ShieldStorage.shared.saveActiveFocusTemplate(focusTemplate)
+            try ShieldStorage.shared.saveFocusCompletionPrompt(FocusCompletionPrompt(session: session))
             return session
         } catch {
             #if canImport(DeviceActivity)
@@ -281,6 +282,7 @@ final class ScheduleService {
             try? ShieldStorage.shared.saveActiveImmediateShieldSelection(nil)
             #endif
             ShieldStorage.shared.clearActiveImmediateSession()
+            ShieldStorage.shared.clearFocusCompletionPrompt()
             throw error
         }
     }
@@ -317,15 +319,18 @@ final class ScheduleService {
             // Authorization was revoked or denied while a session is stored:
             // the session can never be enforced again, so invalidate it fully.
             clearImmediateEnforcement(force: true)
+            ShieldStorage.shared.clearFocusCompletionPrompt()
             throw ScheduleServiceError.authorizationRequired
         case .invalidateSelection:
             // The persisted snapshot lost its effective selection while a
             // session is stored: this is corrupt state that must not linger.
             clearImmediateEnforcement(force: true)
+            ShieldStorage.shared.clearFocusCompletionPrompt()
             throw ScheduleServiceError.emptySelection
         case .reapplyShield:
             guard let session, let selection else {
                 clearImmediateEnforcement(force: true)
+                ShieldStorage.shared.clearFocusCompletionPrompt()
                 throw ScheduleServiceError.managedSettingsNotApplied
             }
             do {
@@ -420,16 +425,61 @@ final class ScheduleService {
     func recordImmediateBlockCompletion(
         _ session: ImmediateBlockSession,
         completedAt: Date = Date(),
-        calendar: Calendar = .current
+        calendar: Calendar = .current,
+        presentsFocusComplete: Bool = false
     ) {
-        var stats = ShieldStorage.shared.loadFocusStats()
-        stats.recordCompleted(session: session, completedAt: completedAt, calendar: calendar)
-        try? ShieldStorage.shared.saveFocusStats(stats)
+        let storedPrompt = ShieldStorage.shared.loadFocusCompletionPrompt()
+        let matchesStoredSession = storedPrompt?.session.start == session.start
+            && storedPrompt?.session.durationMinutes == session.durationMinutes
+        if !(matchesStoredSession && storedPrompt?.progressRecorded == true) {
+            var stats = ShieldStorage.shared.loadFocusStats()
+            stats.recordCompleted(session: session, completedAt: completedAt, calendar: calendar)
+            try? ShieldStorage.shared.saveFocusStats(stats)
+        }
+
+        if presentsFocusComplete {
+            try? ShieldStorage.shared.saveFocusCompletionPrompt(
+                FocusCompletionPrompt(session: session, progressRecorded: true)
+            )
+        } else {
+            ShieldStorage.shared.clearFocusCompletionPrompt()
+        }
         ShieldStorage.shared.clearActiveImmediateSession()
     }
 
-    func stopImmediateBlock(force: Bool = false) {
+    /// Records a naturally finished Quick Block once, keeps its calm completion
+    /// screen available for one hour, and expires that prompt without losing stats.
+    func reconcileFocusCompletionPrompt(now: Date = Date(), calendar: Calendar = .current) -> FocusCompletionPrompt? {
+        guard var prompt = ShieldStorage.shared.loadFocusCompletionPrompt() else { return nil }
+        guard now >= prompt.completedAt else { return nil }
+
+        if !prompt.progressRecorded {
+            var stats = ShieldStorage.shared.loadFocusStats()
+            stats.recordCompleted(session: prompt.session, completedAt: prompt.completedAt, calendar: calendar)
+            try? ShieldStorage.shared.saveFocusStats(stats)
+            try? ShieldStorage.shared.saveAccountabilityReceipt(
+                AccountabilityReceipt(protectedMinutes: prompt.session.durationMinutes)
+            )
+            prompt.progressRecorded = true
+            try? ShieldStorage.shared.saveFocusCompletionPrompt(prompt)
+        }
+
+        guard prompt.isAvailable(at: now) else {
+            ShieldStorage.shared.clearFocusCompletionPrompt()
+            return nil
+        }
+        return prompt
+    }
+
+    func dismissFocusCompletionPrompt() {
+        ShieldStorage.shared.clearFocusCompletionPrompt()
+    }
+
+    func stopImmediateBlock(force: Bool = false, preserveFocusCompletion: Bool = false) {
         clearImmediateEnforcement(force: force)
+        if !preserveFocusCompletion {
+            ShieldStorage.shared.clearFocusCompletionPrompt()
+        }
     }
 
     private func clearImmediateEnforcement(force: Bool = false) {

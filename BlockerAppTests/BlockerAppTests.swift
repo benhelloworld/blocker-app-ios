@@ -8,6 +8,105 @@ import FamilyControls
 @MainActor
 struct BlockerAppTests {
 
+    @Test func recentFocusDaysIncludeTodayAndSixPreviousDaysInOrder() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let today = calendar.date(from: DateComponents(year: 2026, month: 1, day: 3, hour: 16))!
+        let summary = FocusProgressSummary(quickStats: FocusStats(), scheduledStats: ScheduledFocusStats())
+        let days = summary.recentFocusDays(asOf: today, calendar: calendar)
+        #expect(days.count == 7)
+        #expect(days.map(\.id) == ["2025-12-28", "2025-12-29", "2025-12-30", "2025-12-31", "2026-01-01", "2026-01-02", "2026-01-03"])
+        #expect(days.allSatisfy { !$0.hasFocus })
+        #expect(days.filter(\.isToday).count == 1)
+        #expect(days.last?.date == calendar.startOfDay(for: today))
+        #expect(days.last?.isToday == true)
+    }
+
+    @Test func recentFocusDaysMergeQuickAndScheduledActivityWithoutDoubleCounting() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let today = calendar.date(from: DateComponents(year: 2026, month: 9, day: 10, hour: 12))!
+        let quick = FocusStats(focusDayStamps: ["2026-09-04", "2026-09-08", "2026-09-10"])
+        let scheduled = ScheduledFocusStats(focusDayStamps: ["2026-09-08", "2026-09-09"])
+        let days = FocusProgressSummary(quickStats: quick, scheduledStats: scheduled).recentFocusDays(asOf: today, calendar: calendar)
+        #expect(days.filter(\.hasFocus).map(\.id) == ["2026-09-04", "2026-09-08", "2026-09-09", "2026-09-10"])
+        #expect(days.filter(\.hasFocus).count == 4)
+    }
+
+    @Test func recentFocusDaysIgnoreOldFutureAndMalformedStamps() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let today = calendar.date(from: DateComponents(year: 2026, month: 9, day: 10))!
+        let quick = FocusStats(focusDayStamps: ["2026-09-03", "2026-09-11", "not-a-date", "2026-9-10"])
+        let summary = FocusProgressSummary(quickStats: quick, scheduledStats: ScheduledFocusStats())
+        #expect(summary.recentFocusDays(asOf: today, calendar: calendar).filter(\.hasFocus).isEmpty)
+    }
+
+    @Test func recentFocusDaysFollowCalendarDaysAcrossBothDaylightSavingChanges() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Europe/Zurich")!
+        for (month, day, expectedHours) in [(3, 31, 23.0), (10, 27, 25.0)] {
+            let today = calendar.date(from: DateComponents(year: 2026, month: month, day: day, hour: 12))!
+            let summary = FocusProgressSummary(quickStats: FocusStats(), scheduledStats: ScheduledFocusStats())
+            let days = summary.recentFocusDays(asOf: today, calendar: calendar)
+            #expect(days.count == 7)
+            #expect(Set(days.map(\.id)).count == 7)
+            #expect(days.allSatisfy { calendar.component(.hour, from: $0.date) == 0 })
+            let durations = zip(days, days.dropFirst()).map { $1.date.timeIntervalSince($0.date) / 3600 }
+            #expect(durations.contains(expectedHours))
+        }
+    }
+
+    @Test func recentFocusDaysUseTheLocalDayAndRollForwardAtMidnight() {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "Asia/Tokyo")!
+        let beforeMidnight = calendar.date(from: DateComponents(year: 2026, month: 9, day: 10, hour: 23, minute: 59))!
+        let quick = FocusStats(focusDayStamps: ["2026-09-04", "2026-09-10"])
+        let summary = FocusProgressSummary(quickStats: quick, scheduledStats: ScheduledFocusStats())
+        let before = summary.recentFocusDays(asOf: beforeMidnight, calendar: calendar)
+        let after = summary.recentFocusDays(asOf: beforeMidnight.addingTimeInterval(60), calendar: calendar)
+        #expect(before.last?.id == "2026-09-10")
+        #expect(after.last?.id == "2026-09-11")
+        #expect(after.first?.id == "2026-09-05")
+        #expect(after.last?.hasFocus == false)
+        #expect(after.filter(\.hasFocus).count == 1)
+    }
+
+    @Test func recentFocusDaysReflectPersistedQuickAndOvernightScheduledRecords() throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        let start = calendar.date(from: DateComponents(year: 2026, month: 9, day: 9, hour: 23))!
+        var scheduled = ScheduledFocusStats()
+        scheduled.recordProtection(start: start, end: start.addingTimeInterval(2 * 3600), calendar: calendar)
+        var quick = FocusStats()
+        quick.record(session: ImmediateBlockSession(start: start, durationMinutes: 15, calendar: calendar), calendar: calendar)
+        let decodedQuick = try JSONDecoder().decode(FocusStats.self, from: JSONEncoder().encode(quick))
+        let decodedScheduled = try JSONDecoder().decode(ScheduledFocusStats.self, from: JSONEncoder().encode(scheduled))
+        let summary = FocusProgressSummary(quickStats: decodedQuick, scheduledStats: decodedScheduled)
+        #expect(summary.recentFocusDays(asOf: start.addingTimeInterval(2 * 3600), calendar: calendar).filter(\.hasFocus).map(\.id) == ["2026-09-09", "2026-09-10"])
+        #expect(summary.completedSessions == 1)
+        #expect(summary.totalMinutes == 135)
+    }
+
+    @Test func weeklyFocusCopyIsLocalizedInEverySupportedLanguage() throws {
+        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+            .deletingLastPathComponent().appendingPathComponent("BlockerApp/BlockerApp")
+        let locales = try FileManager.default.contentsOfDirectory(at: root, includingPropertiesForKeys: nil)
+            .filter { $0.pathExtension == "lproj" }
+        #expect(locales.count == 11)
+        let keys = ["Last 7 days", "%@ of 7 days with focus", "Focus recorded", "No focus recorded", "Today",
+                    "Quick Blocks and scheduled focus both count. Every day is a fresh start."]
+        for locale in locales {
+            let strings = try #require(NSDictionary(contentsOf: locale.appendingPathComponent("Localizable.strings")) as? [String: String])
+            for key in keys {
+                #expect(strings[key]?.isEmpty == false, "Missing weekly focus copy: \(key) in \(locale.lastPathComponent)")
+            }
+            if let format = strings["%@ of 7 days with focus"] {
+                #expect(format.components(separatedBy: "%@").count == 2)
+            }
+        }
+    }
+
 
     @Test func onboardingStepsAreAllOnStatusTabAndPointAtFreeFeatures() async throws {
         #expect(FirstLaunchOnboardingStep.all.map(\.tabName) == ["Status", "Status", "Status", "Status"])
@@ -461,7 +560,7 @@ struct BlockerAppTests {
         )
 
         #expect(statusSource.contains("reconcileImmediateBlockState()"))
-        #expect(statusSource.contains("recordImmediateBlockCompletion(activeSession, completedAt: activeSession.end)\n                ScheduleService.shared.stopImmediateBlock()"))
+        #expect(statusSource.contains("recordImmediateBlockCompletion(session, completedAt: session.end, presentsFocusComplete: true)\n            ScheduleService.shared.stopImmediateBlock(preserveFocusCompletion: true)"))
         #expect(focusModesSource.contains("reconcileActiveTemplateState()"))
         #expect(serviceSource.contains("func reconcileImmediateShield(now:"))
         #expect(serviceSource.contains("hardShieldMatches($0, storeName: SharedConfig.immediateStoreName)"))
@@ -578,6 +677,62 @@ struct BlockerAppTests {
         #expect(!QuickBlockStartGuard.canStartNewBlock(existing: activeSession, now: now))
         #expect(QuickBlockStartGuard.canStartNewBlock(existing: activeSession, now: afterEnd))
         #expect(QuickBlockStartGuard.activeBlockMessage(existing: activeSession, now: now) == "Focus already active — 450 min left.")
+    }
+
+    @Test func focusCompleteIsOnlyAvailableForOneHourAfterTheBlockEnds() async throws {
+        let calendar = Calendar(identifier: .gregorian)
+        let start = Date(timeIntervalSince1970: 10_000)
+        let session = ImmediateBlockSession(start: start, durationMinutes: 30, calendar: calendar)
+        let completion = FocusCompletionPrompt(session: session)
+
+        #expect(!completion.isAvailable(at: completion.completedAt.addingTimeInterval(-1)))
+        #expect(completion.isAvailable(at: completion.completedAt))
+        #expect(completion.isAvailable(at: completion.completedAt.addingTimeInterval(3_599)))
+        #expect(!completion.isAvailable(at: completion.completedAt.addingTimeInterval(3_600)))
+        #expect(FocusCompletionPolicy.continuationMinutes == 15)
+    }
+
+    @Test func focusStatsDoesNotDoubleCountTheSameCompletionAfterARelaunchRetry() async throws {
+        let start = Date(timeIntervalSince1970: 20_000)
+        let session = ImmediateBlockSession(start: start, durationMinutes: 30)
+        var stats = FocusStats()
+
+        stats.recordCompleted(session: session, completedAt: session.end)
+        let restored = try JSONDecoder().decode(FocusStats.self, from: JSONEncoder().encode(stats))
+        var retriedStats = restored
+        retriedStats.recordCompleted(session: session, completedAt: session.end)
+
+        #expect(retriedStats.totalSessions == 1)
+        #expect(retriedStats.totalPlannedMinutes == 30)
+    }
+
+    @Test func focusCompleteFlowPersistsAcrossRelaunchAndOffersTheAcceptedActions() throws {
+        let projectRoot = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let appRoot = projectRoot.appendingPathComponent("BlockerApp/BlockerApp")
+        let statusSource = try String(contentsOf: appRoot.appendingPathComponent("Views/StatusView.swift"), encoding: .utf8)
+        let serviceSource = try String(contentsOf: appRoot.appendingPathComponent("Services/ScheduleService.swift"), encoding: .utf8)
+        let storageSource = try String(contentsOf: appRoot.appendingPathComponent("Services/ShieldStorage.swift"), encoding: .utf8)
+
+        #expect(storageSource.contains("saveFocusCompletionPrompt"))
+        #expect(storageSource.contains("loadFocusCompletionPrompt"))
+        #expect(serviceSource.contains("FocusCompletionPrompt(session: session)"))
+        #expect(serviceSource.contains("reconcileFocusCompletionPrompt"))
+        #expect(serviceSource.components(separatedBy: "ShieldStorage.shared.clearFocusCompletionPrompt()").count >= 4)
+        #expect(statusSource.contains("focus-complete-screen"))
+        #expect(statusSource.contains("keep-going-15-minutes-button"))
+        #expect(statusSource.contains("view-focus-progress-button"))
+        #expect(statusSource.contains("dismiss-focus-complete-button"))
+        #expect(statusSource.contains(".onChange(of: context.date)"))
+        #expect(statusSource.contains("handleTimelineTick(now: now)"))
+        #expect(!statusSource.contains("private func refreshedSession"))
+        #expect(statusSource.contains("continuationPrompt: completion"))
+        #expect(statusSource.contains("saveFocusCompletionPrompt(continuation)"))
+        #expect(statusSource.contains("L10n.string(\"Focus complete\")"))
+        #expect(statusSource.contains("L10n.string(\"Keep going for 15 minutes\")"))
+        #expect(statusSource.contains("L10n.string(\"View progress\")"))
+        #expect(statusSource.contains("L10n.string(\"Done\")"))
     }
 
     @Test func quickBlockLaunchFlowCountsDownThreeSecondsBeforeActivation() {

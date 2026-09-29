@@ -736,3 +736,18 @@
 "1 second to undo" = "1 seconde pour annuler";
 
 "Add more apps to your current block:" = "Ajoutez d’autres apps à votre blocage actuel :";
+
+// Focus Complete
+"Focus complete" = "Session de concentration terminée";
+"You protected %@ of focused time." = "Vous avez protégé %@ de temps de concentration.";
+"Nice work. Carry that momentum into your next focus block when you’re ready." = "Bravo. Gardez cet élan pour votre prochaine session de concentration, lorsque vous serez prêt.";
+"Keep going for 15 minutes" = "Continuer pendant 15 minutes";
+"View progress" = "Voir les progrès";
+
+// Weekly Focus Card
+"Last 7 days" = "Les 7 derniers jours";
+"%@ of 7 days with focus" = "Jours avec concentration : %@ sur 7";
+"Focus recorded" = "Concentration enregistrée";
+"No focus recorded" = "Aucune concentration enregistrée";
+"Quick Blocks and scheduled focus both count. Every day is a fresh start." = "Les blocages rapides et la concentration planifiée comptent tous les deux. Chaque jour est un nouveau départ.";
+"Today" = "Aujourd’hui";

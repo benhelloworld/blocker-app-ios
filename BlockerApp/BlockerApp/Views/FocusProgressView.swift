@@ -2,6 +2,10 @@ import SwiftUI
 
 struct FocusProgressView: View {
     @EnvironmentObject private var premiumStore: PremiumEntitlementStore
+    @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.calendar) private var calendar
+    @Environment(\.locale) private var locale
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     let onboardingTarget: String?
     let onSelectTab: (String) -> Void
 
@@ -31,11 +35,16 @@ struct FocusProgressView: View {
             }
         }
         .tint(AppActionStyle.turquoise[0])
-        .onAppear {
-            stats = ShieldStorage.shared.loadFocusStats()
-            scheduledStats = ShieldStorage.shared.loadScheduledFocusStats()
-            lastReceipt = ShieldStorage.shared.loadLastAccountabilityReceipt()
+        .onAppear(perform: refreshProgress)
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { refreshProgress() }
         }
+    }
+
+    private func refreshProgress() {
+        stats = ShieldStorage.shared.loadFocusStats()
+        scheduledStats = ShieldStorage.shared.loadScheduledFocusStats()
+        lastReceipt = ShieldStorage.shared.loadLastAccountabilityReceipt()
     }
 
     private var progressContent: some View {
@@ -46,6 +55,10 @@ struct FocusProgressView: View {
                     VStack(spacing: 18) {
                         if hasData {
                             heroCard
+                            TimelineView(.periodic(from: .now, by: 60)) { context in
+                                weeklyFocusCard(asOf: context.date)
+                                    .onChange(of: context.date) { _, _ in refreshProgress() }
+                            }
                             metricsCard
                             if let lastReceipt {
                                 receiptRow(lastReceipt)
@@ -94,6 +107,66 @@ struct FocusProgressView: View {
                 }
             }
         }.padding(22).glassCard(cornerRadius: 28)
+    }
+
+    // MARK: - Recent activity
+
+    private func weeklyFocusCard(asOf date: Date) -> some View {
+        let days = summary.recentFocusDays(asOf: date, calendar: calendar)
+        let focusedDays = days.filter(\.hasFocus).count
+        let columns = dynamicTypeSize.isAccessibilitySize
+            ? [GridItem(.adaptive(minimum: 88), spacing: 8)]
+            : Array(repeating: GridItem(.flexible(minimum: 0), spacing: 6), count: 7)
+
+        return VStack(alignment: .leading, spacing: 16) {
+            Label(L10n.string("Last 7 days"), systemImage: "calendar")
+                .font(.title3.bold())
+                .foregroundStyle(.white)
+            // Plain digits to match the app's existing localized copy style.
+            Text(String(format: L10n.string("%@ of 7 days with focus"), String(focusedDays)))
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(AppActionStyle.turquoise[0])
+                .fixedSize(horizontal: false, vertical: true)
+
+            LazyVGrid(columns: columns, spacing: 12) {
+                ForEach(Array(days.enumerated()), id: \.element.id) { index, day in
+                    focusDayCell(day)
+                        .accessibilityIdentifier("weekly-focus-day-\(index)")
+                }
+            }
+
+            explanatoryText("Quick Blocks and scheduled focus both count. Every day is a fresh start.")
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(20)
+        .glassCard(cornerRadius: 26)
+        .accessibilityIdentifier("weekly-focus-card")
+    }
+
+    private func focusDayCell(_ day: FocusActivityDay) -> some View {
+        let status = day.hasFocus ? L10n.string("Focus recorded") : L10n.string("No focus recorded")
+        let dateStyle = Date.FormatStyle(date: .complete, time: .omitted, locale: locale, calendar: calendar)
+        let spokenSummary = [day.date.formatted(dateStyle), day.isToday ? L10n.string("Today") : nil, status]
+            .compactMap { $0 }.joined(separator: ", ")
+
+        return VStack(spacing: 8) {
+            Text(day.date, format: .dateTime.weekday(.narrow))
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(.white.opacity(0.72))
+            Image(systemName: day.hasFocus ? "checkmark" : "minus")
+                .font(.caption.bold())
+                .foregroundStyle(day.hasFocus ? .black : .white.opacity(0.55))
+                .frame(width: 28, height: 28)
+                .background(day.hasFocus ? AppActionStyle.turquoise[0] : .white.opacity(0.08), in: Circle())
+                .overlay(Circle().stroke(day.isToday ? AppActionStyle.turquoise[0] : .clear, lineWidth: 2).padding(-3))
+            Text(day.date, format: .dateTime.day())
+                .font(.caption2.weight(day.isToday ? .bold : .regular))
+                .foregroundStyle(day.isToday ? .white : .white.opacity(0.60))
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 4)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(spokenSummary)
     }
 
     // MARK: - Metrics first: focus time, sessions, streak

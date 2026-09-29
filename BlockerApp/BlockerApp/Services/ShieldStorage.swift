@@ -92,6 +92,19 @@ final class ShieldStorage {
         defaults?.removeObject(forKey: SharedConfig.activeImmediateShieldSelectionKey)
     }
 
+    func saveFocusCompletionPrompt(_ prompt: FocusCompletionPrompt) throws {
+        defaults?.set(try JSONEncoder().encode(prompt), forKey: SharedConfig.focusCompletionPromptKey)
+    }
+
+    func loadFocusCompletionPrompt() -> FocusCompletionPrompt? {
+        guard let data = defaults?.data(forKey: SharedConfig.focusCompletionPromptKey) else { return nil }
+        return try? JSONDecoder().decode(FocusCompletionPrompt.self, from: data)
+    }
+
+    func clearFocusCompletionPrompt() {
+        defaults?.removeObject(forKey: SharedConfig.focusCompletionPromptKey)
+    }
+
     /// Returns true when a session is stored and still active at `now`.
     /// Unlike `loadActiveImmediateSession`, this never deletes state, so
     /// stale-callback guards can check it without destroying a new session.

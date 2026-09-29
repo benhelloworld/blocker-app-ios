@@ -178,6 +178,30 @@ final class BlockScheduleTests: XCTestCase {
         XCTAssertEqual(QuickBlockStartGuard.activeBlockMessage(existing: activeSession, now: now), "Focus already active — 450 min left.")
     }
 
+    func testFocusCompleteIsOnlyAvailableForOneHourAfterTheBlockEnds() {
+        let completedAt = Date(timeIntervalSince1970: 10_000)
+
+        XCTAssertFalse(FocusCompletionPolicy.isAvailable(completedAt: completedAt, now: completedAt.addingTimeInterval(-1)))
+        XCTAssertTrue(FocusCompletionPolicy.isAvailable(completedAt: completedAt, now: completedAt))
+        XCTAssertTrue(FocusCompletionPolicy.isAvailable(completedAt: completedAt, now: completedAt.addingTimeInterval(3_599)))
+        XCTAssertFalse(FocusCompletionPolicy.isAvailable(completedAt: completedAt, now: completedAt.addingTimeInterval(3_600)))
+        XCTAssertEqual(FocusCompletionPolicy.continuationMinutes, 15)
+    }
+
+    func testFocusStatsDoesNotDoubleCountTheSameCompletionAfterARelaunchRetry() throws {
+        let start = Date(timeIntervalSince1970: 20_000)
+        let session = ImmediateBlockSession(start: start, durationMinutes: 30)
+        var stats = FocusStats()
+
+        stats.recordCompleted(session: session, completedAt: session.end)
+        let restored = try JSONDecoder().decode(FocusStats.self, from: JSONEncoder().encode(stats))
+        var retriedStats = restored
+        retriedStats.recordCompleted(session: session, completedAt: session.end)
+
+        XCTAssertEqual(retriedStats.totalSessions, 1)
+        XCTAssertEqual(retriedStats.totalPlannedMinutes, 30)
+    }
+
     func testQuickBlockPresetsOfferFourCompactDurations() {
         XCTAssertEqual(QuickBlockPreset.mainRow.map(\.title), ["Quick Reset", "Deep Work", "Study", "Sleep"])
         XCTAssertEqual(QuickBlockPreset.mainRow.map(\.durationMinutes), [30, 120, 90, 480])

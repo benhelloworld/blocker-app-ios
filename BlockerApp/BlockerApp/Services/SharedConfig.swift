@@ -14,6 +14,7 @@ enum SharedConfig {
     static let adultWebFilterEnabledKey = "adultWebFilterEnabled"
     static let automaticWebDomainsKey = "automaticWebDomains"
     static let activeImmediateSessionKey = "activeImmediateSession"
+    static let focusCompletionPromptKey = "focusCompletionPrompt"
     static let focusStatsKey = "focusStats"
     static let scheduledFocusStatsKey = "scheduledFocusStats"
     static let scheduledFocusStartsKey = "scheduledFocusStarts"

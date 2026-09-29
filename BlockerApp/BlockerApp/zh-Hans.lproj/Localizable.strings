@@ -736,3 +736,18 @@
 "1 second to undo" = "还有 1 秒可撤销";
 
 "Add more apps to your current block:" = "将更多 App 添加到当前屏蔽：";
+
+// Focus Complete
+"Focus complete" = "专注完成";
+"You protected %@ of focused time." = "你守护了 %@ 的专注时间。";
+"Nice work. Carry that momentum into your next focus block when you’re ready." = "做得很好。准备好后，把这份动力带到下一次专注中。";
+"Keep going for 15 minutes" = "再专注 15 分钟";
+"View progress" = "查看进度";
+
+// Weekly Focus Card
+"Last 7 days" = "过去 7 天";
+"%@ of 7 days with focus" = "专注天数：%@ / 7";
+"Focus recorded" = "已记录专注";
+"No focus recorded" = "未记录专注";
+"Quick Blocks and scheduled focus both count. Every day is a fresh start." = "快速屏蔽和计划专注都会计入。每一天都是新的开始。";
+"Today" = "今天";

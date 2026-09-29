@@ -736,3 +736,18 @@
 "1 second to undo" = "वापस लेने के लिए 1 सेकंड";
 
 "Add more apps to your current block:" = "अपने मौजूदा ब्लॉक में और ऐप्स जोड़ें:";
+
+// Focus Complete
+"Focus complete" = "फ़ोकस पूरा हुआ";
+"You protected %@ of focused time." = "आपने %@ का केंद्रित समय सुरक्षित रखा।";
+"Nice work. Carry that momentum into your next focus block when you’re ready." = "बहुत अच्छा। जब आप तैयार हों, इसी गति को अपने अगले फ़ोकस ब्लॉक में ले जाएँ।";
+"Keep going for 15 minutes" = "15 मिनट और जारी रखें";
+"View progress" = "प्रगति देखें";
+
+// Weekly Focus Card
+"Last 7 days" = "पिछले 7 दिन";
+"%@ of 7 days with focus" = "फ़ोकस वाले दिन: 7 में से %@";
+"Focus recorded" = "फ़ोकस रिकॉर्ड किया गया";
+"No focus recorded" = "कोई फ़ोकस रिकॉर्ड नहीं किया गया";
+"Quick Blocks and scheduled focus both count. Every day is a fresh start." = "क्विक ब्लॉक और निर्धारित फ़ोकस दोनों गिने जाते हैं। हर दिन एक नई शुरुआत है।";
+"Today" = "आज";

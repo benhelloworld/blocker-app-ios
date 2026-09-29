@@ -178,18 +178,29 @@ public struct QuickBlockStartGuard: Equatable, Sendable {
     }
 }
 
+public struct FocusCompletionPolicy: Equatable, Sendable {
+    public static let availabilitySeconds: TimeInterval = 60 * 60
+    public static let continuationMinutes = 15
+
+    public static func isAvailable(completedAt: Date, now: Date = Date()) -> Bool {
+        now >= completedAt && now < completedAt.addingTimeInterval(availabilitySeconds)
+    }
+}
+
 
 public struct FocusStats: Codable, Equatable, Sendable {
     public var totalSessions: Int
     public var totalPlannedMinutes: Int
     public var focusDayStamps: Set<String>
     public var lastSessionStart: Date?
+    private var recordedSessionStarts: Set<Date>?
 
     public init(totalSessions: Int = 0, totalPlannedMinutes: Int = 0, focusDayStamps: Set<String> = [], lastSessionStart: Date? = nil) {
         self.totalSessions = totalSessions
         self.totalPlannedMinutes = totalPlannedMinutes
         self.focusDayStamps = focusDayStamps
         self.lastSessionStart = lastSessionStart
+        self.recordedSessionStarts = nil
     }
 
     public var focusDayCount: Int { focusDayStamps.count }
@@ -211,6 +222,14 @@ public struct FocusStats: Codable, Equatable, Sendable {
         let elapsedSeconds = completedAt.timeIntervalSince(session.start)
         let elapsedMinutes = max(0, min(session.durationMinutes, Int(floor(elapsedSeconds / 60))))
         guard elapsedMinutes > 0 else { return }
+
+        var recordedStarts = recordedSessionStarts ?? []
+        guard !recordedStarts.contains(session.start) else { return }
+        recordedStarts.insert(session.start)
+        if recordedStarts.count > 128 {
+            recordedStarts = Set(recordedStarts.sorted(by: >).prefix(128))
+        }
+        recordedSessionStarts = recordedStarts
 
         totalSessions += 1
         totalPlannedMinutes += elapsedMinutes

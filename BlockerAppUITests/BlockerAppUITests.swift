@@ -23,6 +23,91 @@ final class BlockerAppUITests: XCTestCase {
     }
 
     @MainActor
+    func testWeeklyFocusShowsSevenAccessibleDaysAndCombinedActivity() throws {
+        let app = weeklyFocusApp(language: "en", locale: "en_US")
+        app.launch()
+
+        XCTAssertTrue(app.staticTexts["Last 7 days"].waitForExistence(timeout: 8))
+        XCTAssertTrue(app.staticTexts["3 of 7 days with focus"].exists)
+        // Fixture: Quick Blocks four and two days ago, scheduled focus two days ago and today.
+        let expectedDays = [
+            (4, "Focus recorded", false),
+            (3, "No focus recorded", false),
+            (2, "Focus recorded", false),
+            (1, "No focus recorded", false),
+            (0, "Focus recorded", true)
+        ]
+        for index in 0..<7 {
+            let day = app.otherElements["weekly-focus-day-\(index)"]
+            XCTAssertTrue(day.exists, "Each day needs a single, accessible summary.")
+            XCTAssertFalse(day.label.isEmpty)
+            guard let (daysAgo, status, isToday) = expectedDays.first(where: { $0.0 == 6 - index }) else {
+                XCTAssertTrue(day.label.contains("No focus recorded"), "Day \(index) should report no recorded focus.")
+                continue
+            }
+            XCTAssertTrue(day.label.contains(status), "Day \(index) should report '\(status)' but said '\(day.label)'.")
+            XCTAssertEqual(day.label.contains("Today"), isToday, "Only today should be announced as today.")
+            let expectedDate = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Calendar.current.startOfDay(for: Date()))!
+            // Pinned to the app's en-US launch environment so the spoken date is deterministic.
+            let expectedSpokenDate = expectedDate.formatted(
+                Date.FormatStyle(date: .complete, time: .omitted, locale: Locale(identifier: "en_US"))
+            )
+            XCTAssertTrue(day.label.contains(expectedSpokenDate), "Day \(index) should announce its real date but said '\(day.label)'.")
+        }
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "weekly-focus-en"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+    }
+
+    @MainActor
+    func testWeeklyFocusHandlesAnInactiveWeekWithoutInventingActivity() throws {
+        let app = weeklyFocusApp(language: "en", locale: "en_US", inactive: true)
+        app.launch()
+        XCTAssertTrue(app.staticTexts["0 of 7 days with focus"].waitForExistence(timeout: 8))
+        for index in 0..<7 {
+            XCTAssertTrue(app.otherElements["weekly-focus-day-\(index)"].label.contains("No focus recorded"))
+        }
+    }
+
+    @MainActor
+    func testWeeklyFocusSupportsLongCopyDynamicTypeAndRTL() throws {
+        for (language, locale, title) in [
+            ("de", "de_DE", "Letzte 7 Tage"),
+            ("es", "es_ES", "Últimos 7 días"),
+            ("ar", "ar_SA", "آخر 7 أيام")
+        ] {
+            let app = weeklyFocusApp(language: language, locale: locale)
+            app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+            app.launch()
+            let titleElement = app.staticTexts[title]
+            XCTAssertTrue(titleElement.waitForExistence(timeout: 8))
+            for _ in 0..<8 where !titleElement.isHittable { app.swipeUp() }
+            XCTAssertTrue(titleElement.isHittable)
+            for index in 0..<7 {
+                let day = app.otherElements["weekly-focus-day-\(index)"]
+                for _ in 0..<8 where !day.isHittable { app.swipeUp() }
+                XCTAssertTrue(day.isHittable, "Large text must leave all seven days reachable.")
+            }
+            let screenshot = XCTAttachment(screenshot: app.screenshot())
+            screenshot.name = "weekly-focus-\(language)-accessibility"
+            screenshot.lifetime = .keepAlways
+            add(screenshot)
+            app.terminate()
+        }
+    }
+
+    private func weeklyFocusApp(language: String, locale: String, inactive: Bool = false) -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments += [
+            "-AppleLanguages", "(\(language))", "-AppleLocale", locale,
+            "--ui-testing-skip-onboarding", "--ui-testing-tab-progress",
+            inactive ? "--ui-testing-focus-week-inactive" : "--ui-testing-focus-week"
+        ]
+        return app
+    }
+
+    @MainActor
     func testDebugRunStartsWithPremiumUnlocked() throws {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
@@ -30,6 +115,94 @@ final class BlockerAppUITests: XCTestCase {
 
         let premiumBadge = app.descendants(matching: .any)["premium-status-badge"]
         XCTAssertTrue(premiumBadge.waitForExistence(timeout: 8), "Debug local runs should start with Premium unlocked, not show the free/paywall state.")
+    }
+
+    @MainActor
+    func testFocusCompleteOffersDoneContinueAndProgressWithoutClutter() throws {
+        let app = focusCompleteApp(language: "en", locale: "en_US")
+        app.launch()
+
+        let screen = app.descendants(matching: .any)["focus-complete-screen"]
+        XCTAssertTrue(screen.waitForExistence(timeout: 8))
+        XCTAssertTrue(app.staticTexts["Focus complete"].exists)
+        XCTAssertTrue(app.buttons["keep-going-15-minutes-button"].exists)
+        XCTAssertTrue(app.buttons["view-focus-progress-button"].exists)
+        XCTAssertTrue(app.buttons["dismiss-focus-complete-button"].exists)
+        XCTAssertFalse(app.buttons["start-focus-button"].exists, "The simple completion state should replace the normal Home controls while it is available.")
+
+        let screenshot = XCTAttachment(screenshot: app.screenshot())
+        screenshot.name = "focus-complete"
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+
+        app.buttons["keep-going-15-minutes-button"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["quick-block-countdown-overlay"].waitForExistence(timeout: 3))
+        XCTAssertFalse(screen.exists)
+    }
+
+    @MainActor
+    func testFocusCompleteDoneReturnsToHome() throws {
+        let app = focusCompleteApp(language: "en", locale: "en_US")
+        app.launch()
+
+        XCTAssertTrue(app.buttons["dismiss-focus-complete-button"].waitForExistence(timeout: 8))
+        app.buttons["dismiss-focus-complete-button"].tap()
+
+        XCTAssertTrue(app.buttons["start-focus-button"].waitForExistence(timeout: 3))
+        XCTAssertFalse(app.descendants(matching: .any)["focus-complete-screen"].exists)
+    }
+
+    @MainActor
+    func testCancellingKeepGoingCountdownRestoresFocusComplete() throws {
+        let app = focusCompleteApp(language: "en", locale: "en_US")
+        app.launch()
+
+        XCTAssertTrue(app.buttons["keep-going-15-minutes-button"].waitForExistence(timeout: 8))
+        app.buttons["keep-going-15-minutes-button"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["quick-block-countdown-overlay"].waitForExistence(timeout: 3))
+
+        app.buttons["cancel-quick-block-countdown-button"].tap()
+
+        XCTAssertTrue(app.descendants(matching: .any)["focus-complete-screen"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["keep-going-15-minutes-button"].isHittable)
+    }
+
+    @MainActor
+    func testFocusCompleteViewProgressOpensProgressTab() throws {
+        let app = focusCompleteApp(language: "en", locale: "en_US")
+        app.launch()
+
+        XCTAssertTrue(app.buttons["view-focus-progress-button"].waitForExistence(timeout: 8))
+        app.buttons["view-focus-progress-button"].tap()
+
+        XCTAssertTrue(app.navigationBars["Progress"].waitForExistence(timeout: 3))
+        XCTAssertFalse(app.descendants(matching: .any)["focus-complete-screen"].exists)
+    }
+
+    @MainActor
+    func testFocusCompleteFitsLongGermanAndSpanishCopy() throws {
+        for (language, locale, title) in [
+            ("de", "de_DE", "Fokus abgeschlossen"),
+            ("es", "es_ES", "Sesión de concentración completada")
+        ] {
+            let app = focusCompleteApp(language: language, locale: locale)
+            app.launch()
+
+            XCTAssertTrue(app.staticTexts[title].waitForExistence(timeout: 8))
+            XCTAssertTrue(app.buttons["keep-going-15-minutes-button"].isHittable)
+            XCTAssertTrue(app.buttons["view-focus-progress-button"].isHittable)
+            XCTAssertTrue(app.buttons["dismiss-focus-complete-button"].isHittable)
+            app.terminate()
+        }
+    }
+
+    private func focusCompleteApp(language: String, locale: String) -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments += [
+            "-AppleLanguages", "(\(language))", "-AppleLocale", locale,
+            "--ui-testing-skip-onboarding", "--ui-testing-show-focus-complete"
+        ]
+        return app
     }
 
     @MainActor
